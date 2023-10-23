@@ -4,6 +4,7 @@
 format: jb-book
 root: intro
 chapters:
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+- file: 00-tutorial.md
+- file: 01-tutorial.md
+- file: 90-tips.md
+- file: 91-workflow-diagram.md

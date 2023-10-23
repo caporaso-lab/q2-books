@@ -1,11 +1,10 @@
-# Welcome to your Jupyter Book
+# Shotgun metagenomics analysis with QIIME 2
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
-
-Check out the content pages bundled with this sample book to see more.
+```{warning}
+Shotgun metagenomics analysis with QIIME 2 is in alpha release.
+This means that results you generate should be considered preliminary, and NOT PUBLICATION QUALITY.
+Additionally, interfaces are subject to change, and those changes may be backward incompatible (meaning that a command or file that works in one version of the QIIME 2 Shotgun Metagenomics distribution may not work in the next version of that distribution).
+```
 
 ```{tableofcontents}
 ```
