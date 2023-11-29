@@ -6,6 +6,27 @@ This means that results you generate should be considered preliminary, and NOT P
 Additionally, interfaces are subject to change, and those changes may be backward incompatible (meaning that a command or file that works in one version of the QIIME 2 Shotgun Metagenomics distribution may not work in the next version of that distribution).
 ```
 
+```{warning}
+Filtering of human and other host-associated reads from shotgun metagenomics data is an active area of research,
+and for human hosts in particular updated approaches need to be developed and validated that filter based on
+the [human pangenome](https://humanpangenome.org/), rather than a single human genome sequence. We don't have
+a recommendation on a tool for this right now, but some are in development. Recent publications ([1](https://genome.cshlp.org/content/29/6/954.long), [2](https://doi.org/10.1038/s41564-023-01381-3))
+suggest that **personally identifying information can persist in human-derived shotgun metagenome data,
+even when following current best practices for host read removal**. QIIME 2 has not solved this problem.
+
+All of that said, you can use [`qiime quality-control filter-reads`](https://docs.qiime2.org/2023.9/plugins/available/quality-control/filter-reads/)
+to filter reads that hit the host genome based on alignment to that genome. [`qiime quality-control bowtie2-build`](https://docs.qiime2.org/2023.9/plugins/available/quality-control/bowtie2-build/)
+can help you build a bowtie2 database for use with `filter-reads`.
+
+We also recommend filtering again following taxonomy assignment using [`qiime taxa filter-seqs`](https://docs.qiime2.org/2023.9/plugins/available/taxa/filter-seqs/)
+to only include features that are assigned to a bacterial phylum, for example (see [here](https://docs.qiime2.org/2023.9/tutorials/filtering/#taxonomy-based-filtering-of-tables-and-sequences)).
+Note that this is not perfect due to the issues pointed out [in the first publication referenced above](https://genome.cshlp.org/content/29/6/954.long).
+
+In summary, you can do host read filtering with QIIME 2, but the current best practices
+in general (not only in QIIME 2) are known to be insufficient. Developing and validating
+new best practices is ongoing work.
+```
+
 ## Importing data
 
 Using code from [this repo](https://github.com/gregcaporaso/fq-manifestor), create a manifest.
