@@ -24,7 +24,7 @@ flowchart TD;
     f-->j("Taxonomy annotation");
     j-->k("Taxonomy feature table");
     k-->o("Host read removal again
-          (`qiime taxa filter --p-exclude p__Chordata ...`)")
+          (`qiime taxa filter --p-include k__Bacteria,k__Archaea,k__Fungi,k__Virus --p-exclude p__Chordata ...`)")
     o-->p("Downstream diversity analyses");
     f-->l("Functional annotation");
     l-->m("Functional feature table");
