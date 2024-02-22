@@ -1,0 +1,1 @@
+# Taxonomic annotation of contigs (Paula)
