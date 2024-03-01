@@ -1,1 +1,1 @@
-# Functional annotation (Paula)
+# MAG-analysis (Paula)
