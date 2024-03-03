@@ -37,8 +37,8 @@ qiime moshpit classify-kraken2 \
     --p-confidence 0.6 \
     --p-minimum-base-quality 20 \
     --p-num-partitions 4 \
-    --o-reports "./moshpit_tutorial/cache:kraken-reports-contigs" \
-    --o-hits "./moshpit_tutorial/cache:kraken-hits-contigs" \
+    --o-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
+    --o-hits "./moshpit_tutorial/cache:kraken_hits_contigs" \
     --verbose
 ```
 Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
@@ -47,17 +47,17 @@ Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your 
 ```bash
 qiime moshpit kraken2-to-features \
   --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
-  --o-table "./moshpit_tutorial/cache:kraken_contigs_feature_table" \
-  --o-taxonomy "./moshpit_tutorial/cache:kraken_contigs_taxonomy" \
+  --o-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
+  --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
   --verbose
 ```
 
 ### Build taxa-bar plot
 ```bash
 qiime taxa barplot \
-    --i-table "./moshpit_tutorial/cache:kraken_contigs_feature_table" \
-    --i-taxonomy "./moshpit_tutorial/cache:kraken_contigs_taxonomy "\
-    --o-visualization "./moshpit_tutorial/results/kraken_contigs_taxa_barplot.qzv \
+    --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
+    --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs "\
+    --o-visualization "./moshpit_tutorial/results/kraken_taxa_barplot_contigs.qzv \
     --verbose
 ```
 
@@ -71,8 +71,8 @@ qiime moshpit eggnog-diamond-search \
   --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
   --p-num-cpus 14 \
   --p-db-in-memory \
-  --o-eggnog-hits "./moshpit_tutorial/cache:contigs_diamond_hits" \
-  --o-table "./moshpit_tutorial/cache:contigs_diamond_feature_table \
+  --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_contigs" \
+  --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs \
   --verbose
 ```
 ### Annotate orthologs against eggNOG database
