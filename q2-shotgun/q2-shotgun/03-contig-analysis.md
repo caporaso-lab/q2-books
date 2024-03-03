@@ -33,6 +33,7 @@ qiime moshpit classify-kraken2 \
     --o-hits "./moshpit-tutorial/cache:kraken-hits-contigs" \
     --verbose
 ```
+Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
 
 ### Build presence/absence feature table
 ```bash
@@ -74,3 +75,4 @@ qiime moshpit eggnog-annotate \
  --o-ortholog-annotations "./moshpit-tutorial/cache:eggnog_annotated_contigs" \
  --verbose
 ```
+
