@@ -59,8 +59,8 @@ qiime moshpit eggnog-diamond-search \
   --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
   --p-num-cpus 14 \
   --p-db-in-memory \
-  --o-eggnog-hits "./moshpit_tutorial/cache:derep_mags_diamond_hits" \
-  --o-table "./moshpit_tutorial/cache:derep_mags_diamond_feature_table \
+  --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_derep_mags" \
+  --o-table "./moshpit_tutorial/cache:diamond_feature_table_derep_mags \
   --verbose
 ```
 ### Annotate orthologs against eggNOG database
