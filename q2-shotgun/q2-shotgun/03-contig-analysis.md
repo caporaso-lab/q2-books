@@ -1,6 +1,6 @@
-#Contig analysis
+# Contig analysis
 
-##Assemble reads into contigs with MEGAHIT.
+## Assemble reads into contigs with MEGAHIT.
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
 - The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. 
@@ -15,9 +15,9 @@ qiime assembly assemble-megahit \
 ```
 Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes
 
-##Contig taxonomic annotation workflow
+## Contig taxonomic annotation workflow
 
-###Classify contigs with Kraken2
+### Classify contigs with Kraken2
 - The `--p-confidence` and `--p-minimum-base-quality` are deviations from kraken's defaults.
 - The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
 - The abbreviations in my `output-dir` are the database (`k2pf`), and shorthand for the values I set for confidence (`c60`) and minimum base quality (`mbq20`), respectively.
@@ -34,7 +34,7 @@ qiime moshpit classify-kraken2 \
     --verbose
 ```
 
-###Build presence/absence feature table
+### Build presence/absence feature table
 ```bash
 qiime moshpit kraken2-to-features \
   --i-reports "./moshpit-tutorial/cache:kraken_reports_contigs" \
@@ -43,7 +43,7 @@ qiime moshpit kraken2-to-features \
   --verbose
 ```
 
-###Build taxa-bar plot
+### Build taxa-bar plot
 ```bash
 qiime taxa barplot \
     --i-table "./moshpit-tutorial/cache:kraken_contigs_feature_table" \
@@ -52,9 +52,9 @@ qiime taxa barplot \
     --verbose
 ```
 
-##Contig functional annotation workflow
+## Contig functional annotation workflow
 
-###EggNOG search using diamond aligner
+### EggNOG search using diamond aligner
 - The `--p-db-in-memory`loads the database into memory for faster processing.
 ```bash
 qiime moshpit eggnog-diamond-search \
@@ -66,7 +66,7 @@ qiime moshpit eggnog-diamond-search \
   --o-table "./moshpit-tutorial/cache:contigs_diamond_feature_table \
   --verbose
 ```
-###Annotate orthologs against eggNOG database
+### Annotate orthologs against eggNOG database
 ```bash
 qiime moshpit eggnog-annotate \
  --i-eggnog-hits "./moshpit-tutorial/cache:contigs" \
