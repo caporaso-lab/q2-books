@@ -1,10 +1,9 @@
 #Contig analysis
 
 ##Assemble reads into contigs with MEGAHIT.
-The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly. Here, it's set to 4.
-The `--p-presets` specifies the preset mode for Megahit. In this case, it's set to "meta-sensitive" for metagenomic data.
-The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. Here, it's set to 64.
-
+- The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
+- The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
+- The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. 
 ```bash
 qiime assembly assemble-megahit \
     --i-seqs "./moshpit-tutorial/cache:reads_no_host" \
