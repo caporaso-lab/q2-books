@@ -14,7 +14,15 @@ qiime assembly assemble-megahit \
     --verbose
 ```
 Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
-
+## Contig QC with QUAST
+```bash
+qiime assembly evaluate-contigs \
+    --i-contigs "./moshpit-tutorial/cache:contigs" \
+    --p-threads 128 \
+    --p-memory-efficient \
+    --o-visualization ""./moshpit-tutorial/results/contigs.qzv" \
+    --verbose
+```
 ## Contig taxonomic annotation workflow
 
 ### Classify contigs with Kraken2
