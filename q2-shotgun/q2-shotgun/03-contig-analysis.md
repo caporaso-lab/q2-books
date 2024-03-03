@@ -13,7 +13,7 @@ qiime assembly assemble-megahit \
     --o-contigs "./moshpit-tutorial/cache:contigs" \
     --verbose
 ```
-Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes
+Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
 
 ## Contig taxonomic annotation workflow
 
