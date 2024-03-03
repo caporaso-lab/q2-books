@@ -32,7 +32,7 @@ qiime moshpit classify-kraken2 \
 ```
 Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
 
-### Build presence/absence feature table**
+### Build presence/absence feature table
 ```bash
 qiime moshpit kraken2-to-mag-features \
   --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
