@@ -6,21 +6,21 @@
 - The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. 
 ```bash
 qiime assembly assemble-megahit \
-    --i-seqs "./moshpit-tutorial/cache:reads_no_host" \
+    --i-seqs "./moshpit_tutorial/cache:reads_no_host" \
     --p-presets "meta-sensitive" \
     --p-num-cpu-threads 64 \
     --p-num-partitions 4 \
-    --o-contigs "./moshpit-tutorial/cache:contigs" \
+    --o-contigs "./moshpit_tutorial/cache:contigs" \
     --verbose
 ```
 Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
 ## Contig QC with QUAST
 ```bash
 qiime assembly evaluate-contigs \
-    --i-contigs "./moshpit-tutorial/cache:contigs" \
+    --i-contigs "./moshpit_tutorial/cache:contigs" \
     --p-threads 128 \
     --p-memory-efficient \
-    --o-visualization ""./moshpit-tutorial/results/contigs.qzv" \
+    --o-visualization ""./moshpit_tutorial/results/contigs.qzv" \
     --verbose
 ```
 ## Contig taxonomic annotation workflow
@@ -31,14 +31,14 @@ qiime assembly evaluate-contigs \
 - The abbreviations in my `output-dir` are the database (`k2pf`), and shorthand for the values I set for confidence (`c60`) and minimum base quality (`mbq20`), respectively.
 ```bash
 qiime moshpit classify-kraken2 \
-    --i-seqs "./moshpit-tutorial/cache:megahit-contigs" \
-    --i-kraken2-db "./moshpit-tutorial/cache:kraken_standard" \
+    --i-seqs "./moshpit_tutorial/cache:megahit-contigs" \
+    --i-kraken2-db "./moshpit_tutorial/cache:kraken_standard" \
     --p-threads 48 \
     --p-confidence 0.6 \
     --p-minimum-base-quality 20 \
     --p-num-partitions 4 \
-    --o-reports "./moshpit-tutorial/cache:kraken-reports-contigs" \
-    --o-hits "./moshpit-tutorial/cache:kraken-hits-contigs" \
+    --o-reports "./moshpit_tutorial/cache:kraken-reports-contigs" \
+    --o-hits "./moshpit_tutorial/cache:kraken-hits-contigs" \
     --verbose
 ```
 Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
@@ -46,18 +46,18 @@ Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your 
 ### Build presence/absence feature table
 ```bash
 qiime moshpit kraken2-to-features \
-  --i-reports "./moshpit-tutorial/cache:kraken_reports_contigs" \
-  --o-table "./moshpit-tutorial/cache:kraken_contigs_feature_table" \
-  --o-taxonomy "./moshpit-tutorial/cache:kraken_contigs_taxonomy" \
+  --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
+  --o-table "./moshpit_tutorial/cache:kraken_contigs_feature_table" \
+  --o-taxonomy "./moshpit_tutorial/cache:kraken_contigs_taxonomy" \
   --verbose
 ```
 
 ### Build taxa-bar plot
 ```bash
 qiime taxa barplot \
-    --i-table "./moshpit-tutorial/cache:kraken_contigs_feature_table" \
-    --i-taxonomy "./moshpit-tutorial/cache:kraken_contigs_taxonomy "\
-    --o-visualization "./moshpit-tutorial/results/kraken_contigs_taxa_barplot.qzv \
+    --i-table "./moshpit_tutorial/cache:kraken_contigs_feature_table" \
+    --i-taxonomy "./moshpit_tutorial/cache:kraken_contigs_taxonomy "\
+    --o-visualization "./moshpit_tutorial/results/kraken_contigs_taxa_barplot.qzv \
     --verbose
 ```
 
@@ -67,20 +67,20 @@ qiime taxa barplot \
 - The `--p-db-in-memory`loads the database into memory for faster processing.
 ```bash
 qiime moshpit eggnog-diamond-search \
-  --i-sequences "./moshpit-tutorial/cache:contigs" \
-  --i-diamond-db "./moshpit-tutorial/cache:eggnog_diamond_full"\
+  --i-sequences "./moshpit_tutorial/cache:contigs" \
+  --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
   --p-num-cpus 14 \
   --p-db-in-memory \
-  --o-eggnog-hits "./moshpit-tutorial/cache:contigs_diamond_hits" \
-  --o-table "./moshpit-tutorial/cache:contigs_diamond_feature_table \
+  --o-eggnog-hits "./moshpit_tutorial/cache:contigs_diamond_hits" \
+  --o-table "./moshpit_tutorial/cache:contigs_diamond_feature_table \
   --verbose
 ```
 ### Annotate orthologs against eggNOG database
 ```bash
 qiime moshpit eggnog-annotate \
- --i-eggnog-hits "./moshpit-tutorial/cache:contigs" \
- --i-eggnog-db "./moshpit-tutorial/cache:eggnog_annot_full" \
- --o-ortholog-annotations "./moshpit-tutorial/cache:eggnog_annotated_contigs" \
+ --i-eggnog-hits "./moshpit_tutorial/cache:contigs" \
+ --i-eggnog-db "./moshpit_tutorial/cache:eggnog_annot_full" \
+ --o-ortholog-annotations "./moshpit_tutorial/cache:eggnog_annotated_contigs" \
  --verbose
 ```
 
