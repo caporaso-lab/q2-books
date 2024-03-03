@@ -18,6 +18,7 @@ TODO
 ## MAGs taxonomic annotation workflow
 
 ### MAGs classify with Kraken2
+```bash
 qiime moshpit classify-kraken2 \
     --i-seqs "./moshpit_tutorial/cache:derep_mags" \
     --i-kraken2-db "./moshpit_tutorial/cache:kraken_standard" \
@@ -52,7 +53,6 @@ qiime taxa barplot \
 ## MAGs functional annotation workflow
 
 ### EggNOG search using diamond aligner
-- The `--p-db-in-memory`loads the database into memory for faster processing.
 ```bash
 qiime moshpit eggnog-diamond-search \
   --i-sequences "./moshpit_tutorial/cache:derep_mags" \
