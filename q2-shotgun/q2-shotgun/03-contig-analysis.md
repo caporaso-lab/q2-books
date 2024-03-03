@@ -1,6 +1,6 @@
 # Contig analysis
 
-## Assemble reads into contigs with MEGAHIT.
+## Assemble reads into contigs with MEGAHIT
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
 - The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. 
