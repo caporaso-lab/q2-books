@@ -35,10 +35,10 @@ Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your 
 ### Build presence/absence feature table
 ```bash
 qiime moshpit kraken2-to-mag-features \
-  --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
-  --o-table "./moshpit_tutorial/cache:kraken_feature_table_derep_mags" \
-  --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
-  --verbose
+ --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
+ --i-hits "./moshpit_tutorial/cache:kraken_hits_derep_mags" \
+ --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
+ --verbose
 ```
 
 ### Build taxa-bar plot
