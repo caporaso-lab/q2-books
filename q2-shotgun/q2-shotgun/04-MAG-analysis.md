@@ -1,20 +1,79 @@
 # MAG analysis
 
 ## Bin contigs into MAGs
+Do we talk about `--parallel-config`?? 
 
 ### Contigs indexing
-TODO
+```bash
+qiime assembly index-contigs \
+    --i-contigs "./moshpit_tutorial/cache:contigs" \
+    --p-seed 100 \
+    --p-threads 64 \
+    --p-verbose \
+    --p-num-partitions 4 \
+    --o-index "./moshpit_tutorial/cache:contigs_index" \
+    --verbose
+```    
 ### Read mapping to contigs
-TODO
+```bash
+qiime assembly map-reads-to-contigs \
+    --i-indexed-contigs "./moshpit_tutorial/cache:contigs_index" \
+    --i-reads "./moshpit_tutorial/cache:reads_no_host" \
+    --p-seed 100 \
+    --p-threads 64 \
+    --p-num-partitions 4 \
+    --o-alignment-map "./moshpit_tutorial/cache:reads_to_contigs" \
+    --verbose
+```
 ### Binning
-TODO
+```bash
+qiime moshpit bin-contigs-metabat \
+    --i-contigs "./moshpit_tutorial/cache:contigs" \
+    --i-alignment-maps "./moshpit_tutorial/cache:reads_to_contigs" \
+    --p-seed 100 \
+    --p-num-threads 128 \
+    --p-verbose \
+    --o-mags "./moshpit_tutorial/cache:mags" \
+    --o-contig-map "./moshpit_tutorial/cache:contig_map" \
+    --o-unbinned-contigs "./moshpit_tutorial/cache:unbinned_contigs" \
+    --verbose
+```
 
 ## MAGs dereplication (optional)
-TODO
+```bash
+qiime sourmash compute \
+    --i-sequence-file "./moshpit_tutorial/cache:mags" \
+    --p-ksizes 35 \
+    --p-scaled 10 \
+    --o-min-hash-signature "./moshpit_tutorial/cache:mags_minhash" \
+    --verbose
+```
+```bash
+qiime sourmash compare \
+    --i-min-hash-signature "./moshpit_tutorial/cache:mags_minhash" \
+    --p-ksize 35 \
+    --o-compare-output "./moshpit_tutorial/cache:mags_dist_matrix" \
+    --verbose
+```
+```bash
+qiime moshpit dereplicate-mags \
+    --i-mags "./moshpit_tutorial/cache:mags" \
+    --i-distance-matrix "./moshpit_tutorial/cache:mags_dist_matrix" \
+    --p-threshold 0.99 \
+    --o-dereplicated-mags "./moshpit_tutorial/cache:mags_derep" \
+    --o-feature-table "./moshpit_tutorial/cache:mags_ft" \
+    --verbose
+```
 
 ## MAGs QC with BUSCO
-TODO
-
+```bash
+qiime moshpit evaluate-busco \
+    --i-bins "./moshpit_tutorial/cache:mags" \
+    --p-lineage-dataset bacteria_odb10 \
+    --p-cpu 196 \
+    --o-visualization "/cluster/work/bokulich/mziemski/_data/manuscript/nf-fmt-samples/results/mags.qzv" \
+    --verbose
+```
 In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs
 ## MAGs taxonomic annotation workflow
 
