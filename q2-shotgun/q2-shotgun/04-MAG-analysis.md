@@ -42,7 +42,7 @@ qiime moshpit kraken2-to-mag-features \
  --verbose
 ```
 ### Compare taxonomy contigs vs MAGs with RESCRIPt
-A tutorial demonstrating some of the basic functionality of RESCRIPt is available here.
+A tutorial demonstrating some of the basic functionality of RESCRIPt is available [here](https://library.qiime2.org/plugins/rescript/27/).
 ```bash
 qiime rescript evaluate-taxonomy \
  --i-taxonomies "/cluster/work/bokulich/mziemski/_data/manuscript/cache-fmt-full:kraken_contigs_taxonomy" "/cluster/work/bokulich/mziemski/_data/manuscript/cache-fmt-full:kraken_taxonomy_mags" \
