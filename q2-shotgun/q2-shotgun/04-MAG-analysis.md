@@ -71,7 +71,7 @@ qiime moshpit evaluate-busco \
     --i-bins "./moshpit_tutorial/cache:mags" \
     --p-lineage-dataset bacteria_odb10 \
     --p-cpu 196 \
-    --o-visualization "/cluster/work/bokulich/mziemski/_data/manuscript/nf-fmt-samples/results/mags.qzv" \
+    --o-visualization "./moshpit_tutorial/results/mags.qzv" \
     --verbose
 ```
 In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs
