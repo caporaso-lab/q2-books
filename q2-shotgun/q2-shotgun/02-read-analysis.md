@@ -81,6 +81,41 @@ qiime diversity alpha-group-significance \
     --o-visualization obs-table-bracken-rf-group-sig.qzv
 ```
 
+## Linear Mixed Effects
+
+In order to manage the repeated measures, we will use a linear
+mixed-effects model. In a mixed-effects model, we combine fixed-effects (your typical linear regression coefficients) with random-effects. These random
+effects are some (ostensibly random) per-group coefficient which minimizes the
+error within that group. In our situation, we would want our random effect to
+be the `PatientID` as we can see each subject has a different baseline for
+richness (and we have multiple measures for each patient).
+By making that a random effect, we can more accurately ascribe associations to
+the fixed effects as we treat each sample as a "draw" from a per-group
+distribution.
+
+There are several ways to create a linear model with random effects, but we
+will be using a *random-intercept*, which allows for the per-subject intercept
+to take on a different average from the population intercept (modeling what we
+saw in the group-significance plot above).
+
+
+First let's evaluate the general trend of the Bone Marrow transplant.
+
+
+```bash
+ qiime longitudinal linear-mixed-effects \
+   --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
+   --p-state-column DayRelativeToNearestHCT \
+   --p-individual-id-column PatientID \
+   --p-metric observed_features \
+   --o-visualization lme-obs-features-HCT.qzv
+```
+
+Here we see a significant association between richness and the bone marrow
+transplant.
+
+We may also be interested in the effect of the auto fecal microbiota transplant. It should be known that these are generally correlated, so choosing one model over the other will require external knowledge.
+
 ```bash
 qiime longitudinal linear-mixed-effects \
   --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
@@ -89,6 +124,24 @@ qiime longitudinal linear-mixed-effects \
   --p-metric observed_features \
   --o-visualization lme-obs-features-FMT.qzv
 ```
+
+We also see a downward trend from the FMT. Since the goal of the FMT was to
+ameliorate the impact of the bone marrow transplant protocol (which involves
+an extreme course of antibiotics) on gut health, and the timing of the FMT is
+related to the timing of the marrow transplant, we might deduce that the
+negative coefficient is primarily related to the bone marrow transplant
+procedure. (We can't prove this with statistics alone however, in this case,
+we are using abductive reasoning).
+
+Looking at the log-likelihood, we also note that the HCT result is slightly
+better than the FMT in accounting for the loss of richness. But only slightly,
+if we were to perform model testing it may not prove significant.
+
+In any case, we can ask a more targeted question to identify if the FMT was
+useful in recovering richness.
+
+By adding the ``autoFmtGroup`` to our linear model, we can see if there
+are different slopes for the two groups, based on an *interaction term*.
 
 ```bash
 qiime longitudinal linear-mixed-effects \
@@ -99,15 +152,20 @@ qiime longitudinal linear-mixed-effects \
   --p-metric observed_features \
   --o-visualization lme-obs-features-treatmentVScontrol.qzv
 ```
+Here we see that the ``autoFmtGroup`` is not on its own a significant predictor
+of richness, but and no significance in it's interaction term with ``Q('day-relative-to-fmt')``.
 
-```bash
- qiime longitudinal linear-mixed-effects \
-   --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
-   --p-state-column DayRelativeToNearestHCT \
-   --p-individual-id-column PatientID \
-   --p-metric observed_features \
-   --o-visualization lme-obs-features-HCT.qzv
-```
+This is surprising outcome because we know that FMT intervention was supposed to rectify the decreasing diversity following allo-HCT.
+
+
+This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend. 
+
+Let's checkout the 16S amplicon verison of this visualization: 
+(link to 16s viz)
+
+We can also investigate Shannon's entropy using similar steps. However general trends between Shannons and Observed Features remain the same. 
+
+
 ```bash
 qiime diversity alpha \
     --i-table autofmt-table-rf.qza \
@@ -131,19 +189,16 @@ qiime longitudinal linear-mixed-effects \
   --p-metric shannon_entropy \
   --o-visualization lme-shannon-features-FMT.qzv
 ```
+Now that we better understand community richness trends, lets look at differences in microbial composition.
 
+Let investigate this by looking at Bray Curtis: 
 ```bash
 qiime diversity beta \
   --i-table autofmt-table-rf.qza \
   --p-metric braycurtis \
   --o-distance-matrix braycurtis-autofmt
 ```
-
-```bash
-qiime diversity pcoa \
-  --i-distance-matrix braycurtis-autofmt.qza \
-  qii--o-pcoa pcoa-braycurtis-auto-fmt.qza 
-```
+Now that we have our Bray Curtis distance matrix, lets visualize this using a PCOA plot.
 
 ```bash
 qiime emperor plot \
@@ -151,7 +206,7 @@ qiime emperor plot \
   --m-metadata-file ../new-sample-metadata.tsv \
   --o-visualization braycurtis-auto-fmt-emperor.qzv 
 ```
-
+We can make ` week-relative-to-fmt ` a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.  
 ```bash
 qiime emperor plot \
   --i-pcoa pcoa-braycurtis-auto-fmt.qza \
@@ -159,6 +214,20 @@ qiime emperor plot \
   --p-custom-axes week-relative-to-fmt \
   --o-visualization braycurtis-auto-fmt-emperor-custom.qzv 
 ```
+Another way we can look at microbial composition is to investigate the taxa barplot. One thing to Note, these tend to be even more chaotic then the Amplicon data. 
+```bash
+qiime taxa barplot \
+  --i-table table-bracken.qza \
+  --i-taxonomy taxonomy-bracken.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization taxa-bar-plot.qzv
+```
+
+Lets highlight some features of metagenomic data that we wouldn't see in Amplicon data.
+
+We will take a peek at the viral community members.
+
+First, we filter down to the features taxomically labeled "Virus" 
 
 ```bash
 qiime taxa filter-table \
@@ -167,13 +236,15 @@ qiime taxa filter-table \
   --p-include Viruses \
   --o-filtered-table virus-autofmt-table
 ```
+
+Then we will filtered out any samples that were below 1,000.  
 ```bash
 qiime feature-table filter-samples \
   --i-table virus-autofmt-table.qza \
   --p-min-frequency 1240 \
   --o-filtered-table autofmt-virus-feature-contingency-filtered-table.qza
 ```
-
+Now we can make our Viral Taxa Bar plot 
 ```bash
 qiime taxa barplot \
   --i-table  autofmt-virus-feature-contingency-filtered-table.qza \
@@ -182,14 +253,6 @@ qiime taxa barplot \
   --o-visualization virus-taxa-bar-plot.qzv
 ```
 
-
-```bash
-qiime taxa barplot \
-  --i-table  autofmt-virus-feature-contingency-filtered-table.qza \
-  --i-taxonomy taxonomy-bracken.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
-  --o-visualization virus-taxa-bar-plot.qzv
-```
 
 ```bash
 qiime feature-table filter-samples \
