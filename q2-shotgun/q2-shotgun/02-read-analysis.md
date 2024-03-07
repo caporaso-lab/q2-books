@@ -38,11 +38,24 @@ qiime feature-table relative-frequency \
     --i-table autofmt-table.qza \
 	--o-relative-frequency-table autofmt-table-rf.qza \
 ```
+
+# Alpha diversity 
+
+
+First we'll look for general patterns, by comparing different categorical groupings of samples to see if there is some relationship to richness.
+
+To start with, we'll examine 'observed features':
 ```bash
 qiime diversity alpha \
     --i-table autofmt-table-rf.qza \
     --p-metric "observed_features" \
     --o-alpha-diversity obs-autofmt-bracken-rf
+```
+```bash
+qiime diversity alpha-group-significance \
+    --i-alpha-diversity obs-table-bracken-rf.qza \
+    --m-metadata-file ../new-sample-metadata.tsv \
+    --o-visualization obs-table-bracken-rf-group-sig
 ```
 
 ```bash
