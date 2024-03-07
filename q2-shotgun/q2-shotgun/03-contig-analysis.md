@@ -1,4 +1,4 @@
-# Contig analysis
+# Contig analysis(Paula)
 
 ## Assemble reads into contigs with MEGAHIT
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
