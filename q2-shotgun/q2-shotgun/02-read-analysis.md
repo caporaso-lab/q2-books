@@ -44,18 +44,41 @@ qiime feature-table relative-frequency \
 
 First we'll look for general patterns, by comparing different categorical groupings of samples to see if there is some relationship to richness.
 
-To start with, we'll examine 'observed features':
+To start with, we'll gernate an 'observed features' vector from our relative frequency table:
+
 ```bash
 qiime diversity alpha \
     --i-table autofmt-table-rf.qza \
     --p-metric "observed_features" \
     --o-alpha-diversity obs-autofmt-bracken-rf
 ```
+The first thing to notice is the high variability in each individual's richness
+(`PatientID`). The centers and spreads of the individual distributions are
+likely to obscure other effects, so we will want to keep this in mind.
+Additionally, we have repeated measures of each individual, so we are
+violating independence assumptions when looking at other categories.
+(Kruskal-Wallis is a non-parameteric test, but like most tests, still requires
+samples to be independent.)
+
+Keeping in mind that other categories are probably inconclusive,
+we notice that there are (amusingly, and somewhat reassuringly) differences
+in stool consistency (solid vs non-solid).
+
+Because these data were derived from a study in which participants recieved
+auto-fecal microbiota transplant, we may also be interested in whether there
+was a difference in richness between the control group and the auto-FMT goup.
+
+Looking at ``autoFmtGroup`` we see that there is no apparent difference, but
+we also know that we are violating independence with our repeated measures, and
+all patients recieved a bone-marrow transplant which may be a stronger effect.
+(The goal of the auto-FMT was to mitigate the impact of the marrow transplant.)
+
+We will use a more advanced statistical model to explore this question.
 ```bash
 qiime diversity alpha-group-significance \
     --i-alpha-diversity obs-table-bracken-rf.qza \
     --m-metadata-file ../new-sample-metadata.tsv \
-    --o-visualization obs-table-bracken-rf-group-sig
+    --o-visualization obs-table-bracken-rf-group-sig.qzv
 ```
 
 ```bash
