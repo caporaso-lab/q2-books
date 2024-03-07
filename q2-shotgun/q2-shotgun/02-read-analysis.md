@@ -72,7 +72,29 @@ qiime longitudinal linear-mixed-effects \
    --p-metric observed_features \
    --o-visualization lme-obs-features-HCT.qzv
 ```
+```bash
+qiime diversity alpha \
+    --i-table autofmt-table-rf.qza \
+    --p-metric "shannon" \
+    --o-alpha-diversity shannon-autofmt-bracken-rf
+```
+```bash
+qiime longitudinal linear-mixed-effects \
+  --m-metadata-file ../new-sample-metadata.tsv shannon-autofmt-bracken-rf.qza \
+  --p-state-column day-relative-to-fmt \
+  --p-individual-id-column PatientID \
+  --p-metric shannon_entropy \
+  --o-visualization lme-shannon-features-FMT.qzv
+```
 
+```bash
+qiime longitudinal linear-mixed-effects \
+  --m-metadata-file ../new-sample-metadata.tsv shannon-autofmt-bracken-rf.qza \
+  --p-state-column day-relative-to-fmt \
+  --p-individual-id-column PatientID \
+  --p-metric shannon_entropy \
+  --o-visualization lme-shannon-features-FMT.qzv
+```
 
 ```bash
 qiime diversity beta \
@@ -103,8 +125,77 @@ qiime emperor plot \
 ```
 
 ```bash
-qiime emperor plot \
-  --i-pcoa pcoa-braycurtis-auto-fmt.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
-  --o-visualization braycurtis-auto-fmt-emperor.qzv 
+qiime taxa filter-table \
+  --i-table autofmt-filt-table.qza \
+  --i-taxonomy taxonomy-bracken.qza \
+  --p-include Viruses \
+  --o-filtered-table virus-autofmt-table
 ```
+```bash
+qiime feature-table filter-samples \
+  --i-table virus-autofmt-table.qza \
+  --p-min-frequency 1240 \
+  --o-filtered-table autofmt-virus-feature-contingency-filtered-table.qza
+```
+
+```bash
+qiime taxa barplot \
+  --i-table  autofmt-virus-feature-contingency-filtered-table.qza \
+  --i-taxonomy taxonomy-bracken.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization virus-taxa-bar-plot.qzv
+```
+
+
+```bash
+qiime taxa barplot \
+  --i-table  autofmt-virus-feature-contingency-filtered-table.qza \
+  --i-taxonomy taxonomy-bracken.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization virus-taxa-bar-plot.qzv
+```
+
+```bash
+qiime feature-table filter-samples \
+  --i-table autofmt-table.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --p-where "[categorical-time-relative-to-fmt]='peri'" \
+  --o-filtered-table peri-fmt-table
+```
+
+```bash
+# 2 samples from subject FMT0009
+echo SampleID > samples-to-keep.tsv
+echo SRR14092317 > samples-to-keep.tsv
+```
+```bash
+qiime feature-table filter-samples \
+  --i-table peri-fmt-table.qza \
+  --m-metadata-file samples-to-keep.tsv \
+  --o-filtered-table id-filtered-peri-fmt-table.qza
+```
+```bash
+qiime feature-table summarize \
+  --i-table id-filtered-peri-fmt-table.qza \
+  --m-sample-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization id-filtered-peri-fmt-table.qzv
+```
+```bash
+ qiime composition ancombc \
+  --i-table id-filtered-peri-fmt-table.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --p-formula autoFmtGroup \
+  --o-differentials differentials-peri-autofmt.qza
+```
+```bash
+  qiime longitudinal feature-volatility \
+  --i-table  autofmt-table-p8.qza \
+  --m-metadata-file ../new-sample-metadata.tsv 	pcoa-braycurtis-auto-fmt.qza obs-table-bracken-rf.qza \
+  --p-state-column week-relative-to-hct \
+  --p-individual-id-column PatientID \
+  --output-dir longitudinal-feature-volatility-hct
+```
+
+
+
+
