@@ -1,4 +1,4 @@
-# MAG analysis(Paula)
+# MAG analysis (Paula)
 
 ## Bin contigs into MAGs
 Do we talk about `--parallel-config`?? 
