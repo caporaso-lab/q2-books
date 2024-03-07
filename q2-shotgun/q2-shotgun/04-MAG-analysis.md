@@ -100,14 +100,7 @@ qiime moshpit kraken2-to-mag-features \
  --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
  --verbose
 ```
-### Compare taxonomy contigs vs MAGs with RESCRIPt
-A tutorial demonstrating some of the basic functionality of RESCRIPt is available [here](https://library.qiime2.org/plugins/rescript/27/).
-```bash
-qiime rescript evaluate-taxonomy \
- --i-taxonomies "/cluster/work/bokulich/mziemski/_data/manuscript/cache-fmt-full:kraken_contigs_taxonomy" "/cluster/work/bokulich/mziemski/_data/manuscript/cache-fmt-full:kraken_taxonomy_mags" \
- --o-taxonomy-stats "/cluster/work/bokulich/mziemski/_data/manuscript/nf-fmt-samples/results/taxonomy_stats.qzv" \
- --verbose
-```
+
 ## MAGs functional annotation workflow
 
 ### EggNOG search using diamond aligner
