@@ -1,4 +1,11 @@
 # Taxonomic annotation of reads (Chloe)
+With Metagenomic Data, our first step of our analysis is to run Kraken.
+
+This will give us taxonomic annotations for our reads and from this there, we can create our feature table that we will use for the rest of the analysis
+
+In this command, we have loaded all of our inputs into cache, this saves time unzipping, reading, and writing them into memory. We are also writing our outputs directly to `Artifact Cache`, this similarly saves time for writing the files out and zipping them into .qza
+
+We have found that its most effective to keep your artifacts in cache until after you have a feature table due to the size of this data. 
 
 ```bash
 qiime moshpit classify-kraken2 \
@@ -15,6 +22,21 @@ qiime moshpit classify-kraken2 \
     --verbose \
     --p-memory-mapping False ##this was taking too much time for me 
 ```
+At this point we have kraken reports and hits.
+
+ Reports are per sample tab seperated files that contain **read** information per line. Hits are per sample tab seperated files that contain **taxon** information per line
+
+
+Hits contain read information on each line:  U/C based on if the read was classified or not, the read id as seen in the fastq header,Taxonomic ID(or 0 if unclassified), The length of the sequences, amd list of LCA mappings of each k-mer (which indicates what k-mers mapped to which taxonomic annotations).
+
+Reports contain taxon information on each line: Percentage of fragments covered by the clade root, number of fragments covered by clade root, Number of fragments assigned directly to this taxon, a rank code: indicating (U)nclassified, (R)oot, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, or (S)pecies, NCBI taxonomic ID number, and taxonomic annotation. 
+
+For more information on Kraken outputs, [visit the Kraken Manual] (https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown)!
+
+ 
+Bracken uses a Bracken database, the length of your reads and the kraken reports to give you a `feature-table[Frequency]`
+
+
 ```bash
 qiime moshpit estimate-bracken \
     --i-bracken-db /projects/microbiome/biological-reference-data/2023.06.05-k2-plus-pf-bracken-db.qza \
@@ -25,6 +47,13 @@ qiime moshpit estimate-bracken \
     --o-table ~/chloe-analysis/sra-shotgun-workshop/kraken-outputs/table-bracken.qza
 ```
 
+## Filtering Feature Table and Normalization
+Once we have feature table, this is becomes alot more similar to the amplicon workflow of QIIME 2. 
+
+In this tutorial, we’re going to work specifically with samples that were included in the autoFMT randomized trial. Many of these subjects dropped out before randomization (placing the subject into FMT group or Control group) and therefore do not have a value in the `autoFmtGroup`. 
+
+We need to filter our feature table to contain samples that were in the autoFMT study by filtering out any samples that are null in the metadata column autoFmtGroup. 
+
 ```bash
 qiime feature-table filter-samples \
   --i-table table-bracken.qza \
@@ -32,6 +61,7 @@ qiime feature-table filter-samples \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table autofmt-table.qza
 ```
+For this tutorial, to normalization our data we will generate a relative-frequency table. 
 
 ```bash
 qiime feature-table relative-frequency \
