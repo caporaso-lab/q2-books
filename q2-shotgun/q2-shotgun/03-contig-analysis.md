@@ -22,13 +22,13 @@ Once the reads are assembled into contigs, we can use QUAST to evaluate the qual
 
 - **N50**: represents the contiguity of a genome assembly. It's defined as the length of the contig (or scaffold) at which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.
 - **L50**: represents the number of contigs required to cover 50% of the genome's total length - the smaller this number, the better.
-In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to run the analysis against.
+In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to run the analysis against using `--i-references`.
 ```bash
 qiime assembly evaluate-contigs \
     --i-contigs "./moshpit_tutorial/cache:contigs" \
     --p-threads 128 \
     --p-memory-efficient \
-    --o-visualization ""./moshpit_tutorial/results/contigs.qzv" \
+    --o-visualization "./moshpit_tutorial/results/contigs.qzv" \
     --verbose
 ```
 ## Contig taxonomic annotation workflow
