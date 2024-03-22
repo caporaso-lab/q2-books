@@ -2,7 +2,8 @@
 This section of the tutorial focuses on obtaining and analyzing contigs, which are contiguous sequences of DNA assembled from short reads obtained through sequencing techniques. Contigs are crucial in genome assembly and analysis.
 
 ## Assemble reads into contigs with MEGAHIT
-Here we use MEGAHIT, a popular assembler for metagenomic data, to assemble short reads into longer contigs.
+The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
+
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
 - The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. 
@@ -17,7 +18,11 @@ qiime assembly assemble-megahit \
 ```
 Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
 ## Contig QC with QUAST
-QUAST is used here for quality control of assembled contigs. It provides metrics to assess the quality of assembly.
+Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly. There are many metrics which can be used for that purpose but here we will focus on the two most popular metrics:
+
+    **N50:** represents the contiguity of a genome assembly. It's defined as the length of the contig (or scaffold) at which 50% of the entire genome is covered by contigs of that length or longer - the higher this number, the better.
+    **L50:** represents the number of contigs required to cover 50% of the genome's total length - the smaller this number, the better.
+In addition to calculating generic statistics like N50 and L50, QUAST will try to identify potential genomes from which the analyzed contigs originated. Alternatively, we can provide it with a set of reference genomes we would like it to run the analysis against.
 ```bash
 qiime assembly evaluate-contigs \
     --i-contigs "./moshpit_tutorial/cache:contigs" \
