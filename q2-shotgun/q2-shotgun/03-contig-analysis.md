@@ -1,6 +1,8 @@
 # Contig analysis (Paula)
+This section of the tutorial focuses on obtaining and analyzing contigs, which are contiguous sequences of DNA assembled from short reads obtained through sequencing techniques. Contigs are crucial in genome assembly and analysis.
 
 ## Assemble reads into contigs with MEGAHIT
+Here we use MEGAHIT, a popular assembler for metagenomic data, to assemble short reads into longer contigs.
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
 - The `--p-presets` specifies the preset mode for MEGAHIT. In this case, it's set to "meta-sensitive" for metagenomic data.
 - The `--p-cpu-threads` specifies the number of CPU threads to use during assembly. 
@@ -15,6 +17,7 @@ qiime assembly assemble-megahit \
 ```
 Alternatively, you can also use `qiime assembly assemble-spades` to assemble contigs with SPAdes.
 ## Contig QC with QUAST
+QUAST is used here for quality control of assembled contigs. It provides metrics to assess the quality of assembly.
 ```bash
 qiime assembly evaluate-contigs \
     --i-contigs "./moshpit_tutorial/cache:contigs" \
@@ -24,7 +27,12 @@ qiime assembly evaluate-contigs \
     --verbose
 ```
 ## Contig taxonomic annotation workflow
+This workflow involves annotating contigs with taxonomic information using Kraken2 classification. Key steps include:
 
+- **Classify contigs with Kraken2**: Assigns taxonomic labels to contigs. Parameters used include confidence threshold and minimum base quality.
+- **Build presence/absence feature table**: Constructs a feature table indicating the presence or absence of taxa in contigs.
+- **Build taxa-bar plot**: Visualizes taxonomic composition using a bar plot.
+  
 ### Classify contigs with Kraken2
 - The `--p-confidence` and `--p-minimum-base-quality` are deviations from kraken's defaults.
 - The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
@@ -62,7 +70,12 @@ qiime taxa barplot \
 ```
 
 ## Contig functional annotation workflow
+This section focuses on functional annotation of contigs, particularly identifying functional elements like genes and their diversity. Key steps include:
 
+- **EggNOG search using diamond aligner**: Searches for homologous sequences in the EggNOG database using the Diamond aligner for faster processing.
+- **Gene diversity**: Calculates gene diversity metrics, specifically Jaccard distance, for contigs.
+- **Annotate orthologs against EggNOG database**: Annotates contigs with functional information from the EggNOG database.
+  
 ### EggNOG search using diamond aligner
 - The `--p-db-in-memory`loads the database into memory for faster processing.
 ```bash
