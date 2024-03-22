@@ -75,6 +75,28 @@ qiime moshpit eggnog-diamond-search \
   --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs \
   --verbose
 ```
+### Gene diversity
+Generate a unweighted beta diversity matrix, ie., Jaccard
+```bash
+qiime diversity beta \
+  --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
+  --p-metric jaccard \
+  --o-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs"
+```
+Generate a PCoA from Jaccard matrix output
+```bash
+qiime diversity pcoa \
+  --i-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs" \
+  --o-pcoa "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs"
+```
+Visualize PCoA using emperor
+```bash
+qiime emperor plot \
+  --i-pcoa  "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --o-visualization "./moshpit_tutorial/results/jaccard_distance_matrix_pcoa_contigs.qzv"
+```
+
 ### Annotate orthologs against eggNOG database
 ```bash
 qiime moshpit eggnog-annotate \
