@@ -1,9 +1,11 @@
 # MAG analysis (Paula)
+This section of the repository focuses on analyzing metagenome-assembled genomes (MAGs), which are reconstructed genomes derived from metagenomic data.
 
 ## Bin contigs into MAGs
-Do we talk about `--parallel-config`?? 
+This workflow involves binning contigs into MAGs using various tools and methodologies.
 
 ### Contigs indexing
+Before binning, contigs are indexed for efficient processing. This step involves preparing contigs for subsequent read mapping and binning processes.
 ```bash
 qiime assembly index-contigs \
     --i-contigs "./moshpit_tutorial/cache:contigs" \
@@ -15,6 +17,7 @@ qiime assembly index-contigs \
     --verbose
 ```    
 ### Read mapping to contigs
+In this step, reads are mapped to contigs to assess coverage and aid in binning. The alignment maps generated here are used in the subsequent binning process.
 ```bash
 qiime assembly map-reads-to-contigs \
     --i-indexed-contigs "./moshpit_tutorial/cache:contigs_index" \
@@ -26,6 +29,7 @@ qiime assembly map-reads-to-contigs \
     --verbose
 ```
 ### Binning
+Binning is the process of grouping contigs into putative genomes based on sequence composition, coverage, and other features. Here we use MetaBAT.
 ```bash
 qiime moshpit bin-contigs-metabat \
     --i-contigs "./moshpit_tutorial/cache:contigs" \
@@ -40,6 +44,7 @@ qiime moshpit bin-contigs-metabat \
 ```
 
 ## MAGs dereplication (optional)
+Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses.
 ```bash
 qiime sourmash compute \
     --i-sequence-file "./moshpit_tutorial/cache:mags" \
@@ -66,6 +71,7 @@ qiime moshpit dereplicate-mags \
 ```
 
 ## MAGs QC with BUSCO
+BUSCO is used here to assess the completeness and quality of MAGs by searching for single-copy orthologous genes within the genomes.
 ```bash
 qiime moshpit evaluate-busco \
     --i-bins "./moshpit_tutorial/cache:mags" \
@@ -76,8 +82,9 @@ qiime moshpit evaluate-busco \
 ```
 In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs
 ## MAGs taxonomic annotation workflow
-
+This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification.
 ### MAGs classify with Kraken2
+MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.
 ```bash
 qiime moshpit classify-kraken2 \
     --i-seqs "./moshpit_tutorial/cache:derep_mags" \
@@ -93,6 +100,7 @@ qiime moshpit classify-kraken2 \
 Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
 
 ### Build taxonomy table
+A taxonomy table is constructed based on the classification results, providing taxonomic assignments for each MAG.
 ```bash
 qiime moshpit kraken2-to-mag-features \
  --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
@@ -102,8 +110,9 @@ qiime moshpit kraken2-to-mag-features \
 ```
 
 ## MAGs functional annotation workflow
-
+This workflow involves annotating MAGs with functional information, particularly identifying functional elements like genes and their annotations.
 ### EggNOG search using diamond aligner
+MAGs are searched against the EggNOG database using the Diamond aligner to identify functional annotations.
 ```bash
 qiime moshpit eggnog-diamond-search \
   --i-sequences "./moshpit_tutorial/cache:derep_mags" \
@@ -115,6 +124,7 @@ qiime moshpit eggnog-diamond-search \
   --verbose
 ```
 ### Annotate orthologs against eggNOG database
+Orthologs in MAGs are annotated against the EggNOG database, providing functional insights into the genes and gene products present in the MAGs.
 ```bash
 qiime moshpit eggnog-annotate \
  --i-eggnog-hits "./moshpit_tutorial/cache:derep_mags" \
