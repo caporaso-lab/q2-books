@@ -262,7 +262,7 @@ qiime taxa barplot \
 
 Lets highlight some features of metagenomic data that we wouldn't see in Amplicon data.
 
-#### Viral Taxa-bar Creation
+### Viral Taxa-bar Creation
 We will take a peek at the viral community members.
 
 First, we filter down to the features taxomically labeled "Virus" 
@@ -292,19 +292,28 @@ qiime taxa barplot \
 ```
 ## Differential Abundance Analysis 
 
+ANCOM-BC does not allow for repeated measures, so we need to filter down to a time point that will give us one sample per subject.  We will attempt to do that by filtering down to the "peri" timepoint.
 
 ```bash
 qiime feature-table filter-samples \
   --i-table autofmt-table.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
-  --o-filtered-table peri-fmt-table
+  --o-filtered-table peri-fmt-table.qza
 ```
-
+How would we check to see if there is no more duplicates? Let's summarize the feature table! 
 ```bash
-# 2 samples from subject FMT0009
+qiime feature-table summarize \
+  --i-table peri-fmt-table.qza \
+  --m-sample-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization peri-fmt-table.qzv
+```
+Unforunately, we still have some subjects that have more then one sample. 
+```bash
+
 echo SampleID > samples-to-keep.tsv
 echo SRR14092317 > samples-to-keep.tsv
+
 ```
 ```bash
 qiime feature-table filter-samples \
