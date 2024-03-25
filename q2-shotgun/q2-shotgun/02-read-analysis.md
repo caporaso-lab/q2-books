@@ -13,7 +13,7 @@ We have found that its most effective to keep your artifacts in cache until afte
 
 ```bash
 qiime moshpit classify-kraken2 \
-	--i-seqs /scratch/crh423/cache:workshop-reads \
+	--i-seqs ./moshpit_tutorial/cache:workshop-reads \
 	--i-kraken2-db /scratch/crh423/cache:workshop-kraken-db \
 	--p-threads 40 \
 	--p-confidence 0.6 \
