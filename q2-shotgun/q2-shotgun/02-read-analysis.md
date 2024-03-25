@@ -35,7 +35,7 @@ Hits contain read information on each line:  U/C based on if the read was classi
 
 Reports contain taxon information on each line: Percentage of fragments covered by the clade root, number of fragments covered by clade root, Number of fragments assigned directly to this taxon, a rank code: indicating (U)nclassified, (R)oot, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, or (S)pecies, NCBI taxonomic ID number, and taxonomic annotation. 
 
-For more information on Kraken outputs, [visit the Kraken Manual] (https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown)!
+For more information on Kraken outputs, [visit the Kraken Manual](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown)!
 
  
 Bracken uses a Bracken database, the length of your reads and the kraken reports to give you a `feature-table[Frequency]`
@@ -292,7 +292,7 @@ qiime taxa barplot \
 ```
 ## Differential Abundance Analysis 
 
-ANCOM-BC does not allow for repeated measures, so we need to filter down to a time point that will give us one sample per subject.  We will attempt to do that by filtering down to the "peri" timepoint.
+ANCOM-BC does not allow for repeated measures, so we need to filter down to a time point that will give us one sample per subject.  We will attempt to do that by filtering down to the "peri" timepoint. This will allow us to look at the timepoint directly following FMT.
 
 ```bash
 qiime feature-table filter-samples \
@@ -308,7 +308,7 @@ qiime feature-table summarize \
   --m-sample-metadata-file ../new-sample-metadata.tsv \
   --o-visualization peri-fmt-table.qzv
 ```
-Unforunately, we still have some subjects that have more then one sample. 
+Unforunately, we still have some subjects that have more then one sample. So I manually filtered that out. 
 ```bash
 
 echo SampleID > samples-to-keep.tsv
@@ -321,26 +321,20 @@ qiime feature-table filter-samples \
   --m-metadata-file samples-to-keep.tsv \
   --o-filtered-table id-filtered-peri-fmt-table.qza
 ```
+
 ```bash
 qiime feature-table summarize \
   --i-table id-filtered-peri-fmt-table.qza \
   --m-sample-metadata-file ../new-sample-metadata.tsv \
   --o-visualization id-filtered-peri-fmt-table.qzv
 ```
+Now lets run ANCOM-BC to see what features are different between our control and FMT group, directly after FMT intervention
 ```bash
  qiime composition ancombc \
   --i-table id-filtered-peri-fmt-table.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
   --p-formula autoFmtGroup \
   --o-differentials differentials-peri-autofmt.qza
-```
-```bash
-  qiime longitudinal feature-volatility \
-  --i-table  autofmt-table-p8.qza \
-  --m-metadata-file ../new-sample-metadata.tsv 	pcoa-braycurtis-auto-fmt.qza obs-table-bracken-rf.qza \
-  --p-state-column week-relative-to-hct \
-  --p-individual-id-column PatientID \
-  --output-dir longitudinal-feature-volatility-hct
 ```
 
 
