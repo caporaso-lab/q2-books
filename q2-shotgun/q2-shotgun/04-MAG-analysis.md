@@ -5,7 +5,7 @@ This section of the tutorial focuses on analyzing metagenome-assembled genomes (
 This workflow involves binning contigs into MAGs using various tools and methodologies.
 
 ### Read mapping
- We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together. 
+We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together. 
 
 ```bash
 qiime assembly index-contigs \
@@ -28,7 +28,7 @@ qiime assembly map-reads-to-contigs \
     --verbose
 ```
 ### Binning
-Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the MetaBAT 2 tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign contigs to individual bins.
+Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the [MetaBAT 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6662567/) tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign contigs to individual bins.
 
 ```bash
 qiime moshpit bin-contigs-metabat \
@@ -44,15 +44,15 @@ qiime moshpit bin-contigs-metabat \
 ```
 The previous step generated a couple artifacts:
 
-`mags.qza`: these are our actual MAGS, per sample
-`contig-map.qza`: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG
-`unbinned-contigs.qza`: these are all the contigs that could not be assign to any particular MAG
+- `mags.qza`: these are our actual MAGS, per sample.
+- `contig-map.qza`: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.
+- `unbinned-contigs.qza`: these are all the contigs that could not be assign to any particular MAG.
 From now on, we will focus on the mags.qza. 
 
 ## MAGs dereplication (optional)
-Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses.To dereplicate our MAGs, we will:
+Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:
 
-1. compute hash sketches of every genome using sourmash - you can think of those sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).
+1. compute hash sketches of every genome using [sourmash](https://sourmash.readthedocs.io/en/latest/) - you can think of those sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).
 2. compare all of those sketches (genomes) to one another to generate a matrix of pairwise distances between our MAGs
 3. dereplicate the genomes using the distance matrix and a fixed similarity threshold: the last action will simply choose the longest genome from all of the genomes belonging to the same cluster, given a similarity threshold.
    
