@@ -14,7 +14,7 @@ We have found that its most effective to keep your artifacts in cache until afte
 ```bash
 qiime moshpit classify-kraken2 \
 	--i-seqs ./moshpit_tutorial/cache:workshop-reads \
-	--i-kraken2-db ./moshpit_tutorial/cache:workshop-kraken-db \
+	--i-kraken2-db ./moshpit_tutorial/cache:kracken_standard \
 	--p-threads 40 \
 	--p-confidence 0.6 \
 	--p-minimum-base-quality 20 \
@@ -43,7 +43,7 @@ Bracken uses a Bracken database, the length of your reads and the kraken reports
 
 ```bash
 qiime moshpit estimate-bracken \
-    --i-bracken-db /projects/microbiome/biological-reference-data/2023.06.05-k2-plus-pf-bracken-db.qza \
+    --i-bracken-db ./moshpit_tutorial/cache:bracken_standard \
     --p-read-len 100 \
     --i-kraken-reports ./moshpit_tutorial/cache:workshop_kraken_db_reports \
     --o-reports ./moshpit_tutorial/kraken-outputs/bracken-reports.qza \
