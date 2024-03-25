@@ -44,9 +44,9 @@ qiime moshpit bin-contigs-metabat \
 ```
 The previous step generated a couple artifacts:
 
-mags.qza: these are our actual MAGS, per sample
-contig-map.qza: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG
-unbinned-contigs.qza: these are all the contigs that could not be assign to any particular MAG
+`mags.qza`: these are our actual MAGS, per sample
+`contig-map.qza`: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG
+`unbinned-contigs.qza`: these are all the contigs that could not be assign to any particular MAG
 From now on, we will focus on the mags.qza. 
 
 ## MAGs dereplication (optional)
