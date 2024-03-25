@@ -1,4 +1,6 @@
-# Taxonomic annotation of reads (Chloe)
+# Reads Analysis (Chloe)
+
+## Read Taxonomic Annotation
 With Metagenomic Data, our first step of our analysis is to run Kraken.
 
 This will give us taxonomic annotations for our reads and from this there, we can create our feature table that we will use for the rest of the analysis
