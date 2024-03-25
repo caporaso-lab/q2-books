@@ -1,5 +1,5 @@
 # MAG analysis (Paula)
-This section of the repository focuses on analyzing metagenome-assembled genomes (MAGs), which are reconstructed genomes derived from metagenomic data.
+This section of the tutorial focuses on analyzing metagenome-assembled genomes (MAGs), which are reconstructed genomes derived from metagenomic data.
 
 ## Bin contigs into MAGs
 This workflow involves binning contigs into MAGs using various tools and methodologies.
