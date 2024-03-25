@@ -1,7 +1,9 @@
 # Reads Analysis (Chloe)
 
+This section of the tutorial focuses on obtaining and analyzing reads. We will taxonomically annotate the reads and investigate relevant diversity and differential abundance methods. However, we are not able to functionally annotate reads that will have to wait for a later step! 
+
 ## Read Taxonomic Annotation
-With Metagenomic Data, our first step of our analysis is to run Kraken.
+With metagenomic data, our first step of our analysis is to run Kraken.
 
 This will give us taxonomic annotations for our reads and from this there, we can create our feature table that we will use for the rest of the analysis
 
@@ -71,7 +73,7 @@ qiime feature-table relative-frequency \
 	--o-relative-frequency-table autofmt-table-rf.qza \
 ```
 
-# Alpha diversity 
+## Alpha diversity 
 
 
 First we'll look for general patterns, by comparing different categorical groupings of samples to see if there is some relationship to richness.
@@ -113,7 +115,7 @@ qiime diversity alpha-group-significance \
     --o-visualization obs-table-bracken-rf-group-sig.qzv
 ```
 
-## Linear Mixed Effects
+### Linear Mixed Effects
 
 In order to manage the repeated measures, we will use a linear
 mixed-effects model. In a mixed-effects model, we combine fixed-effects (your typical linear regression coefficients) with random-effects. These random
@@ -189,14 +191,12 @@ of richness, but and no significance in it's interaction term with ``Q('day-rela
 
 This is surprising outcome because we know that FMT intervention was supposed to rectify the decreasing diversity following allo-HCT.
 
-
 This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend. 
 
 Let's checkout the 16S amplicon verison of this visualization: 
 (link to 16s viz)
 
 We can also investigate Shannon's entropy using similar steps. However general trends between Shannons and Observed Features remain the same. 
-
 
 ```bash
 qiime diversity alpha \
@@ -221,6 +221,7 @@ qiime longitudinal linear-mixed-effects \
   --p-metric shannon_entropy \
   --o-visualization lme-shannon-features-FMT.qzv
 ```
+## Beta Diversity 
 Now that we better understand community richness trends, lets look at differences in microbial composition.
 
 Let investigate this by looking at Bray Curtis: 
@@ -230,6 +231,8 @@ qiime diversity beta \
   --p-metric braycurtis \
   --o-distance-matrix braycurtis-autofmt
 ```
+
+### Emperor Plot Creation
 Now that we have our Bray Curtis distance matrix, lets visualize this using a PCOA plot.
 
 ```bash
@@ -246,6 +249,8 @@ qiime emperor plot \
   --p-custom-axes week-relative-to-fmt \
   --o-visualization braycurtis-auto-fmt-emperor-custom.qzv 
 ```
+
+## Taxa-bar Creation
 Another way we can look at microbial composition is to investigate the taxa barplot. One thing to Note, these tend to be even more chaotic then the Amplicon data. 
 ```bash
 qiime taxa barplot \
@@ -257,6 +262,7 @@ qiime taxa barplot \
 
 Lets highlight some features of metagenomic data that we wouldn't see in Amplicon data.
 
+#### Viral Taxa-bar Creation
 We will take a peek at the viral community members.
 
 First, we filter down to the features taxomically labeled "Virus" 
@@ -284,6 +290,7 @@ qiime taxa barplot \
   --m-metadata-file ../new-sample-metadata.tsv \
   --o-visualization virus-taxa-bar-plot.qzv
 ```
+## Differential Abundance Analysis 
 
 
 ```bash
