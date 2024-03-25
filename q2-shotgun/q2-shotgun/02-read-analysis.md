@@ -14,17 +14,17 @@ We have found that its most effective to keep your artifacts in cache until afte
 ```bash
 qiime moshpit classify-kraken2 \
 	--i-seqs ./moshpit_tutorial/cache:workshop-reads \
-	--i-kraken2-db /scratch/crh423/cache:workshop-kraken-db \
+	--i-kraken2-db ./moshpit_tutorial/cache:workshop-kraken-db \
 	--p-threads 40 \
 	--p-confidence 0.6 \
 	--p-minimum-base-quality 20 \
-	--o-hits /scratch/crh423/cache:workshop_kraken_db_hits \
-	--o-reports /scratch/crh423/cache:workshop_kraken_db_reports \
+	--o-hits ./moshpit_tutorial/cache:workshop_kraken_db_hits \
+	--o-reports ./moshpit_tutorial/cache:workshop_kraken_db_reports \
 	--p-report-minimizer-data \
-	--use-cache /scratch/crh423/cache \
-	--parallel-config ~/shotgun-test/slurm_config.toml \
-    --verbose \
-    --p-memory-mapping False ##this was taking too much time for me 
+	--use-cache ./moshpit_tutorial/cache \
+	--parallel-config slurm_config.toml \
+    	--verbose \
+    	--p-memory-mapping False ##this was taking too much time for me 
 ```
 At this point we have kraken reports and hits.
 
@@ -45,10 +45,10 @@ Bracken uses a Bracken database, the length of your reads and the kraken reports
 qiime moshpit estimate-bracken \
     --i-bracken-db /projects/microbiome/biological-reference-data/2023.06.05-k2-plus-pf-bracken-db.qza \
     --p-read-len 100 \
-    --i-kraken-reports /scratch/crh423/cache:workshop_kraken_db_reports \
-    --o-reports ~/chloe-analysis/sra-shotgun-workshop/kraken-outputs/bracken-reports.qza \
-    --o-taxonomy ~/chloe-analysis/sra-shotgun-workshop/kraken-outputs/taxonomy-bracken.qza \
-    --o-table ~/chloe-analysis/sra-shotgun-workshop/kraken-outputs/table-bracken.qza
+    --i-kraken-reports ./moshpit_tutorial/cache:workshop_kraken_db_reports \
+    --o-reports ./moshpit_tutorial/kraken-outputs/bracken-reports.qza \
+    --o-taxonomy ./moshpit_tutorial/kraken-outputs/taxonomy-bracken.qza \
+    --o-table ~./moshpit_tutorial/kraken-outputs/table-bracken.qza
 ```
 
 ## Filtering Feature Table and Normalization
