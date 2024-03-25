@@ -57,7 +57,7 @@ qiime moshpit classify-kraken2 \
 ```
 Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
 
-### Build presence/absence feature table
+### Presence/absence feature table creation
 ```bash
 qiime moshpit kraken2-to-features \
   --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
@@ -66,7 +66,7 @@ qiime moshpit kraken2-to-features \
   --verbose
 ```
 
-### Build taxa-bar plot
+### Taxa-bar plot creation
 ```bash
 qiime taxa barplot \
     --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
