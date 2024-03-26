@@ -33,11 +33,7 @@ qiime assembly evaluate-contigs \
     --verbose
 ```
 ## Contig taxonomic annotation workflow
-This workflow involves annotating contigs with taxonomic information using Kraken2 classification. Key steps include:
-
-- **Classify contigs with Kraken2**: Assigns taxonomic labels to contigs. Parameters used include confidence threshold and minimum base quality.
-- **Build presence/absence feature table**: Constructs a feature table indicating the presence or absence of taxa in contigs.
-- **Build taxa-bar plot**: Visualizes taxonomic composition using a bar plot.
+This workflow involves annotating contigs with taxonomic information using Kraken2 classification. 
   
 ### Classify contigs with Kraken2
 - The `--p-confidence` and `--p-minimum-base-quality` are deviations from kraken's defaults.
