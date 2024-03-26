@@ -33,11 +33,12 @@ qiime assembly evaluate-contigs \
     --verbose
 ```
 ## Contig taxonomic annotation workflow
-This workflow involves annotating contigs with taxonomic information using Kraken2 classification. 
+Now we are ready to perform taxonomic classification of our contigs. Here, we are focusing on [Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) - one of the most popular taxonomic classifiers for metagenomic data. 
+Kraken 2 requires a pre-built database so that it can compare the analyzed genomes to a reference. In this example, we are using the [Standard database](https://benlangmead.github.io/aws-indexes/k2), which is a database built using all archaeal, bacterial, viral, plasmid and human sequences found in the NCBI's RefSeq database. Since Kraken 2 classification is based on comparing k-mer profiles, this database contains pre-calculated k-mer profiles for all the genomes listed earlier and stored in the so-called \"hash tables\" - data structres optimized for efficient data storage and retrieval.
   
 ### Classify contigs with Kraken2
 - The `--p-confidence` and `--p-minimum-base-quality` are deviations from kraken's defaults.
-- The database used here is the `PlusPF` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
+- The database used here is the `Standard` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
 - The abbreviations in my `output-dir` are the database (`k2pf`), and shorthand for the values I set for confidence (`c60`) and minimum base quality (`mbq20`), respectively.
 ```bash
 qiime moshpit classify-kraken2 \
