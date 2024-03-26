@@ -176,30 +176,30 @@ qiime diversity pcoa \
 Now that we have our Jaccard diversity PCoA, lets visualize it!
 ```bash
 qiime emperor plot \
-  --i-pcoa pcoa-braycurtis-auto-fmt.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
-  --o-visualization braycurtis-auto-fmt-emperor.qzv 
+  --i-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --o-visualization "./moshpit_tutorial/results/jaccard_autofmt_emperor.qzv 
 ```
 We can make ` week-relative-to-fmt ` a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.  
 ```bash
 qiime emperor plot \
-  --i-pcoa pcoa-braycurtis-auto-fmt.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
+  --i-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --p-custom-axes week-relative-to-fmt \
-  --o-visualization braycurtis-auto-fmt-emperor-custom.qzv 
+  --o-visualization "./moshpit_tutorial/results/jaccard_autofmt_emperor_custom.qzv" 
 ```
 
 ## Taxa-bar Creation
-Another way we can look at microbial composition is to investigate the taxa barplot. One thing to Note, these tend to be even more chaotic then the Amplicon data. 
+We will now explore our coting microbial composition by visualizing a taxa bar plot. Note that we are using a `FeatureTable[PresenceAbsence]`, hence we are not talking about relative abundance in this case.
 ```bash
 qiime taxa barplot \
-  --i-table table-bracken.qza \
-  --i-taxonomy taxonomy-bracken.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
-  --o-visualization taxa-bar-plot.qzv
+  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
+  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
 
-Lets highlight some features of metagenomic data that we wouldn't see in Amplicon data.
+Let's now highlight some features of metagenomic data that we wouldn't be able to capture in Amplicon data.
 
 ### Viral Taxa-bar Creation
 We will take a peek at the viral community members.
@@ -208,26 +208,27 @@ First, we filter down to the features taxomically labeled "Virus"
 
 ```bash
 qiime taxa filter-table \
-  --i-table autofmt-filt-table.qza \
-  --i-taxonomy taxonomy-bracken.qza \
+  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
+  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
   --p-include Viruses \
-  --o-filtered-table virus-autofmt-table
+  --o-filtered-table "./moshpit_tutorial/cache:virus_autofmt_feature_table_contigs"
 ```
 
 Then we will filtered out any samples that were below 1,000.  
 ```bash
 qiime feature-table filter-samples \
-  --i-table virus-autofmt-table.qza \
+  --i-table "./moshpit_tutorial/cache:virus_autofmt_feature_table_contigs" \
   --p-min-frequency 1240 \
-  --o-filtered-table autofmt-virus-feature-contingency-filtered-table.qza
+  --o-filtered-table "./moshpit_tutorial/cache:filtered_virus_autofmt_feature_table_contigs"
 ```
-Now we can make our Viral Taxa Bar plot 
+
+Now we can make our filtered Viral Taxa Bar plot 
 ```bash
 qiime taxa barplot \
-  --i-table  autofmt-virus-feature-contingency-filtered-table.qza \
-  --i-taxonomy taxonomy-bracken.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
-  --o-visualization virus-taxa-bar-plot.qzv
+  --i-table "./moshpit_tutorial/cache:filtered_virus_autofmt_feature_table_contigs" \
+  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --o-visualization "./moshpit_tutorial/results/virus_taxa_bar_plot_contigs.qzv
 ```
 
 ## Contig functional annotation workflow
@@ -246,6 +247,7 @@ qiime moshpit eggnog-diamond-search \
   --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs \
   --verbose
 ```
+### Filter...
 ### Gene diversity
 Calculates gene diversity metrics, specifically Jaccard distance, for contigs.
 Calculate Jaccard beta-diversity matrix
