@@ -1,7 +1,7 @@
-# Contig analysis (Paula)
+# Contig Analysis (Paula)
 This section of the tutorial focuses on obtaining and analyzing contigs, which are contiguous sequences of DNA assembled from short reads obtained through sequencing techniques. Contigs are crucial in genome assembly and analysis.
 
-## Assemble reads into contigs with MEGAHIT
+## Assemble Reads into Contigs with MEGAHIT
 The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
 
 - The `--p-num-partition` specifies the number of partitions to split the dataset into for parallel processing during assembly.
@@ -32,12 +32,12 @@ qiime assembly evaluate-contigs \
     --o-visualization "./moshpit_tutorial/results/contigs.qzv" \
     --verbose
 ```
-## Contig taxonomic annotation workflow
+## Contig Taxonomic Annotation Workflow
 Now we are ready to perform taxonomic classification of our contigs. 
   
-### Classify contigs with Kraken2
+### Classify Contigs with Kraken2
 Here, we are focusing on [Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) - one of the most popular taxonomic classifiers for metagenomic data. 
-Kraken 2 requires a pre-built database, which we have already built on the `01-sra-data-access` section of this tutorial, so that it can compare the analyzed genomes to a reference. In this example, we are using the [Standard database](https://benlangmead.github.io/aws-indexes/k2), which is a database built using all archaeal, bacterial, viral, plasmid and human sequences found in the NCBI's RefSeq database. Since Kraken 2 classification is based on comparing k-mer profiles, this database contains pre-calculated k-mer profiles for all the genomes listed earlier and stored in the so-called \"hash tables\" - data structres optimized for efficient data storage and retrieval.
+Kraken 2 requires a pre-built database, which we have already built on the `01-sra-data-access` section of this tutorial, so that it can compare the analyzed genomes to a reference. In this example, we are using the [Standard database](https://benlangmead.github.io/aws-indexes/k2), which is a database built using all archaeal, bacterial, viral, plasmid and human sequences found in the NCBI's RefSeq database. Since Kraken 2 classification is based on comparing k-mer profiles, this database contains pre-calculated k-mer profiles for all the genomes listed earlier and stored in the so-called \"hash tables\" - data structres optimized for efficient data storage and retrieval. Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with [Kaiju](https://github.com/bioinformatics-centre/kaiju).
 - The `--p-confidence` and `--p-minimum-base-quality` are deviations from kraken's defaults.
 - The database used here is the `Standard` database, defined [here](https://benlangmead.github.io/aws-indexes/k2).
 - The abbreviations in my `output-dir` are the database (`k2pf`), and shorthand for the values I set for confidence (`c60`) and minimum base quality (`mbq20`), respectively.
@@ -53,9 +53,10 @@ qiime moshpit classify-kraken2 \
     --o-hits "./moshpit_tutorial/cache:kraken_hits_contigs" \
     --verbose
 ```
-Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with [Kaiju](https://github.com/bioinformatics-centre/kaiju).
+With this previous action we got two new artifacts: FeatureData[Kraken2Report % Properties('contigs')] and FeatureData[Kraken2Output % Properties('contigs')]. The first one contains the Kraken 2 report: a tree-like representation of all the identified taxa. The second one is a list of all contigs with their corresponding identified taxa. 
 
-### Presence/absence feature table creation
+### Presence/Absence Feature Table Creation
+A natural next step would now be to estimate the relative frequencies of those taxa in our samples, however this is not yet possible to do on contigs with QIIME 2 (coming soon though!) Therefore, to convert those into a more QIIME-like taxonomy, run the following action:
 ```bash
 qiime moshpit kraken2-to-features \
   --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
@@ -72,24 +73,23 @@ We need to filter our feature table to contain samples that were in the autoFMT 
 
 ```bash
 qiime feature-table filter-samples \
-  --i-table table-bracken.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
+  --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table autofmt-table.qza
+  --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs"
 ```
-## Alpha diversity on presence/absence feature table
+## Alpha Diversity on Presence/Absence Feature Table
 First we'll look for general patterns, by comparing different categorical groupings of samples to see if there is some relationship to richness.
 
 To start with, we'll generate an 'observed features' vector from our presence/absence feature table:
 
 ```bash
 qiime diversity alpha \
-    --i-table autofmt-table-rf.qza \
+    --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
     --p-metric "observed_features" \
-    --o-alpha-diversity obs-autofmt-bracken-rf
+    --o-alpha-diversity "./moshpit_tutorial/cache:obs_features_autofmt_contigs"
 ```
-## Linear Mixed Effects
-
+### Linear Mixed Effects
 In order to manage the repeated measures, we will use a linear
 mixed-effects model. In a mixed-effects model, we combine fixed-effects (your typical linear regression coefficients) with random-effects. These random
 effects are some (ostensibly random) per-group coefficient which minimizes the
@@ -105,31 +105,26 @@ will be using a *random-intercept*, which allows for the per-subject intercept
 to take on a different average from the population intercept (modeling what we
 saw in the group-significance plot above).
 
-
 First let's evaluate the general trend of the Bone Marrow transplant.
-
 
 ```bash
  qiime longitudinal linear-mixed-effects \
-   --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
+   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
    --p-state-column DayRelativeToNearestHCT \
    --p-individual-id-column PatientID \
    --p-metric observed_features \
-   --o-visualization lme-obs-features-HCT.qzv
+   --o-visualization "./moshpit_tutorial/results/lme_obs_features_HCT_contigs.qzv"
 ```
-
-Here we see a significant association between richness and the bone marrow
-transplant.
 
 We may also be interested in the effect of the auto fecal microbiota transplant. It should be known that these are generally correlated, so choosing one model over the other will require external knowledge.
 
 ```bash
-qiime longitudinal linear-mixed-effects \
-  --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
-  --p-state-column day-relative-to-fmt \
-  --p-individual-id-column PatientID \
-  --p-metric observed_features \
-  --o-visualization lme-obs-features-FMT.qzv
+ qiime longitudinal linear-mixed-effects \
+   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
+   --p-state-column day-relative-to-fmt \
+   --p-individual-id-column PatientID \
+   --p-metric observed_features \
+   --o-visualization "./moshpit_tutorial/results/lme_obs_features_FMT_contigs.qzv"
 ```
 
 We also see a downward trend from the FMT. Since the goal of the FMT was to
@@ -152,27 +147,33 @@ are different slopes for the two groups, based on an *interaction term*.
 
 ```bash
 qiime longitudinal linear-mixed-effects \
-  --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
+ --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
   --p-state-column day-relative-to-fmt \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
   --p-metric observed_features \
-  --o-visualization lme-obs-features-treatmentVScontrol.qzv
+  --o-visualization "./moshpit_tutorial/results/lme_obs_features_treatmentVScontrol_contigs.qzv"
 ```
+
 ## Beta Diversity 
 Now that we better understand community richness trends, lets look at differences in microbial composition.
 
-Let investigate this by looking at Bray Curtis: 
+### Jaccard Distance Matrix PCoA creation
+Let's first create the Jaccard distance matrix. 
 ```bash
 qiime diversity beta \
-  --i-table autofmt-table-rf.qza \
-  --p-metric braycurtis \
-  --o-distance-matrix braycurtis-autofmt
+  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
+  --p-metric jaccard \
+  --o-distance-matrix "./moshpit_tutorial/cache:jaccard_autofmt_contigs"
 ```
-
+Now, let's generate a PCoA from Jaccard matrix.
+```bash
+qiime diversity pcoa \
+  --i-distance-matrix "./moshpit_tutorial/cache:jaccard_autofmt_contigs" \
+  --o-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs"
+```
 ### Emperor Plot Creation
-Now that we have our Bray Curtis distance matrix, lets visualize this using a PCOA plot.
-
+Now that we have our Jaccard diversity PCoA, lets visualize it!
 ```bash
 qiime emperor plot \
   --i-pcoa pcoa-braycurtis-auto-fmt.qza \
@@ -228,23 +229,12 @@ qiime taxa barplot \
   --m-metadata-file ../new-sample-metadata.tsv \
   --o-visualization virus-taxa-bar-plot.qzv
 ```
-### Taxa-bar plot creation
-```bash
-qiime taxa barplot \
-    --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
-    --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs "\
-    --o-visualization "./moshpit_tutorial/results/kraken_taxa_barplot_contigs.qzv \
-    --verbose
-```
 
 ## Contig functional annotation workflow
-This section focuses on functional annotation of contigs, particularly identifying functional elements like genes and their diversity. Key steps include:
-
-- **EggNOG search using diamond aligner**: Searches for homologous sequences in the EggNOG database using the Diamond aligner for faster processing.
-- **Gene diversity**: Calculates gene diversity metrics, specifically Jaccard distance, for contigs.
-- **Annotate orthologs against EggNOG database**: Annotates contigs with functional information from the EggNOG database.
+Here we will perform functional annotation of contigs to capture gene diversity.
   
 ### EggNOG search using diamond aligner
+Searches for homologous sequences in the EggNOG database using the Diamond aligner for faster processing.
 - The `--p-db-in-memory`loads the database into memory for faster processing.
 ```bash
 qiime moshpit eggnog-diamond-search \
@@ -257,6 +247,7 @@ qiime moshpit eggnog-diamond-search \
   --verbose
 ```
 ### Gene diversity
+Calculates gene diversity metrics, specifically Jaccard distance, for contigs.
 Calculate Jaccard beta-diversity matrix
 ```bash
 qiime diversity beta \
@@ -279,6 +270,7 @@ qiime emperor plot \
 ```
 
 ### Annotate orthologs against eggNOG database
+Annotates contigs with functional information from the EggNOG database.
 ```bash
 qiime moshpit eggnog-annotate \
  --i-eggnog-hits "./moshpit_tutorial/cache:contigs" \
