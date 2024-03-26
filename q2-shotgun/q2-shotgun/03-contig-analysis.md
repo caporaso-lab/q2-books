@@ -53,7 +53,7 @@ qiime moshpit classify-kraken2 \
     --o-hits "./moshpit_tutorial/cache:kraken_hits_contigs" \
     --verbose
 ```
-Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
+Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with [Kaiju](https://github.com/bioinformatics-centre/kaiju).
 
 ### Presence/absence feature table creation
 ```bash
