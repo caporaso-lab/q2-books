@@ -8,5 +8,6 @@ chapters:
 - file: 02-read-analysis.md
 - file: 03-contig-analysis.md
 - file: 04-MAG-analysis.md
+- file: 80-leiden-workshop.md
 - file: 90-tips.md
 - file: 91-workflow-diagram.md
