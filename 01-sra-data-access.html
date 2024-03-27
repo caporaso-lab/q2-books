@@ -479,24 +479,6 @@ document.write(`
 <li><p>Generation and annotation of MAGs (TODO)</p></li>
 </ul>
 <p>Before we jump into the next sections, lets discuss our parsl_config! We are using Parsl to parallelize our computationally expensive jobs. This will be used to run <code class="docutils literal notranslate"><span class="pre">Kraken</span></code> and <code class="docutils literal notranslate"><span class="pre">Eggnog-Mapper</span></code>. Here we can decide how many workers, cores, nodes and blocks.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[parsl]
-
-[[parsl.executors]]
-class = &quot;HighThroughputExecutor&quot;
-label = &quot;default&quot;
-max_workers = 1
-
-[parsl.executors.provider]
-class = &quot;SlurmProvider&quot;
-mem_per_node = 200
-exclusive = false
-walltime = &quot;48:00:00&quot;
-nodes_per_block = 1
-cores_per_node = 40
-min_blocks = 1
-max_blocks = 10
-</pre></div>
-</div>
 </section>
 </section>
 

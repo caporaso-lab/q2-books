@@ -102,23 +102,4 @@ This will download all the sequences into the QIIME 2 cache. It is a lot of data
 - Generation and annotation of MAGs (TODO)
 
 Before we jump into the next sections, lets discuss our parsl_config! We are using Parsl to parallelize our computationally expensive jobs. This will be used to run `Kraken` and `Eggnog-Mapper`. Here we can decide how many workers, cores, nodes and blocks.
-```
-[parsl]
-
-[[parsl.executors]]
-class = "HighThroughputExecutor"
-label = "default"
-max_workers = 1
-
-[parsl.executors.provider]
-class = "SlurmProvider"
-mem_per_node = 200
-exclusive = false
-walltime = "48:00:00"
-nodes_per_block = 1
-cores_per_node = 40
-min_blocks = 1
-max_blocks = 10
-```
-
 
