@@ -2,7 +2,7 @@
 This section of the tutorial focuses on analyzing metagenome-assembled genomes (MAGs), which are reconstructed genomes derived from metagenomic data.
 
 ## Bin contigs into MAGs
-This workflow involves binning contigs into MAGs using various tools and methodologies.
+Let's start binning our contigs into MAGs using various tools and methodologies!
 
 ### Read mapping
 We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together. 
@@ -42,7 +42,7 @@ qiime moshpit bin-contigs-metabat \
     --o-unbinned-contigs "./moshpit_tutorial/cache:unbinned_contigs" \
     --verbose
 ```
-The previous step generated a couple artifacts:
+This tep generated a couple artifacts:
 
 - `mags.qza`: these are our actual MAGS, per sample.
 - `contig-map.qza`: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.
