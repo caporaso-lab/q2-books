@@ -174,10 +174,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="03-contig-analysis.html">Contig Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04-MAG-analysis.html">MAG analysis</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Metagenomics with QIIME 2 - Leiden 2024</a></li>
-
-
-
-
 <li class="toctree-l1"><a class="reference internal" href="90-tips.html">Tips for metagenome analysis with QIIME 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="91-workflow-diagram.html">Diagram of QIIME 2 metagenomics workflow</a></li>
 </ul>
@@ -375,53 +371,46 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Filtering Feature Table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-functional-annotation-workflow">Contig functional annotation workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity-observation">Gene diversity observation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity-observation">Gene diversity observation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Jaccard Distance Matrix PCoA creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Emperor Plot Creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-taxonomy-table">Build taxonomy table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mags-functional-annotation-workflow">MAGs functional annotation workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">EggNOG search using diamond aligner</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -434,19 +423,18 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="metagenomics-with-qiime-2-leiden-2024">
 <h1>Metagenomics with QIIME 2 - Leiden 2024<a class="headerlink" href="#metagenomics-with-qiime-2-leiden-2024" title="Permalink to this heading">#</a></h1>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="setup">
-<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h1>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
 <p>Before we dive into the tutorial, let’s set up the required directory structre and make sure we have all the required software installed.</p>
 <section id="qiime-2-metagenome-distribution">
-<h2>QIIME 2 metagenome distribution<a class="headerlink" href="#qiime-2-metagenome-distribution" title="Permalink to this heading">#</a></h2>
+<h3>QIIME 2 metagenome distribution<a class="headerlink" href="#qiime-2-metagenome-distribution" title="Permalink to this heading">#</a></h3>
 <p>You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions <a class="reference external" href="https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution">here</a>. Once installed, you can activate the environment by running the following command:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>qiime2-shotgun-2024.2
 </pre></div>
 </div>
 </section>
 <section id="directory-structure">
-<h2>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">#</a></h2>
+<h3>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">#</a></h3>
 <p>Below you can see the directory structure that we will use throughout this tutorial:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&lt;your<span class="w"> </span>working<span class="w"> </span>directory&gt;
 ├──<span class="w"> </span>moshpit_tutorial
@@ -466,10 +454,10 @@ document.write(`
 <p>We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. If you want to read more about the QIIME cache, you can do so <a class="reference external" href="https://dev.qiime2.org/latest/api-reference/cache/">here</a>.</p>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="read-based-analysis">
-<h1>Read-based analysis<a class="headerlink" href="#read-based-analysis" title="Permalink to this heading">#</a></h1>
+<section id="read-based-analysis">
+<h2>Read-based analysis<a class="headerlink" href="#read-based-analysis" title="Permalink to this heading">#</a></h2>
 <section id="filtering-feature-table">
-<h2>Filtering Feature Table<a class="headerlink" href="#filtering-feature-table" title="Permalink to this heading">#</a></h2>
+<h3>Filtering Feature Table<a class="headerlink" href="#filtering-feature-table" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_reads&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -479,7 +467,7 @@ document.write(`
 </div>
 </section>
 <section id="taxa-bar-creation">
-<h2>Taxa-bar Creation<a class="headerlink" href="#taxa-bar-creation" title="Permalink to this heading">#</a></h2>
+<h3>Taxa-bar Creation<a class="headerlink" href="#taxa-bar-creation" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_reads&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -489,10 +477,10 @@ document.write(`
 </div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="contig-based-analysis">
-<h1>Contig-based analysis<a class="headerlink" href="#contig-based-analysis" title="Permalink to this heading">#</a></h1>
+<section id="contig-based-analysis">
+<h2>Contig-based analysis<a class="headerlink" href="#contig-based-analysis" title="Permalink to this heading">#</a></h2>
 <section id="id1">
-<h2>Filtering Feature Table<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h3>Filtering Feature Table<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -502,9 +490,9 @@ document.write(`
 </div>
 </section>
 <section id="alpha-diversity">
-<h2>Alpha Diversity<a class="headerlink" href="#alpha-diversity" title="Permalink to this heading">#</a></h2>
+<h3>Alpha Diversity<a class="headerlink" href="#alpha-diversity" title="Permalink to this heading">#</a></h3>
 <section id="observed-features">
-<h3>Observed Features<a class="headerlink" href="#observed-features" title="Permalink to this heading">#</a></h3>
+<h4>Observed Features<a class="headerlink" href="#observed-features" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--p-metric<span class="w"> </span><span class="s2">&quot;observed_features&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -513,7 +501,7 @@ document.write(`
 </div>
 </section>
 <section id="linear-mixed-effects">
-<h3>Linear Mixed Effects<a class="headerlink" href="#linear-mixed-effects" title="Permalink to this heading">#</a></h3>
+<h4>Linear Mixed Effects<a class="headerlink" href="#linear-mixed-effects" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-state-column<span class="w"> </span>DayRelativeToNearestHCT<span class="w"> </span><span class="se">\</span>
@@ -542,9 +530,9 @@ document.write(`
 </section>
 </section>
 <section id="beta-diversity">
-<h2>Beta Diversity<a class="headerlink" href="#beta-diversity" title="Permalink to this heading">#</a></h2>
+<h3>Beta Diversity<a class="headerlink" href="#beta-diversity" title="Permalink to this heading">#</a></h3>
 <section id="jaccard-distance-matrix-pcoa-creation">
-<h3>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation" title="Permalink to this heading">#</a></h3>
+<h4>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
@@ -558,7 +546,7 @@ document.write(`
 </div>
 </section>
 <section id="emperor-plot-creation">
-<h3>Emperor Plot Creation<a class="headerlink" href="#emperor-plot-creation" title="Permalink to this heading">#</a></h3>
+<h4>Emperor Plot Creation<a class="headerlink" href="#emperor-plot-creation" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -575,7 +563,7 @@ document.write(`
 </section>
 </section>
 <section id="id2">
-<h2>Taxa-bar Creation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h3>Taxa-bar Creation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -584,8 +572,6 @@ document.write(`
 </pre></div>
 </div>
 </section>
-<section id="contig-functional-annotation-workflow">
-<h2>Contig functional annotation workflow<a class="headerlink" href="#contig-functional-annotation-workflow" title="Permalink to this heading">#</a></h2>
 <section id="eggnog-search-using-diamond-aligner">
 <h3>EggNOG search using diamond aligner<a class="headerlink" href="#eggnog-search-using-diamond-aligner" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
@@ -599,11 +585,10 @@ document.write(`
 </pre></div>
 </div>
 </section>
-</section>
 <section id="gene-diversity-observation">
-<h2>Gene diversity observation<a class="headerlink" href="#gene-diversity-observation" title="Permalink to this heading">#</a></h2>
+<h3>Gene diversity observation<a class="headerlink" href="#gene-diversity-observation" title="Permalink to this heading">#</a></h3>
 <section id="id3">
-<h3>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<h4>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
@@ -617,13 +602,14 @@ document.write(`
 </div>
 </section>
 <section id="id4">
-<h3>Emperor Plot Creation<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<h4>Emperor Plot Creation<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-pcoa<span class="w">  </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/jaccard_distance_matrix_pcoa_contigs.qzv&quot;</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="annotate-orthologs-against-eggnog-database">
 <h3>Annotate orthologs against eggNOG database<a class="headerlink" href="#annotate-orthologs-against-eggnog-database" title="Permalink to this heading">#</a></h3>
@@ -636,11 +622,10 @@ document.write(`
 </div>
 </section>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="mag-based-analysis">
-<h1>MAG-based analysis<a class="headerlink" href="#mag-based-analysis" title="Permalink to this heading">#</a></h1>
-<section id="build-taxonomy-table">
-<h2>Build taxonomy table<a class="headerlink" href="#build-taxonomy-table" title="Permalink to this heading">#</a></h2>
+<section id="mag-based-analysis">
+<h2>MAG-based analysis<a class="headerlink" href="#mag-based-analysis" title="Permalink to this heading">#</a></h2>
+<section id="taxonomy-table-creation">
+<h3>Taxonomy table creation<a class="headerlink" href="#taxonomy-table-creation" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>kraken2-to-mag-features<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--i-reports<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_reports_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--i-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_hits_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -648,6 +633,9 @@ document.write(`
 <span class="w"> </span>--verbose
 </pre></div>
 </div>
+</section>
+<section id="taxonomy-table-visualization">
+<h3>Taxonomy table visualization<a class="headerlink" href="#taxonomy-table-visualization" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>metadata<span class="w"> </span>tabulate<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--m-input-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--p-page-size<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_hits_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -655,8 +643,6 @@ document.write(`
 </pre></div>
 </div>
 </section>
-<section id="mags-functional-annotation-workflow">
-<h2>MAGs functional annotation workflow<a class="headerlink" href="#mags-functional-annotation-workflow" title="Permalink to this heading">#</a></h2>
 <section id="id5">
 <h3>EggNOG search using diamond aligner<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
@@ -746,53 +732,46 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Filtering Feature Table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-functional-annotation-workflow">Contig functional annotation workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity-observation">Gene diversity observation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity-observation">Gene diversity observation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Jaccard Distance Matrix PCoA creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Emperor Plot Creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-taxonomy-table">Build taxonomy table</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mags-functional-annotation-workflow">MAGs functional annotation workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">EggNOG search using diamond aligner</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>

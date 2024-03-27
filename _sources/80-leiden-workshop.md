@@ -1,10 +1,10 @@
 # Metagenomics with QIIME 2 - Leiden 2024
 
-# Setup
+## Setup
 
 Before we dive into the tutorial, let's set up the required directory structre and make sure we have all the required software installed.
 
-#### QIIME 2 metagenome distribution
+### QIIME 2 metagenome distribution
 
 You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions [here](https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution). Once installed, you can activate the environment by running the following command:
 
@@ -12,7 +12,7 @@ You can install the latest distribution of the QIIME 2 metagenome distribution b
 conda activate qiime2-shotgun-2024.2
 ```
 
-## Directory structure
+### Directory structure
 
 Below you can see the directory structure that we will use throughout this tutorial:
 
@@ -38,8 +38,8 @@ qiime tools cache-create \
 
 We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the `results` directory. If you want to read more about the QIIME cache, you can do so [here](https://dev.qiime2.org/latest/api-reference/cache/).
 
-# Read-based analysis
-## Filtering Feature Table
+## Read-based analysis
+### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/cache:kraken_feature_table_reads" \
@@ -48,7 +48,7 @@ qiime feature-table filter-samples \
   --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads"
 ```
 
-## Taxa-bar Creation
+### Taxa-bar Creation
 ```shell
 qiime taxa barplot \
   --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads" \
@@ -57,8 +57,8 @@ qiime taxa barplot \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_reads.qzv"
 ```
 
-# Contig-based analysis
-## Filtering Feature Table
+## Contig-based analysis
+### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
@@ -66,15 +66,15 @@ qiime feature-table filter-samples \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs"
 ```
-## Alpha Diversity
-### Observed Features 
+### Alpha Diversity
+#### Observed Features 
 ```shell
 qiime diversity alpha \
     --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
     --p-metric "observed_features" \
     --o-alpha-diversity "./moshpit_tutorial/cache:obs_features_autofmt_contigs"
 ```
-### Linear Mixed Effects
+#### Linear Mixed Effects
 ```shell
  qiime longitudinal linear-mixed-effects \
    --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
@@ -103,8 +103,8 @@ qiime longitudinal linear-mixed-effects \
   --o-visualization "./moshpit_tutorial/results/lme_obs_features_treatmentVScontrol_contigs.qzv"
 ```
 
-## Beta Diversity
-### Jaccard Distance Matrix PCoA creation
+### Beta Diversity
+#### Jaccard Distance Matrix PCoA creation
 ```shell
 qiime diversity beta \
   --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
@@ -117,7 +117,7 @@ qiime diversity pcoa \
   --i-distance-matrix "./moshpit_tutorial/cache:jaccard_autofmt_contigs" \
   --o-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs"
 ```
-### Emperor Plot Creation
+#### Emperor Plot Creation
 ```shell
 qiime emperor plot \
   --i-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs" \
@@ -133,7 +133,7 @@ qiime emperor plot \
   --o-visualization "./moshpit_tutorial/results/jaccard_autofmt_emperor_custom.qzv"
 ```
 
-## Taxa-bar Creation
+### Taxa-bar Creation
 ```shell
 qiime taxa barplot \
   --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
@@ -142,7 +142,6 @@ qiime taxa barplot \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
 
-## Contig functional annotation workflow
 ### EggNOG search using diamond aligner
 ```shell
 qiime moshpit eggnog-diamond-search \
@@ -154,8 +153,8 @@ qiime moshpit eggnog-diamond-search \
   --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
   --verbose
 ```
-## Gene diversity observation
-### Jaccard Distance Matrix PCoA creation
+### Gene diversity observation
+#### Jaccard Distance Matrix PCoA creation
 ```shell
 qiime diversity beta \
   --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
@@ -168,7 +167,7 @@ qiime diversity pcoa \
   --i-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs" \
   --o-pcoa "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs"
 ```
-### Emperor Plot Creation
+#### Emperor Plot Creation
 ```shell
 qiime emperor plot \
   --i-pcoa  "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs" \
@@ -185,8 +184,8 @@ qiime moshpit eggnog-annotate \
  --verbose
 ```
 
-# MAG-based analysis
-### Build taxonomy table
+## MAG-based analysis
+#### Taxonomy table creation
 ```shell
 qiime moshpit kraken2-to-mag-features \
  --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
@@ -195,6 +194,7 @@ qiime moshpit kraken2-to-mag-features \
  --verbose
 ```
 
+### Taxonomy table visualization
 ```shell
 qiime metadata tabulate \
  --m-input-file "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
@@ -202,7 +202,6 @@ qiime metadata tabulate \
  --verbose
 ```
 
-## MAGs functional annotation workflow
 ### EggNOG search using diamond aligner
 ```shell
 qiime moshpit eggnog-diamond-search \
