@@ -1,6 +1,6 @@
 # Metagenomics with QIIME 2 - Leiden 2024
 
-## Setup
+# Setup
 
 Before we dive into the tutorial, let's set up the required directory structre and make sure we have all the required software installed.
 

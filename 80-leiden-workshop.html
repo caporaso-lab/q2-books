@@ -177,6 +177,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="90-tips.html">Tips for metagenome analysis with QIIME 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="91-workflow-diagram.html">Diagram of QIIME 2 metagenomics workflow</a></li>
 </ul>
@@ -374,12 +375,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="visible nav section-nav flex-column">
@@ -435,18 +434,19 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="metagenomics-with-qiime-2-leiden-2024">
 <h1>Metagenomics with QIIME 2 - Leiden 2024<a class="headerlink" href="#metagenomics-with-qiime-2-leiden-2024" title="Permalink to this heading">#</a></h1>
-<section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h1>
 <p>Before we dive into the tutorial, let’s set up the required directory structre and make sure we have all the required software installed.</p>
 <section id="qiime-2-metagenome-distribution">
-<h3>QIIME 2 metagenome distribution<a class="headerlink" href="#qiime-2-metagenome-distribution" title="Permalink to this heading">#</a></h3>
+<h2>QIIME 2 metagenome distribution<a class="headerlink" href="#qiime-2-metagenome-distribution" title="Permalink to this heading">#</a></h2>
 <p>You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions <a class="reference external" href="https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution">here</a>. Once installed, you can activate the environment by running the following command:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>qiime2-shotgun-2024.2
 </pre></div>
 </div>
 </section>
 <section id="directory-structure">
-<h3>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">#</a></h3>
+<h2>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">#</a></h2>
 <p>Below you can see the directory structure that we will use throughout this tutorial:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&lt;your<span class="w"> </span>working<span class="w"> </span>directory&gt;
 ├──<span class="w"> </span>moshpit_tutorial
@@ -464,7 +464,6 @@ document.write(`
 </pre></div>
 </div>
 <p>We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. If you want to read more about the QIIME cache, you can do so <a class="reference external" href="https://dev.qiime2.org/latest/api-reference/cache/">here</a>.</p>
-</section>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="read-based-analysis">
@@ -747,12 +746,10 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="visible nav section-nav flex-column">
