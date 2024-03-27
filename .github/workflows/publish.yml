@@ -1,0 +1,52 @@
+name: deploy-book
+
+# Only run this when the main branch changes
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+# This job installs dependencies, builds the book, and pushes it to `gh-pages`
+jobs:
+  deploy-book:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    # Install dependencies
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Get latest QIIME 2 Environment
+      shell: bash
+      run: |
+        wget https://raw.githubusercontent.com/qiime2/distributions/dev/latest/passed/qiime2-tiny-ubuntu-latest-conda.yml
+
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: qiime2
+        environment-file: qiime2-tiny-ubuntu-latest-conda.yml
+        auto-activate-base: false
+
+    - name: Install dependencies
+      shell: bash -e -l {0}
+      run: |
+        pip install -r requirements.txt
+
+    # Build the book
+    - name: Build the book
+      shell: bash -e -l {0}
+      run: |
+        jb build q2-metagenomics/book/
+
+    # Push the book's HTML to github-pages
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.6.1
+      if: ${{ github.ref == 'refs/heads/main' }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./q2-metagenomics/book/_build/html
