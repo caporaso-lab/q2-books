@@ -8,6 +8,7 @@ Use a temporary directory where you have a lot of storage capacity. On a slurm-b
 export TMPDIR=/scratch/jgc53/temp
 echo $TMPDIR
 ```
+(Slurm-ConFig) = 
 ## HPC Slurm Config Example for Eggnog mapper and Kraken
 ```
 [parsl]
