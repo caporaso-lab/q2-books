@@ -1,20 +1,20 @@
-# Shotgun metagenomics analysis with QIIME 2
+# Metagenomics Analysis with QIIME 2
 
-This book provides an tutorial introduction analysis of shotgun metagenomics data with QIIME 2.
+This book provides an tutorial introduction analysis of metagenomics data with QIIME 2.
 
 ## Usage
 
 ### Building the book
 
-If you'd like to develop and/or build the Shotgun metagenomics analysis with QIIME 2 book, you should:
+If you'd like to develop and/or build the Metagenomics analysis with QIIME 2 book, you should:
 
 1. Clone this repository
 2. Run `pip install -r requirements.txt` (it is recommended you do this within a virtual environment)
-3. (Optional) Edit the books source files located in the `q2-shotgun/` directory
-4. Run `jupyter-book clean q2-shotgun/` to remove any existing builds
-5. Run `jupyter-book build q2-shotgun/`
+3. (Optional) Edit the books source files located in the `q2-metagenome/` directory
+4. Run `jupyter-book clean book/` to remove any existing builds
+5. Run `jupyter-book build book/`
 
-A fully-rendered HTML version of the book will be built in `q2-shotgun/_build/html/`.
+A fully-rendered HTML version of the book will be built in `book/_build/html/`.
 
 ### Hosting the book
 
@@ -24,7 +24,7 @@ For GitHub and GitLab deployment specifically, the [cookiecutter-jupyter-book](h
 
 ## Contributors
 
-We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/caporaso-lab/q2-shotgun/graphs/contributors).
+We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/caporaso-lab/q2-book/graphs/contributors).
 
 ## Credits
 

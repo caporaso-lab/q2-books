@@ -1,6 +1,6 @@
-# Reads Analysis (Chloe)
+# Reads Analysis
 
-This section of the tutorial focuses on obtaining and analyzing reads. We will taxonomically annotate the reads and investigate relevant diversity and differential abundance methods. However, we are not able to functionally annotate reads that will have to wait for a later step! 
+This section of the tutorial focuses on obtaining and analyzing reads. We will taxonomically annotate the reads and investigate relevant diversity and differential abundance methods. However, we are not able to functionally annotate reads that will have to wait for a later step!
 
 ## Read Taxonomic Annotation
 With metagenomic data, our first step of our analysis is to run Kraken.
@@ -9,9 +9,9 @@ This will give us taxonomic annotations for our reads and from this there, we ca
 
 In this command, we have loaded all of our inputs into cache, this saves time unzipping, reading, and writing them into memory. We are also writing our outputs directly to `Artifact Cache`, this similarly saves time for writing the files out and zipping them into .qza
 
-We have found that its most effective to keep your artifacts in cache until after you have a feature table due to the size of this data. 
+We have found that its most effective to keep your artifacts in cache until after you have a feature table due to the size of this data.
 
-```bash
+```shell
 qiime moshpit classify-kraken2 \
 	--i-seqs ./moshpit_tutorial/cache:workshop-reads \
 	--i-kraken2-db ./moshpit_tutorial/cache:kracken_standard \
@@ -24,7 +24,7 @@ qiime moshpit classify-kraken2 \
 	--use-cache ./moshpit_tutorial/cache \
 	--parallel-config slurm_config.toml \
     	--verbose \
-    	--p-memory-mapping False ##this was taking too much time for me 
+    	--p-memory-mapping False ##this was taking too much time for me
 ```
 At this point we have kraken reports and hits.
 
@@ -33,15 +33,15 @@ At this point we have kraken reports and hits.
 
 Hits contain read information on each line:  U/C based on if the read was classified or not, the read id as seen in the fastq header,Taxonomic ID(or 0 if unclassified), The length of the sequences, amd list of LCA mappings of each k-mer (which indicates what k-mers mapped to which taxonomic annotations).
 
-Reports contain taxon information on each line: Percentage of fragments covered by the clade root, number of fragments covered by clade root, Number of fragments assigned directly to this taxon, a rank code: indicating (U)nclassified, (R)oot, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, or (S)pecies, NCBI taxonomic ID number, and taxonomic annotation. 
+Reports contain taxon information on each line: Percentage of fragments covered by the clade root, number of fragments covered by clade root, Number of fragments assigned directly to this taxon, a rank code: indicating (U)nclassified, (R)oot, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, or (S)pecies, NCBI taxonomic ID number, and taxonomic annotation.
 
 For more information on Kraken outputs, [visit the Kraken Manual](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown)!
 
- 
+
 Bracken uses a Bracken database, the length of your reads and the kraken reports to give you a `feature-table[Frequency]`
 
 
-```bash
+```shell
 qiime moshpit estimate-bracken \
     --i-bracken-db ./moshpit_tutorial/cache:bracken_standard \
     --p-read-len 100 \
@@ -52,35 +52,35 @@ qiime moshpit estimate-bracken \
 ```
 
 ## Filtering Feature Table and Normalization
-Once we have feature table, this is becomes alot more similar to the amplicon workflow of QIIME 2. 
+Once we have feature table, this is becomes alot more similar to the amplicon workflow of QIIME 2.
 
-In this tutorial, we’re going to work specifically with samples that were included in the autoFMT randomized trial. Many of these subjects dropped out before randomization (placing the subject into FMT group or Control group) and therefore do not have a value in the `autoFmtGroup`. 
+In this tutorial, we’re going to work specifically with samples that were included in the autoFMT randomized trial. Many of these subjects dropped out before randomization (placing the subject into FMT group or Control group) and therefore do not have a value in the `autoFmtGroup`.
 
-We need to filter our feature table to contain samples that were in the autoFMT study by filtering out any samples that are null in the metadata column autoFmtGroup. 
+We need to filter our feature table to contain samples that were in the autoFMT study by filtering out any samples that are null in the metadata column autoFmtGroup.
 
-```bash
+```shell
 qiime feature-table filter-samples \
   --i-table table-bracken.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table autofmt-table.qza
 ```
-For this tutorial, to normalization our data we will generate a relative-frequency table. 
+For this tutorial, to normalization our data we will generate a relative-frequency table.
 
-```bash
+```shell
 qiime feature-table relative-frequency \
     --i-table autofmt-table.qza \
 	--o-relative-frequency-table autofmt-table-rf.qza \
 ```
 
-## Alpha diversity 
+## Alpha diversity
 
 
 First we'll look for general patterns, by comparing different categorical groupings of samples to see if there is some relationship to richness.
 
 To start with, we'll gernate an 'observed features' vector from our relative frequency table:
 
-```bash
+```shell
 qiime diversity alpha \
     --i-table autofmt-table-rf.qza \
     --p-metric "observed_features" \
@@ -108,7 +108,7 @@ all patients recieved a bone-marrow transplant which may be a stronger effect.
 (The goal of the auto-FMT was to mitigate the impact of the marrow transplant.)
 
 We will use a more advanced statistical model to explore this question.
-```bash
+```shell
 qiime diversity alpha-group-significance \
     --i-alpha-diversity obs-table-bracken-rf.qza \
     --m-metadata-file ../new-sample-metadata.tsv \
@@ -136,7 +136,7 @@ saw in the group-significance plot above).
 First let's evaluate the general trend of the Bone Marrow transplant.
 
 
-```bash
+```shell
  qiime longitudinal linear-mixed-effects \
    --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
    --p-state-column DayRelativeToNearestHCT \
@@ -150,7 +150,7 @@ transplant.
 
 We may also be interested in the effect of the auto fecal microbiota transplant. It should be known that these are generally correlated, so choosing one model over the other will require external knowledge.
 
-```bash
+```shell
 qiime longitudinal linear-mixed-effects \
   --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
   --p-state-column day-relative-to-fmt \
@@ -177,7 +177,7 @@ useful in recovering richness.
 By adding the ``autoFmtGroup`` to our linear model, we can see if there
 are different slopes for the two groups, based on an *interaction term*.
 
-```bash
+```shell
 qiime longitudinal linear-mixed-effects \
   --m-metadata-file ../new-sample-metadata.tsv obs-autofmt-bracken-rf.qza \
   --p-state-column day-relative-to-fmt \
@@ -191,20 +191,20 @@ of richness, but and no significance in it's interaction term with ``Q('day-rela
 
 This is surprising outcome because we know that FMT intervention was supposed to rectify the decreasing diversity following allo-HCT.
 
-This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend. 
+This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend.
 
-Let's checkout the 16S amplicon verison of this visualization: 
+Let's checkout the 16S amplicon verison of this visualization:
 (link to 16s viz)
 
-We can also investigate Shannon's entropy using similar steps. However general trends between Shannons and Observed Features remain the same. 
+We can also investigate Shannon's entropy using similar steps. However general trends between Shannons and Observed Features remain the same.
 
-```bash
+```shell
 qiime diversity alpha \
     --i-table autofmt-table-rf.qza \
     --p-metric "shannon" \
     --o-alpha-diversity shannon-autofmt-bracken-rf
 ```
-```bash
+```shell
 qiime longitudinal linear-mixed-effects \
   --m-metadata-file ../new-sample-metadata.tsv shannon-autofmt-bracken-rf.qza \
   --p-state-column day-relative-to-fmt \
@@ -213,7 +213,7 @@ qiime longitudinal linear-mixed-effects \
   --o-visualization lme-shannon-features-FMT.qzv
 ```
 
-```bash
+```shell
 qiime longitudinal linear-mixed-effects \
   --m-metadata-file ../new-sample-metadata.tsv shannon-autofmt-bracken-rf.qza \
   --p-state-column day-relative-to-fmt \
@@ -221,11 +221,11 @@ qiime longitudinal linear-mixed-effects \
   --p-metric shannon_entropy \
   --o-visualization lme-shannon-features-FMT.qzv
 ```
-## Beta Diversity 
+## Beta Diversity
 Now that we better understand community richness trends, lets look at differences in microbial composition.
 
-Let investigate this by looking at Bray Curtis: 
-```bash
+Let investigate this by looking at Bray Curtis:
+```shell
 qiime diversity beta \
   --i-table autofmt-table-rf.qza \
   --p-metric braycurtis \
@@ -235,24 +235,24 @@ qiime diversity beta \
 ### Emperor Plot Creation
 Now that we have our Bray Curtis distance matrix, lets visualize this using a PCOA plot.
 
-```bash
+```shell
 qiime emperor plot \
   --i-pcoa pcoa-braycurtis-auto-fmt.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
-  --o-visualization braycurtis-auto-fmt-emperor.qzv 
+  --o-visualization braycurtis-auto-fmt-emperor.qzv
 ```
-We can make ` week-relative-to-fmt ` a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.  
-```bash
+We can make ` week-relative-to-fmt ` a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.
+```shell
 qiime emperor plot \
   --i-pcoa pcoa-braycurtis-auto-fmt.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
   --p-custom-axes week-relative-to-fmt \
-  --o-visualization braycurtis-auto-fmt-emperor-custom.qzv 
+  --o-visualization braycurtis-auto-fmt-emperor-custom.qzv
 ```
 
 ## Taxa-bar Creation
-Another way we can look at microbial composition is to investigate the taxa barplot. One thing to Note, these tend to be even more chaotic then the Amplicon data. 
-```bash
+Another way we can look at microbial composition is to investigate the taxa barplot. One thing to Note, these tend to be even more chaotic then the Amplicon data.
+```shell
 qiime taxa barplot \
   --i-table table-bracken.qza \
   --i-taxonomy taxonomy-bracken.qza \
@@ -265,9 +265,9 @@ Lets highlight some features of metagenomic data that we wouldn't see in Amplico
 ### Viral Taxa-bar Creation
 We will take a peek at the viral community members.
 
-First, we filter down to the features taxomically labeled "Virus" 
+First, we filter down to the features taxomically labeled "Virus"
 
-```bash
+```shell
 qiime taxa filter-table \
   --i-table autofmt-filt-table.qza \
   --i-taxonomy taxonomy-bracken.qza \
@@ -275,61 +275,61 @@ qiime taxa filter-table \
   --o-filtered-table virus-autofmt-table
 ```
 
-Then we will filtered out any samples that were below 1,000.  
-```bash
+Then we will filtered out any samples that were below 1,000.
+```shell
 qiime feature-table filter-samples \
   --i-table virus-autofmt-table.qza \
   --p-min-frequency 1240 \
   --o-filtered-table autofmt-virus-feature-contingency-filtered-table.qza
 ```
-Now we can make our Viral Taxa Bar plot 
-```bash
+Now we can make our Viral Taxa Bar plot
+```shell
 qiime taxa barplot \
   --i-table  autofmt-virus-feature-contingency-filtered-table.qza \
   --i-taxonomy taxonomy-bracken.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
   --o-visualization virus-taxa-bar-plot.qzv
 ```
-## Differential Abundance Analysis 
+## Differential Abundance Analysis
 
 ANCOM-BC does not allow for repeated measures, so we need to filter down to a time point that will give us one sample per subject.  We will attempt to do that by filtering down to the "peri" timepoint. This will allow us to look at the timepoint directly following FMT.
 
-```bash
+```shell
 qiime feature-table filter-samples \
   --i-table autofmt-table.qza \
   --m-metadata-file ../new-sample-metadata.tsv \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
   --o-filtered-table peri-fmt-table.qza
 ```
-How would we check to see if there is no more duplicates? Let's summarize the feature table! 
-```bash
+How would we check to see if there is no more duplicates? Let's summarize the feature table!
+```shell
 qiime feature-table summarize \
   --i-table peri-fmt-table.qza \
   --m-sample-metadata-file ../new-sample-metadata.tsv \
   --o-visualization peri-fmt-table.qzv
 ```
-Unforunately, we still have some subjects that have more then one sample. So I manually filtered that out. 
-```bash
+Unforunately, we still have some subjects that have more then one sample. So I manually filtered that out.
+```shell
 
 echo SampleID > samples-to-keep.tsv
 echo SRR14092317 > samples-to-keep.tsv
 
 ```
-```bash
+```shell
 qiime feature-table filter-samples \
   --i-table peri-fmt-table.qza \
   --m-metadata-file samples-to-keep.tsv \
   --o-filtered-table id-filtered-peri-fmt-table.qza
 ```
 
-```bash
+```shell
 qiime feature-table summarize \
   --i-table id-filtered-peri-fmt-table.qza \
   --m-sample-metadata-file ../new-sample-metadata.tsv \
   --o-visualization id-filtered-peri-fmt-table.qzv
 ```
 Now lets run ANCOM-BC to see what features are different between our control and FMT group, directly after FMT intervention
-```bash
+```shell
  qiime composition ancombc \
   --i-table id-filtered-peri-fmt-table.qza \
   --m-metadata-file ../new-sample-metadata.tsv \

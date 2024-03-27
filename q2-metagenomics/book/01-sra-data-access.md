@@ -1,14 +1,14 @@
-# q2-fondue (Michal)
+# Data access from SRA and other resources
 
 ## Setup
 
 Before we dive into the tutorial, let's set up the required directory structre and make sure we have all the required software installed.
 
-### QIIME 2 shotgun distribution
+### QIIME 2 metagenome distribution
 
-You can install the latest distribution of the QIIME 2 shotgun distribution by following the instructions [here](https://docs.qiime2.org/2024.2/install/native/#qiime-2-shotgun-distribution). Once installed, you can activate the environment by running the following command:
+You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions [here](https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution). Once installed, you can activate the environment by running the following command:
 
-```bash
+```shell
 conda activate qiime2-shotgun-2024.2
 ```
 
@@ -16,7 +16,7 @@ conda activate qiime2-shotgun-2024.2
 
 Below you can see the directory structure that we will use throughout this tutorial:
 
-```bash
+```shell
 <your working directory>
 ├── moshpit_tutorial
 │   ├── cache
@@ -25,13 +25,13 @@ Below you can see the directory structure that we will use throughout this tutor
 
 Once you decided on the location of your working directory, let's create the `results` subdirectory by running the following command:
 
-```bash
+```shell
 mkdir -p moshpit_tutorial/results
 ```
 
 Next, we create the `cache` subdirectory (this is where majority of the data will be written to by QIIME 2) by running the following command:
 
-```bash
+```shell
 qiime tools cache-create \
   --cache ./moshpit_tutorial/cache
 ```
@@ -44,7 +44,7 @@ In order to perform the taxonomic and functional annotation, we will need a coup
 
 1. Kraken 2/Bracken database
 
-```bash
+```shell
 qiime moshpit build-kraken-db \
     --p-collection standard \
     --o-kraken2-database ./moshpit_tutorial/cache:kraken_standard \
@@ -54,13 +54,13 @@ qiime moshpit build-kraken-db \
 
 2. EggNOG databases
 
-```bash
+```shell
 qiime moshpit fetch-diamond-db \
     --o-diamond-db ./moshpit_tutorial/cache:eggnog_diamond_full \
     --verbose
 ```
 
-```bash
+```shell
 qiime moshpit fetch-eggnog-db \
     --o-eggnog-db ./moshpit_tutorial/cache:eggnog_annot_full \
     --verbose
@@ -70,13 +70,13 @@ qiime moshpit fetch-eggnog-db \
 
 The data we are using in this tutorial can be fetched from the SRA repository using the [q2-fondue](https://github.com/bokulich-lab/q2-fondue) plugin. You can fetch the list of accession IDs using the following command:
 
-```bash
+```shell
 wget TODO
 ```
 
 Next, we need to import the accession IDs into a QIIME 2 artifact:
 
-```bash
+```shell
 qiime tools import \
   --type NCBIAccessionIDs \
   --input-path ids.tsv \
@@ -85,7 +85,7 @@ qiime tools import \
 
 Finally, we can use the `get-sequences` action to download the data (please insert your e-mail address in the `--p-email` parameter):
 
-```bash
+```shell
 qiime fondue get-sequences \
     --i-accession-ids ./moshpit_tutorial/ids.qza \
     --p-n-jobs 16 \
@@ -97,9 +97,9 @@ qiime fondue get-sequences \
 ```
 This will download all the sequences into the QIIME 2 cache. It is a lot of data, so keep in mind that depending on your network speed, this might take a while. Once the data is downloaded, you can proceed to one (or more) of the following steps:
 
-- [Annotation of reads](#TODO)
-- [Generation and annotation of contigs](#TODO)
-- [Generation and annotation of MAGs](#TODO)
+- Annotation of reads (TODO)
+- Generation and annotation of contigs (TODO)
+- Generation and annotation of MAGs (TODO)
 
 Before we jump into the next sections, lets discuss our parsl_config! We are using Parsl to parallelize our computationally expensive jobs. This will be used to run `Kraken` and `Eggnog-Mapper`. Here we can decide how many workers, cores, nodes and blocks.
 ```

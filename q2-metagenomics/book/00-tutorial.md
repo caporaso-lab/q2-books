@@ -1,17 +1,17 @@
 # Taxonomic annotation of reads and assembled contigs
 
 ```{warning}
-Shotgun metagenomics analysis with QIIME 2 is in alpha release.
+Metagenomics analysis with QIIME 2 is in alpha release.
 This means that results you generate should be considered preliminary, and NOT PUBLICATION QUALITY.
 Additionally, interfaces are subject to change, and those changes may be backward incompatible (meaning that a command or file that works in one version of the QIIME 2 Shotgun Metagenomics distribution may not work in the next version of that distribution).
 ```
 
 ```{warning}
-Filtering of human and other host-associated reads from shotgun metagenomics data is an active area of research,
+Filtering of human and other host-associated reads from metagenomics data is an active area of research,
 and for human hosts in particular updated approaches need to be developed and validated that filter based on
 the [human pangenome](https://humanpangenome.org/), rather than a single human genome sequence. We don't have
 a recommendation on a tool for this right now, but some are in development. Recent publications ([1](https://genome.cshlp.org/content/29/6/954.long), [2](https://doi.org/10.1038/s41564-023-01381-3))
-suggest that **personally identifying information can persist in human-derived shotgun metagenome data,
+suggest that **personally identifying information can persist in human-derived metagenome data,
 even when following current best practices for host read removal**. QIIME 2 has not solved this problem.
 
 All of that said, you can use [`qiime quality-control filter-reads`](https://docs.qiime2.org/2023.9/plugins/available/quality-control/filter-reads/)

@@ -1,0 +1,30 @@
+#######################################################################################
+# A default configuration that will be loaded for all jupyter books
+# See the documentation for help and more options:
+# https://jupyterbook.org/customize/config.html
+
+#######################################################################################
+# Book settings
+title                       : Metagenomics Analysis with QIIME 2  # The title of the book. Will be placed in the left navbar.
+author                      : Bokulich and Caporaso Labs  # The author of the book
+copyright                   : "2024"  # Copyright year to be placed in the footer
+logo                        : logo.png  # A path to the book logo
+
+execute:
+  execute_notebooks: force
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+bibtex_bibfiles:
+  - references.bib
+
+repository:
+  url: https://github.com/caporaso-lab/q2-book
+  path_to_book: q2-metagenomics/book
+  branch: main
+
+html:
+  use_issues_button: true
+  use_repository_button: true

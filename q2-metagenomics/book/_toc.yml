@@ -4,7 +4,9 @@
 format: jb-book
 root: intro
 chapters:
-- file: 00-tutorial.md
-- file: 01-tutorial.md
+- file: 01-sra-data-access.md
+- file: 02-read-analysis.md
+- file: 03-contig-analysis.md
+- file: 04-MAG-analysis.md
 - file: 90-tips.md
 - file: 91-workflow-diagram.md

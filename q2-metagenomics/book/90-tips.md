@@ -1,4 +1,4 @@
-# Tips for shotgun metagenome analysis with QIIME 2
+# Tips for metagenome analysis with QIIME 2
 
 ## Use temporary directories with a lot of storage capacity
 
