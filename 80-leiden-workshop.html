@@ -393,21 +393,16 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity-observation">Gene diversity observation</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Jaccard Distance Matrix PCoA creation</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Emperor Plot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation-for-gene-diversity">Jaccard Distance Matrix PCoA creation for gene diversity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation-for-gene-diversity">Emperor Plot Creation for gene diversity</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">EggNOG search using diamond aligner</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
 </ul>
@@ -571,24 +566,8 @@ document.write(`
 <span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv&quot;</span>
 </pre></div>
 </div>
-</section>
-<section id="eggnog-search-using-diamond-aligner">
-<h3>EggNOG search using diamond aligner<a class="headerlink" href="#eggnog-search-using-diamond-aligner" title="Permalink to this heading">#</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-sequences<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-diamond-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_diamond_full&quot;</span><span class="se">\</span>
-<span class="w">  </span>--p-num-cpus<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--p-db-in-memory<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_hits_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--verbose
-</pre></div>
-</div>
-</section>
-<section id="gene-diversity-observation">
-<h3>Gene diversity observation<a class="headerlink" href="#gene-diversity-observation" title="Permalink to this heading">#</a></h3>
-<section id="id3">
-<h4>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<section id="jaccard-distance-matrix-pcoa-creation-for-gene-diversity">
+<h4>Jaccard Distance Matrix PCoA creation for gene diversity<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation-for-gene-diversity" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
@@ -601,8 +580,8 @@ document.write(`
 </pre></div>
 </div>
 </section>
-<section id="id4">
-<h4>Emperor Plot Creation<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<section id="emperor-plot-creation-for-gene-diversity">
+<h4>Emperor Plot Creation for gene diversity<a class="headerlink" href="#emperor-plot-creation-for-gene-diversity" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-pcoa<span class="w">  </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -610,16 +589,6 @@ document.write(`
 </pre></div>
 </div>
 </section>
-</section>
-<section id="annotate-orthologs-against-eggnog-database">
-<h3>Annotate orthologs against eggNOG database<a class="headerlink" href="#annotate-orthologs-against-eggnog-database" title="Permalink to this heading">#</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-annotate<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--i-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--i-eggnog-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annot_full&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--o-ortholog-annotations<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annotated_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--verbose
-</pre></div>
-</div>
 </section>
 </section>
 <section id="mag-based-analysis">
@@ -639,29 +608,6 @@ document.write(`
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>metadata<span class="w"> </span>tabulate<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--m-input-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--p-page-size<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_hits_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--verbose
-</pre></div>
-</div>
-</section>
-<section id="id5">
-<h3>EggNOG search using diamond aligner<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-sequences<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-diamond-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_diamond_full&quot;</span><span class="se">\</span>
-<span class="w">  </span>--p-num-cpus<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--p-db-in-memory<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_hits_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_derep_mags \</span>
-<span class="s2">  --verbose</span>
-</pre></div>
-</div>
-</section>
-<section id="id6">
-<h3>Annotate orthologs against eggNOG database<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-annotate<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--i-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--i-eggnog-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annot_full&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--o-ortholog-annotations<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annotated_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--verbose
 </pre></div>
 </div>
@@ -754,21 +700,16 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity-observation">Gene diversity observation</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Jaccard Distance Matrix PCoA creation</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Emperor Plot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Taxa-bar Creation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation-for-gene-diversity">Jaccard Distance Matrix PCoA creation for gene diversity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation-for-gene-diversity">Emperor Plot Creation for gene diversity</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">EggNOG search using diamond aligner</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
 </ul>
