@@ -1,0 +1,826 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Reads Analysis &#8212; Metagenomics Analysis with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '02-read-analysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contig Analysis" href="03-contig-analysis.html" />
+    <link rel="prev" title="Data access from SRA and other resources" href="01-sra-data-access.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Metagenomics Analysis with QIIME 2 - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Metagenomics Analysis with QIIME 2 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Metagenomics analysis with QIIME 2
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-sra-data-access.html">Data access from SRA and other resources</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reads Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-contig-analysis.html">Contig Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-MAG-analysis.html">MAG analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="90-tips.html">Tips for metagenome analysis with QIIME 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="91-workflow-diagram.html">Diagram of QIIME 2 metagenomics workflow</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/caporaso-lab/q2-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/caporaso-lab/q2-book/issues/new?title=Issue%20on%20page%20%2F02-read-analysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/02-read-analysis.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reads Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-taxonomic-annotation">Read Taxonomic Annotation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table-and-normalization">Filtering Feature Table and Normalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viral-taxa-bar-creation">Viral Taxa-bar Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-abundance-analysis">Differential Abundance Analysis</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reads-analysis">
+<h1>Reads Analysis<a class="headerlink" href="#reads-analysis" title="Permalink to this heading">#</a></h1>
+<p>This section of the tutorial focuses on obtaining and analyzing reads. We will taxonomically annotate the reads and investigate relevant diversity and differential abundance methods. However, we are not able to functionally annotate reads that will have to wait for a later step!</p>
+<section id="read-taxonomic-annotation">
+<h2>Read Taxonomic Annotation<a class="headerlink" href="#read-taxonomic-annotation" title="Permalink to this heading">#</a></h2>
+<p>With metagenomic data, our first step of our analysis is to run Kraken.</p>
+<p>This will give us taxonomic annotations for our reads and from this there, we can create our feature table that we will use for the rest of the analysis</p>
+<p>In this command, we have loaded all of our inputs into cache, this saves time unzipping, reading, and writing them into memory. We are also writing our outputs directly to <code class="docutils literal notranslate"><span class="pre">Artifact</span> <span class="pre">Cache</span></code>, this similarly saves time for writing the files out and zipping them into .qza</p>
+<p>We have found that its most effective to keep your artifacts in cache until after you have a feature table due to the size of this data.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>classify-kraken2<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--i-seqs<span class="w"> </span>./moshpit_tutorial/cache:workshop-reads<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--i-kraken2-db<span class="w"> </span>./moshpit_tutorial/cache:kracken_standard<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-threads<span class="w"> </span><span class="m">40</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-confidence<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-minimum-base-quality<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--o-hits<span class="w"> </span>./moshpit_tutorial/cache:workshop_kraken_db_hits<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--o-reports<span class="w"> </span>./moshpit_tutorial/cache:workshop_kraken_db_reports<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-report-minimizer-data<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--use-cache<span class="w"> </span>./moshpit_tutorial/cache<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--parallel-config<span class="w"> </span>slurm_config.toml<span class="w"> </span><span class="se">\</span>
+<span class="w">    	</span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">    	</span>--p-memory-mapping<span class="w"> </span>False<span class="w"> </span><span class="c1">##this was taking too much time for me</span>
+</pre></div>
+</div>
+<p>At this point we have kraken reports and hits.</p>
+<p>Reports are per sample tab seperated files that contain <strong>read</strong> information per line. Hits are per sample tab seperated files that contain <strong>taxon</strong> information per line</p>
+<p>Hits contain read information on each line:  U/C based on if the read was classified or not, the read id as seen in the fastq header,Taxonomic ID(or 0 if unclassified), The length of the sequences, amd list of LCA mappings of each k-mer (which indicates what k-mers mapped to which taxonomic annotations).</p>
+<p>Reports contain taxon information on each line: Percentage of fragments covered by the clade root, number of fragments covered by clade root, Number of fragments assigned directly to this taxon, a rank code: indicating (U)nclassified, (R)oot, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, or (S)pecies, NCBI taxonomic ID number, and taxonomic annotation.</p>
+<p>For more information on Kraken outputs, <a class="reference external" href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">visit the Kraken Manual</a>!</p>
+<p>Bracken uses a Bracken database, the length of your reads and the kraken reports to give you a <code class="docutils literal notranslate"><span class="pre">feature-table[Frequency]</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>estimate-bracken<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-bracken-db<span class="w"> </span>./moshpit_tutorial/cache:bracken_standard<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-read-len<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-kraken-reports<span class="w"> </span>./moshpit_tutorial/cache:workshop_kraken_db_reports<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-reports<span class="w"> </span>./moshpit_tutorial/kraken-outputs/bracken-reports.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-taxonomy<span class="w"> </span>./moshpit_tutorial/kraken-outputs/taxonomy-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-table<span class="w"> </span>~./moshpit_tutorial/kraken-outputs/table-bracken.qza
+</pre></div>
+</div>
+</section>
+<section id="filtering-feature-table-and-normalization">
+<h2>Filtering Feature Table and Normalization<a class="headerlink" href="#filtering-feature-table-and-normalization" title="Permalink to this heading">#</a></h2>
+<p>Once we have feature table, this is becomes alot more similar to the amplicon workflow of QIIME 2.</p>
+<p>In this tutorial, we’re going to work specifically with samples that were included in the autoFMT randomized trial. Many of these subjects dropped out before randomization (placing the subject into FMT group or Control group) and therefore do not have a value in the <code class="docutils literal notranslate"><span class="pre">autoFmtGroup</span></code>.</p>
+<p>We need to filter our feature table to contain samples that were in the autoFMT study by filtering out any samples that are null in the metadata column autoFmtGroup.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>table-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>autofmt-table.qza
+</pre></div>
+</div>
+<p>For this tutorial, to normalization our data we will generate a relative-frequency table.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>relative-frequency<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>autofmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--o-relative-frequency-table<span class="w"> </span>autofmt-table-rf.qza<span class="w"> </span><span class="se">\</span>
+</pre></div>
+</div>
+</section>
+<section id="alpha-diversity">
+<h2>Alpha diversity<a class="headerlink" href="#alpha-diversity" title="Permalink to this heading">#</a></h2>
+<p>First we’ll look for general patterns, by comparing different categorical groupings of samples to see if there is some relationship to richness.</p>
+<p>To start with, we’ll gernate an ‘observed features’ vector from our relative frequency table:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>autofmt-table-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-metric<span class="w"> </span><span class="s2">&quot;observed_features&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-alpha-diversity<span class="w"> </span>obs-autofmt-bracken-rf
+</pre></div>
+</div>
+<p>The first thing to notice is the high variability in each individual’s richness
+(<code class="docutils literal notranslate"><span class="pre">PatientID</span></code>). The centers and spreads of the individual distributions are
+likely to obscure other effects, so we will want to keep this in mind.
+Additionally, we have repeated measures of each individual, so we are
+violating independence assumptions when looking at other categories.
+(Kruskal-Wallis is a non-parameteric test, but like most tests, still requires
+samples to be independent.)</p>
+<p>Keeping in mind that other categories are probably inconclusive,
+we notice that there are (amusingly, and somewhat reassuringly) differences
+in stool consistency (solid vs non-solid).</p>
+<p>Because these data were derived from a study in which participants recieved
+auto-fecal microbiota transplant, we may also be interested in whether there
+was a difference in richness between the control group and the auto-FMT goup.</p>
+<p>Looking at <code class="docutils literal notranslate"><span class="pre">autoFmtGroup</span></code> we see that there is no apparent difference, but
+we also know that we are violating independence with our repeated measures, and
+all patients recieved a bone-marrow transplant which may be a stronger effect.
+(The goal of the auto-FMT was to mitigate the impact of the marrow transplant.)</p>
+<p>We will use a more advanced statistical model to explore this question.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha-group-significance<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-alpha-diversity<span class="w"> </span>obs-table-bracken-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span>obs-table-bracken-rf-group-sig.qzv
+</pre></div>
+</div>
+<section id="linear-mixed-effects">
+<h3>Linear Mixed Effects<a class="headerlink" href="#linear-mixed-effects" title="Permalink to this heading">#</a></h3>
+<p>In order to manage the repeated measures, we will use a linear
+mixed-effects model. In a mixed-effects model, we combine fixed-effects (your typical linear regression coefficients) with random-effects. These random
+effects are some (ostensibly random) per-group coefficient which minimizes the
+error within that group. In our situation, we would want our random effect to
+be the <code class="docutils literal notranslate"><span class="pre">PatientID</span></code> as we can see each subject has a different baseline for
+richness (and we have multiple measures for each patient).
+By making that a random effect, we can more accurately ascribe associations to
+the fixed effects as we treat each sample as a “draw” from a per-group
+distribution.</p>
+<p>There are several ways to create a linear model with random effects, but we
+will be using a <em>random-intercept</em>, which allows for the per-subject intercept
+to take on a different average from the population intercept (modeling what we
+saw in the group-significance plot above).</p>
+<p>First let’s evaluate the general trend of the Bone Marrow transplant.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span>obs-autofmt-bracken-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-state-column<span class="w"> </span>DayRelativeToNearestHCT<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--o-visualization<span class="w"> </span>lme-obs-features-HCT.qzv
+</pre></div>
+</div>
+<p>Here we see a significant association between richness and the bone marrow
+transplant.</p>
+<p>We may also be interested in the effect of the auto fecal microbiota transplant. It should be known that these are generally correlated, so choosing one model over the other will require external knowledge.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span>obs-autofmt-bracken-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>lme-obs-features-FMT.qzv
+</pre></div>
+</div>
+<p>We also see a downward trend from the FMT. Since the goal of the FMT was to
+ameliorate the impact of the bone marrow transplant protocol (which involves
+an extreme course of antibiotics) on gut health, and the timing of the FMT is
+related to the timing of the marrow transplant, we might deduce that the
+negative coefficient is primarily related to the bone marrow transplant
+procedure. (We can’t prove this with statistics alone however, in this case,
+we are using abductive reasoning).</p>
+<p>Looking at the log-likelihood, we also note that the HCT result is slightly
+better than the FMT in accounting for the loss of richness. But only slightly,
+if we were to perform model testing it may not prove significant.</p>
+<p>In any case, we can ask a more targeted question to identify if the FMT was
+useful in recovering richness.</p>
+<p>By adding the <code class="docutils literal notranslate"><span class="pre">autoFmtGroup</span></code> to our linear model, we can see if there
+are different slopes for the two groups, based on an <em>interaction term</em>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span>obs-autofmt-bracken-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-group-columns<span class="w"> </span>autoFmtGroup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>lme-obs-features-treatmentVScontrol.qzv
+</pre></div>
+</div>
+<p>Here we see that the <code class="docutils literal notranslate"><span class="pre">autoFmtGroup</span></code> is not on its own a significant predictor
+of richness, but and no significance in it’s interaction term with <code class="docutils literal notranslate"><span class="pre">Q('day-relative-to-fmt')</span></code>.</p>
+<p>This is surprising outcome because we know that FMT intervention was supposed to rectify the decreasing diversity following allo-HCT.</p>
+<p>This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend.</p>
+<p>Let’s checkout the 16S amplicon verison of this visualization:
+(link to 16s viz)</p>
+<p>We can also investigate Shannon’s entropy using similar steps. However general trends between Shannons and Observed Features remain the same.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>autofmt-table-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-metric<span class="w"> </span><span class="s2">&quot;shannon&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-alpha-diversity<span class="w"> </span>shannon-autofmt-bracken-rf
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span>shannon-autofmt-bracken-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>shannon_entropy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>lme-shannon-features-FMT.qzv
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span>shannon-autofmt-bracken-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>shannon_entropy<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>lme-shannon-features-FMT.qzv
+</pre></div>
+</div>
+</section>
+</section>
+<section id="beta-diversity">
+<h2>Beta Diversity<a class="headerlink" href="#beta-diversity" title="Permalink to this heading">#</a></h2>
+<p>Now that we better understand community richness trends, lets look at differences in microbial composition.</p>
+<p>Let investigate this by looking at Bray Curtis:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>autofmt-table-rf.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>braycurtis<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-distance-matrix<span class="w"> </span>braycurtis-autofmt
+</pre></div>
+</div>
+<section id="emperor-plot-creation">
+<h3>Emperor Plot Creation<a class="headerlink" href="#emperor-plot-creation" title="Permalink to this heading">#</a></h3>
+<p>Now that we have our Bray Curtis distance matrix, lets visualize this using a PCOA plot.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span>pcoa-braycurtis-auto-fmt.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>braycurtis-auto-fmt-emperor.qzv
+</pre></div>
+</div>
+<p>We can make <code class="docutils literal notranslate"><span class="pre">week-relative-to-fmt</span></code> a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span>pcoa-braycurtis-auto-fmt.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-custom-axes<span class="w"> </span>week-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>braycurtis-auto-fmt-emperor-custom.qzv
+</pre></div>
+</div>
+</section>
+</section>
+<section id="taxa-bar-creation">
+<h2>Taxa-bar Creation<a class="headerlink" href="#taxa-bar-creation" title="Permalink to this heading">#</a></h2>
+<p>Another way we can look at microbial composition is to investigate the taxa barplot. One thing to Note, these tend to be even more chaotic then the Amplicon data.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>table-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span>taxonomy-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>taxa-bar-plot.qzv
+</pre></div>
+</div>
+<p>Lets highlight some features of metagenomic data that we wouldn’t see in Amplicon data.</p>
+<section id="viral-taxa-bar-creation">
+<h3>Viral Taxa-bar Creation<a class="headerlink" href="#viral-taxa-bar-creation" title="Permalink to this heading">#</a></h3>
+<p>We will take a peek at the viral community members.</p>
+<p>First, we filter down to the features taxomically labeled “Virus”</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>filter-table<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>autofmt-filt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span>taxonomy-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-include<span class="w"> </span>Viruses<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>virus-autofmt-table
+</pre></div>
+</div>
+<p>Then we will filtered out any samples that were below 1,000.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>virus-autofmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-min-frequency<span class="w"> </span><span class="m">1240</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>autofmt-virus-feature-contingency-filtered-table.qza
+</pre></div>
+</div>
+<p>Now we can make our Viral Taxa Bar plot</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w">  </span>autofmt-virus-feature-contingency-filtered-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span>taxonomy-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>virus-taxa-bar-plot.qzv
+</pre></div>
+</div>
+</section>
+</section>
+<section id="differential-abundance-analysis">
+<h2>Differential Abundance Analysis<a class="headerlink" href="#differential-abundance-analysis" title="Permalink to this heading">#</a></h2>
+<p>ANCOM-BC does not allow for repeated measures, so we need to filter down to a time point that will give us one sample per subject.  We will attempt to do that by filtering down to the “peri” timepoint. This will allow us to look at the timepoint directly following FMT.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>autofmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s2">&quot;[categorical-time-relative-to-fmt]=&#39;peri&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>peri-fmt-table.qza
+</pre></div>
+</div>
+<p>How would we check to see if there is no more duplicates? Let’s summarize the feature table!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>peri-fmt-table.qzv
+</pre></div>
+</div>
+<p>Unforunately, we still have some subjects that have more then one sample. So I manually filtered that out.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>SampleID<span class="w"> </span>&gt;<span class="w"> </span>samples-to-keep.tsv
+<span class="nb">echo</span><span class="w"> </span>SRR14092317<span class="w"> </span>&gt;<span class="w"> </span>samples-to-keep.tsv
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>samples-to-keep.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>id-filtered-peri-fmt-table.qza
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>id-filtered-peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>id-filtered-peri-fmt-table.qzv
+</pre></div>
+</div>
+<p>Now lets run ANCOM-BC to see what features are different between our control and FMT group, directly after FMT intervention</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>composition<span class="w"> </span>ancombc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>id-filtered-peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>../new-sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-formula<span class="w"> </span>autoFmtGroup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-differentials<span class="w"> </span>differentials-peri-autofmt.qza
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01-sra-data-access.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data access from SRA and other resources</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03-contig-analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Contig Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-taxonomic-annotation">Read Taxonomic Annotation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table-and-normalization">Filtering Feature Table and Normalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viral-taxa-bar-creation">Viral Taxa-bar Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-abundance-analysis">Differential Abundance Analysis</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bokulich and Caporaso Labs
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
