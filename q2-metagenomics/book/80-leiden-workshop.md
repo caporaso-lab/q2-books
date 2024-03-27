@@ -183,3 +183,41 @@ qiime moshpit eggnog-annotate \
  --verbose
 ```
 
+# MAG-based analysis
+### Build taxonomy table
+```shell
+qiime moshpit kraken2-to-mag-features \
+ --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
+ --i-hits "./moshpit_tutorial/cache:kraken_hits_derep_mags" \
+ --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
+ --verbose
+```
+
+```shell
+qiime metadata tabulate \
+ --m-input-file "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
+ --p-page-size "./moshpit_tutorial/cache:kraken_hits_derep_mags" \
+ --verbose
+```
+
+## MAGs functional annotation workflow
+### EggNOG search using diamond aligner
+```shell
+qiime moshpit eggnog-diamond-search \
+  --i-sequences "./moshpit_tutorial/cache:derep_mags" \
+  --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
+  --p-num-cpus 14 \
+  --p-db-in-memory \
+  --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_derep_mags" \
+  --o-table "./moshpit_tutorial/cache:diamond_feature_table_derep_mags \
+  --verbose
+```
+### Annotate orthologs against eggNOG database
+```shell
+qiime moshpit eggnog-annotate \
+ --i-eggnog-hits "./moshpit_tutorial/cache:derep_mags" \
+ --i-eggnog-db "./moshpit_tutorial/cache:eggnog_annot_full" \
+ --o-ortholog-annotations "./moshpit_tutorial/cache:eggnog_annotated_derep_mags" \
+ --verbose
+```
+
