@@ -141,7 +141,7 @@ qiime taxa barplot \
   --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
-
+### Functional analysis
 #### Jaccard Distance Matrix PCoA creation for gene diversity
 ```shell
 qiime diversity beta \
