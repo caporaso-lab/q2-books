@@ -186,15 +186,7 @@ qiime longitudinal linear-mixed-effects \
   --p-metric observed_features \
   --o-visualization lme-obs-features-treatmentVScontrol.qzv
 ```
-Here we see that the ``autoFmtGroup`` is not on its own a significant predictor
-of richness, but and no significance in it's interaction term with ``Q('day-relative-to-fmt')``.
-
-This is surprising outcome because we know that FMT intervention was supposed to rectify the decreasing diversity following allo-HCT.
-
-This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend.
-
-Let's checkout the 16S amplicon verison of this visualization:
-(link to 16s viz)
+Here we see that the `autoFmtGroup` is not on its own a significant predictor of richness, but its interaction term with `Q('day-relative-to-fmt')` is. This implies that there are different slopes between these groups, and we note that given the coding of `Q('day-relative-to-fmt'):autoFmtGroup[T.treatment]` we have a positive coefficient which counteracts (to a degree) the negative coefficient of Q('day-relative-to-fmt').
 
 We can also investigate Shannon's entropy using similar steps. However general trends between Shannons and Observed Features remain the same.
 

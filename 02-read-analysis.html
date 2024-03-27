@@ -547,12 +547,7 @@ are different slopes for the two groups, based on an <em>interaction term</em>.<
 <span class="w">  </span>--o-visualization<span class="w"> </span>lme-obs-features-treatmentVScontrol.qzv
 </pre></div>
 </div>
-<p>Here we see that the <code class="docutils literal notranslate"><span class="pre">autoFmtGroup</span></code> is not on its own a significant predictor
-of richness, but and no significance in it’s interaction term with <code class="docutils literal notranslate"><span class="pre">Q('day-relative-to-fmt')</span></code>.</p>
-<p>This is surprising outcome because we know that FMT intervention was supposed to rectify the decreasing diversity following allo-HCT.</p>
-<p>This may be because these metagenomic samples are a subsample of the 16S samples in which we originally saw this trend.</p>
-<p>Let’s checkout the 16S amplicon verison of this visualization:
-(link to 16s viz)</p>
+<p>Here we see that the <code class="docutils literal notranslate"><span class="pre">autoFmtGroup</span></code> is not on its own a significant predictor of richness, but its interaction term with <code class="docutils literal notranslate"><span class="pre">Q('day-relative-to-fmt')</span></code> is. This implies that there are different slopes between these groups, and we note that given the coding of <code class="docutils literal notranslate"><span class="pre">Q('day-relative-to-fmt'):autoFmtGroup[T.treatment]</span></code> we have a positive coefficient which counteracts (to a degree) the negative coefficient of Q(‘day-relative-to-fmt’).</p>
 <p>We can also investigate Shannon’s entropy using similar steps. However general trends between Shannons and Observed Features remain the same.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-table<span class="w"> </span>autofmt-table-rf.qza<span class="w"> </span><span class="se">\</span>
