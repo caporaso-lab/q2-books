@@ -142,19 +142,7 @@ qiime taxa barplot \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
 
-### EggNOG search using diamond aligner
-```shell
-qiime moshpit eggnog-diamond-search \
-  --i-sequences "./moshpit_tutorial/cache:contigs" \
-  --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
-  --p-num-cpus 14 \
-  --p-db-in-memory \
-  --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_contigs" \
-  --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
-  --verbose
-```
-### Gene diversity observation
-#### Jaccard Distance Matrix PCoA creation
+#### Jaccard Distance Matrix PCoA creation for gene diversity
 ```shell
 qiime diversity beta \
   --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
@@ -167,21 +155,12 @@ qiime diversity pcoa \
   --i-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs" \
   --o-pcoa "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs"
 ```
-#### Emperor Plot Creation
+#### Emperor Plot Creation for gene diversity
 ```shell
 qiime emperor plot \
   --i-pcoa  "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs" \
   --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --o-visualization "./moshpit_tutorial/results/jaccard_distance_matrix_pcoa_contigs.qzv"
-```
-
-### Annotate orthologs against eggNOG database
-```shell
-qiime moshpit eggnog-annotate \
- --i-eggnog-hits "./moshpit_tutorial/cache:contigs" \
- --i-eggnog-db "./moshpit_tutorial/cache:eggnog_annot_full" \
- --o-ortholog-annotations "./moshpit_tutorial/cache:eggnog_annotated_contigs" \
- --verbose
 ```
 
 ## MAG-based analysis
@@ -202,23 +181,5 @@ qiime metadata tabulate \
  --verbose
 ```
 
-### EggNOG search using diamond aligner
-```shell
-qiime moshpit eggnog-diamond-search \
-  --i-sequences "./moshpit_tutorial/cache:derep_mags" \
-  --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
-  --p-num-cpus 14 \
-  --p-db-in-memory \
-  --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_derep_mags" \
-  --o-table "./moshpit_tutorial/cache:diamond_feature_table_derep_mags \
-  --verbose
-```
-### Annotate orthologs against eggNOG database
-```shell
-qiime moshpit eggnog-annotate \
- --i-eggnog-hits "./moshpit_tutorial/cache:derep_mags" \
- --i-eggnog-db "./moshpit_tutorial/cache:eggnog_annot_full" \
- --o-ortholog-annotations "./moshpit_tutorial/cache:eggnog_annotated_derep_mags" \
- --verbose
-```
+
 
