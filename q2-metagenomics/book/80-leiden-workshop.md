@@ -39,23 +39,26 @@ qiime tools cache-create \
 We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the `results` directory. If you want to read more about the QIIME cache, you can do so [here](https://dev.qiime2.org/latest/api-reference/cache/).
 
 # Read-based analysis
-PLACE HOLDER!
+## Filtering Feature Table
+```shell
+qiime feature-table filter-samples \
+  --i-table "./moshpit_tutorial/cache:kraken_feature_table_reads" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --p-where 'autoFmtGroup IS NOT NULL' \
+  --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads"
+```
 
-
-
+## Taxa-bar Creation
+```shell
+qiime taxa barplot \
+  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads" \
+  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_reads" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv"v \
+  --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_reads.qzv"
+```
 
 # Contig-based analysis
-
-## Feature Table Preparation
-### Presence/Absence Feature Table Creation
-```shell
-qiime moshpit kraken2-to-features \
-  --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
-  --o-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
-  --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
-  --verbose
-```
-## Filtering Feature Table and Normalization
+## Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
@@ -64,7 +67,7 @@ qiime feature-table filter-samples \
   --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs"
 ```
 ## Alpha Diversity
-## Observed Features 
+### Observed Features 
 ```shell
 qiime diversity alpha \
     --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
@@ -102,7 +105,6 @@ qiime longitudinal linear-mixed-effects \
 
 ## Beta Diversity
 ### Jaccard Distance Matrix PCoA creation
-
 ```shell
 qiime diversity beta \
   --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
@@ -152,7 +154,7 @@ qiime moshpit eggnog-diamond-search \
   --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
   --verbose
 ```
-### Gene diversity
+## Gene diversity observation
 ### Jaccard Distance Matrix PCoA creation
 ```shell
 qiime diversity beta \
