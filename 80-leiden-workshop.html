@@ -174,6 +174,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="03-contig-analysis.html">Contig Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04-MAG-analysis.html">MAG analysis</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Metagenomics with QIIME 2 - Leiden 2024</a></li>
+
+
 <li class="toctree-l1"><a class="reference internal" href="90-tips.html">Tips for metagenome analysis with QIIME 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="91-workflow-diagram.html">Diagram of QIIME 2 metagenomics workflow</a></li>
 </ul>
@@ -371,12 +373,44 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-table-preparation">Feature Table Preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#presence-absence-feature-table-creation">Presence/Absence Feature Table Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table-and-normalization">Filtering Feature Table and Normalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-functional-annotation-workflow">Contig functional annotation workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity">Gene diversity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Emperor Plot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -418,6 +452,171 @@ document.write(`
 </pre></div>
 </div>
 <p>We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. If you want to read more about the QIIME cache, you can do so <a class="reference external" href="https://dev.qiime2.org/latest/api-reference/cache/">here</a>.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="read-based-analysis">
+<h1>Read-based analysis<a class="headerlink" href="#read-based-analysis" title="Permalink to this heading">#</a></h1>
+<p>PLACE HOLDER!</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="contig-based-analysis">
+<h1>Contig-based analysis<a class="headerlink" href="#contig-based-analysis" title="Permalink to this heading">#</a></h1>
+<section id="feature-table-preparation">
+<h2>Feature Table Preparation<a class="headerlink" href="#feature-table-preparation" title="Permalink to this heading">#</a></h2>
+<section id="presence-absence-feature-table-creation">
+<h3>Presence/Absence Feature Table Creation<a class="headerlink" href="#presence-absence-feature-table-creation" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>kraken2-to-features<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-reports<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_reports_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbose
+</pre></div>
+</div>
+</section>
+</section>
+<section id="filtering-feature-table-and-normalization">
+<h2>Filtering Feature Table and Normalization<a class="headerlink" href="#filtering-feature-table-and-normalization" title="Permalink to this heading">#</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="alpha-diversity">
+<h2>Alpha Diversity<a class="headerlink" href="#alpha-diversity" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="observed-features">
+<h2>Observed Features<a class="headerlink" href="#observed-features" title="Permalink to this heading">#</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-metric<span class="w"> </span><span class="s2">&quot;observed_features&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-alpha-diversity<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span>
+</pre></div>
+</div>
+<section id="linear-mixed-effects">
+<h3>Linear Mixed Effects<a class="headerlink" href="#linear-mixed-effects" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-state-column<span class="w"> </span>DayRelativeToNearestHCT<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/lme_obs_features_HCT_contigs.qzv&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/lme_obs_features_FMT_contigs.qzv&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-group-columns<span class="w"> </span>autoFmtGroup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/lme_obs_features_treatmentVScontrol_contigs.qzv&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="beta-diversity">
+<h2>Beta Diversity<a class="headerlink" href="#beta-diversity" title="Permalink to this heading">#</a></h2>
+<section id="jaccard-distance-matrix-pcoa-creation">
+<h3>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_contigs&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>pcoa<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="emperor-plot-creation">
+<h3>Emperor Plot Creation<a class="headerlink" href="#emperor-plot-creation" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/jaccard_autofmt_emperor.qzv</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-custom-axes<span class="w"> </span>week-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/jaccard_autofmt_emperor_custom.qzv&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="taxa-bar-creation">
+<h2>Taxa-bar Creation<a class="headerlink" href="#taxa-bar-creation" title="Permalink to this heading">#</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="contig-functional-annotation-workflow">
+<h2>Contig functional annotation workflow<a class="headerlink" href="#contig-functional-annotation-workflow" title="Permalink to this heading">#</a></h2>
+<section id="eggnog-search-using-diamond-aligner">
+<h3>EggNOG search using diamond aligner<a class="headerlink" href="#eggnog-search-using-diamond-aligner" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-sequences<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-diamond-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_diamond_full&quot;</span><span class="se">\</span>
+<span class="w">  </span>--p-num-cpus<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-db-in-memory<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_hits_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbose
+</pre></div>
+</div>
+</section>
+<section id="gene-diversity">
+<h3>Gene diversity<a class="headerlink" href="#gene-diversity" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="id1">
+<h3>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_contigs&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>pcoa<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Emperor Plot Creation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w">  </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/jaccard_distance_matrix_pcoa_contigs.qzv&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="annotate-orthologs-against-eggnog-database">
+<h3>Annotate orthologs against eggNOG database<a class="headerlink" href="#annotate-orthologs-against-eggnog-database" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-annotate<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--i-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--i-eggnog-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annot_full&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--o-ortholog-annotations<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annotated_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--verbose
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -485,12 +684,44 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Metagenomics with QIIME 2 - Leiden 2024</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-table-preparation">Feature Table Preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#presence-absence-feature-table-creation">Presence/Absence Feature Table Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table-and-normalization">Filtering Feature Table and Normalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-functional-annotation-workflow">Contig functional annotation workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity">Gene diversity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Emperor Plot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
