@@ -371,6 +371,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-temporary-directories-with-a-lot-of-storage-capacity">Use temporary directories with a lot of storage capacity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-slurm-config-example-for-eggnog-mapper-and-kraken">HPC Slurm Config Example for Eggnog mapper and Kraken</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-qiime-2-artifact-cache-for-reference-data">Use the QIIME 2 artifact cache for reference data</a></li>
 </ul>
             </nav>
@@ -390,6 +391,27 @@ document.write(`
 <p>Use a temporary directory where you have a lot of storage capacity. On a slurm-based system, set the temporary directory in your job script, so the environment is set up correctly where the job is running. I include the following two lines in all of my job scripts (the second line isn’t required, but allows me to confirm that it is set correctly on the node where the job is running).</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">TMPDIR</span><span class="o">=</span>/scratch/jgc53/temp
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$TMPDIR</span>
+</pre></div>
+</div>
+</section>
+<section id="hpc-slurm-config-example-for-eggnog-mapper-and-kraken">
+<h2>HPC Slurm Config Example for Eggnog mapper and Kraken<a class="headerlink" href="#hpc-slurm-config-example-for-eggnog-mapper-and-kraken" title="Permalink to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[parsl]
+
+[[parsl.executors]]
+class = &quot;HighThroughputExecutor&quot;
+label = &quot;default&quot;
+max_workers = 1
+
+[parsl.executors.provider]
+class = &quot;SlurmProvider&quot;
+mem_per_node = 200
+exclusive = false
+walltime = &quot;48:00:00&quot;
+nodes_per_block = 1
+cores_per_node = 40
+min_blocks = 1
+max_blocks = 10
 </pre></div>
 </div>
 </section>
@@ -463,6 +485,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-temporary-directories-with-a-lot-of-storage-capacity">Use temporary directories with a lot of storage capacity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-slurm-config-example-for-eggnog-mapper-and-kraken">HPC Slurm Config Example for Eggnog mapper and Kraken</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-qiime-2-artifact-cache-for-reference-data">Use the QIIME 2 artifact cache for reference data</a></li>
 </ul>
   </nav></div>
