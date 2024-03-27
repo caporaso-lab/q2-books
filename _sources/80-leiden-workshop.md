@@ -142,18 +142,26 @@ qiime taxa barplot \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
 ### Functional analysis
+### Filtering Feature Table
+```shell
+qiime feature-table filter-samples \
+  --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --p-where 'autoFmtGroup IS NOT NULL' \
+  --o-filtered-table "./moshpit_tutorial/cache:diamond_autofmt_feature_table_contigs"
+```
 #### Jaccard Distance Matrix PCoA creation for gene diversity
 ```shell
 qiime diversity beta \
-  --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
+  --i-table "./moshpit_tutorial/cache:diamond_autofmt_feature_table_contigs" \
   --p-metric jaccard \
-  --o-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs"
+  --o-distance-matrix "./moshpit_tutorial/cache:jaccard_diamond_autofmt_contigs"
 ```
 
 ```shell
 qiime diversity pcoa \
-  --i-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs" \
-  --o-pcoa "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs"
+  --i-distance-matrix "./moshpit_tutorial/cache:jaccard_diamond_autofmt_contigs" \
+  --o-pcoa "./moshpit_tutorial/cache:jaccard_diamond_autofmt_pcoa_contigs"
 ```
 #### Emperor Plot Creation for gene diversity
 ```shell
