@@ -1,5 +1,4 @@
 # Metagenomics with QIIME 2 - Leiden 2024
-## Data access from SRA and other resources
 
 ## Setup
 
