@@ -348,7 +348,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -364,6 +366,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -375,6 +389,38 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="metagenomics-with-qiime-2-leiden-2024">
 <h1>Metagenomics with QIIME 2 - Leiden 2024<a class="headerlink" href="#metagenomics-with-qiime-2-leiden-2024" title="Permalink to this heading">#</a></h1>
+<p>#Data access from SRA and other resources</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<p>Before we dive into the tutorial, let’s set up the required directory structre and make sure we have all the required software installed.</p>
+<section id="qiime-2-metagenome-distribution">
+<h3>QIIME 2 metagenome distribution<a class="headerlink" href="#qiime-2-metagenome-distribution" title="Permalink to this heading">#</a></h3>
+<p>You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions <a class="reference external" href="https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution">here</a>. Once installed, you can activate the environment by running the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>qiime2-shotgun-2024.2
+</pre></div>
+</div>
+</section>
+<section id="directory-structure">
+<h3>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">#</a></h3>
+<p>Below you can see the directory structure that we will use throughout this tutorial:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&lt;your<span class="w"> </span>working<span class="w"> </span>directory&gt;
+├──<span class="w"> </span>moshpit_tutorial
+│<span class="w">   </span>├──<span class="w"> </span>cache
+│<span class="w">   </span>├──<span class="w"> </span>results
+</pre></div>
+</div>
+<p>Once you decided on the location of your working directory, let’s create the <code class="docutils literal notranslate"><span class="pre">results</span></code> subdirectory by running the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>moshpit_tutorial/results
+</pre></div>
+</div>
+<p>Next, we create the <code class="docutils literal notranslate"><span class="pre">cache</span></code> subdirectory (this is where majority of the data will be written to by QIIME 2) by running the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>cache-create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cache<span class="w"> </span>./moshpit_tutorial/cache
+</pre></div>
+</div>
+<p>We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. If you want to read more about the QIIME cache, you can do so <a class="reference external" href="https://dev.qiime2.org/latest/api-reference/cache/">here</a>.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -431,6 +477,24 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qiime-2-metagenome-distribution">QIIME 2 metagenome distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
