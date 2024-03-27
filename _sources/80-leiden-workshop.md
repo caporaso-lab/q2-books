@@ -4,7 +4,7 @@
 
 Before we dive into the tutorial, let's set up the required directory structre and make sure we have all the required software installed.
 
-### QIIME 2 metagenome distribution
+#### QIIME 2 metagenome distribution
 
 You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions [here](https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution). Once installed, you can activate the environment by running the following command:
 
@@ -12,7 +12,7 @@ You can install the latest distribution of the QIIME 2 metagenome distribution b
 conda activate qiime2-shotgun-2024.2
 ```
 
-### Directory structure
+## Directory structure
 
 Below you can see the directory structure that we will use throughout this tutorial:
 
