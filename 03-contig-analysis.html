@@ -387,14 +387,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viral-taxa-bar-creation">Viral Taxa-bar Creation</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-functional-annotation-workflow">Contig functional annotation workflow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter…</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity">Gene diversity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Emperor Plot Creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>
@@ -615,34 +613,6 @@ are different slopes for the two groups, based on an <em>interaction term</em>.<
 <span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv&quot;</span>
 </pre></div>
 </div>
-<p>Let’s now highlight some features of metagenomic data that we wouldn’t be able to capture in Amplicon data.</p>
-<section id="viral-taxa-bar-creation">
-<h3>Viral Taxa-bar Creation<a class="headerlink" href="#viral-taxa-bar-creation" title="Permalink to this heading">#</a></h3>
-<p>We will take a peek at the viral community members.</p>
-<p>First, we filter down to the features taxomically labeled “Virus”</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>filter-table<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--p-include<span class="w"> </span>Viruses<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:virus_autofmt_feature_table_contigs&quot;</span>
-</pre></div>
-</div>
-<p>Then we will filtered out any samples that were below 1,000.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:virus_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--p-min-frequency<span class="w"> </span><span class="m">1240</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:filtered_virus_autofmt_feature_table_contigs&quot;</span>
-</pre></div>
-</div>
-<p>Now we can make our filtered Viral Taxa Bar plot</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:filtered_virus_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/virus_taxa_bar_plot_contigs.qzv</span>
-</pre></div>
-</div>
-</section>
 </section>
 <section id="contig-functional-annotation-workflow">
 <h2>Contig functional annotation workflow<a class="headerlink" href="#contig-functional-annotation-workflow" title="Permalink to this heading">#</a></h2>
@@ -659,31 +629,34 @@ are different slopes for the two groups, based on an <em>interaction term</em>.<
 <span class="w">  </span>--p-num-cpus<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-db-in-memory<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--o-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_hits_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs \</span>
-<span class="s2">  --verbose</span>
+<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbose
 </pre></div>
 </div>
 </section>
-<section id="filter">
-<h3>Filter…<a class="headerlink" href="#filter" title="Permalink to this heading">#</a></h3>
-</section>
 <section id="gene-diversity">
 <h3>Gene diversity<a class="headerlink" href="#gene-diversity" title="Permalink to this heading">#</a></h3>
-<p>Calculates gene diversity metrics, specifically Jaccard distance, for contigs.
-Calculate Jaccard beta-diversity matrix</p>
+<p>Now, let’s have a look at the gene composition of our community</p>
+</section>
+<section id="id1">
+<h3>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>We will again start by calculating our Jaccard beta-diversity matrix</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--o-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_contigs&quot;</span>
 </pre></div>
 </div>
-<p>Generate a PCoA from Jaccard matrix</p>
+<p>Then, we will generate out PCoA from Jaccard matrix</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>pcoa<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--o-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs&quot;</span>
 </pre></div>
 </div>
-<p>Visualize PCoA using Emperor</p>
+</section>
+<section id="id2">
+<h3>Emperor Plot Creation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Now that we have our Jaccard diversity PCoA, lets visualize it!</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-pcoa<span class="w">  </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -693,7 +666,7 @@ Calculate Jaccard beta-diversity matrix</p>
 </section>
 <section id="annotate-orthologs-against-eggnog-database">
 <h3>Annotate orthologs against eggNOG database<a class="headerlink" href="#annotate-orthologs-against-eggnog-database" title="Permalink to this heading">#</a></h3>
-<p>Annotates contigs with functional information from the EggNOG database.</p>
+<p>Lastly, let’s annotate our contigs with functional information from the EggNOG database.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-annotate<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--i-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--i-eggnog-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_annot_full&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -785,14 +758,12 @@ Calculate Jaccard beta-diversity matrix</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viral-taxa-bar-creation">Viral Taxa-bar Creation</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-functional-annotation-workflow">Contig functional annotation workflow</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eggnog-search-using-diamond-aligner">EggNOG search using diamond aligner</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter…</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gene-diversity">Gene diversity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Emperor Plot Creation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotate-orthologs-against-eggnog-database">Annotate orthologs against eggNOG database</a></li>
 </ul>
 </li>

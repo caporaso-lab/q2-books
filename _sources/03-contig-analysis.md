@@ -199,38 +199,6 @@ qiime taxa barplot \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
 
-Let's now highlight some features of metagenomic data that we wouldn't be able to capture in Amplicon data.
-
-### Viral Taxa-bar Creation
-We will take a peek at the viral community members.
-
-First, we filter down to the features taxomically labeled "Virus"
-
-```shell
-qiime taxa filter-table \
-  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
-  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
-  --p-include Viruses \
-  --o-filtered-table "./moshpit_tutorial/cache:virus_autofmt_feature_table_contigs"
-```
-
-Then we will filtered out any samples that were below 1,000.
-```shell
-qiime feature-table filter-samples \
-  --i-table "./moshpit_tutorial/cache:virus_autofmt_feature_table_contigs" \
-  --p-min-frequency 1240 \
-  --o-filtered-table "./moshpit_tutorial/cache:filtered_virus_autofmt_feature_table_contigs"
-```
-
-Now we can make our filtered Viral Taxa Bar plot
-```shell
-qiime taxa barplot \
-  --i-table "./moshpit_tutorial/cache:filtered_virus_autofmt_feature_table_contigs" \
-  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
-  --o-visualization "./moshpit_tutorial/results/virus_taxa_bar_plot_contigs.qzv
-```
-
 ## Contig functional annotation workflow
 Here we will perform functional annotation of contigs to capture gene diversity.
 
@@ -244,26 +212,28 @@ qiime moshpit eggnog-diamond-search \
   --p-num-cpus 14 \
   --p-db-in-memory \
   --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_contigs" \
-  --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs \
+  --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
   --verbose
 ```
-### Filter...
 ### Gene diversity
-Calculates gene diversity metrics, specifically Jaccard distance, for contigs.
-Calculate Jaccard beta-diversity matrix
+Now, let's have a look at the gene composition of our community
+
+### Jaccard Distance Matrix PCoA creation
+We will again start by calculating our Jaccard beta-diversity matrix
 ```shell
 qiime diversity beta \
   --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
   --p-metric jaccard \
   --o-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs"
 ```
-Generate a PCoA from Jaccard matrix
+Then, we will generate out PCoA from Jaccard matrix
 ```shell
 qiime diversity pcoa \
   --i-distance-matrix "./moshpit_tutorial/cache:jaccard_distance_matrix_contigs" \
   --o-pcoa "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs"
 ```
-Visualize PCoA using Emperor
+### Emperor Plot Creation
+Now that we have our Jaccard diversity PCoA, lets visualize it!
 ```shell
 qiime emperor plot \
   --i-pcoa  "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs" \
@@ -272,7 +242,7 @@ qiime emperor plot \
 ```
 
 ### Annotate orthologs against eggNOG database
-Annotates contigs with functional information from the EggNOG database.
+Lastly, let's annotate our contigs with functional information from the EggNOG database.
 ```shell
 qiime moshpit eggnog-annotate \
  --i-eggnog-hits "./moshpit_tutorial/cache:contigs" \
