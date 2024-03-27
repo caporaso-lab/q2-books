@@ -101,5 +101,5 @@ This will download all the sequences into the QIIME 2 cache. It is a lot of data
 - Generation and annotation of contigs (TODO)
 - Generation and annotation of MAGs (TODO)
 
-Before we jump into the next sections, lets discuss our parsl_config! We are using Parsl to parallelize our computationally expensive jobs. This will be used to run `Kraken` and `Eggnog-Mapper`. Here we can decide how many workers, cores, nodes and blocks.
+Before we jump into the next sections, lets discuss our parsl_config! We are using Parsl to parallelize our computationally expensive jobs. This will be used to run `Kraken` and `Eggnog-Mapper`. Here we can decide how many workers, cores, nodes and blocks. You can see an example[here)(Slurm-ConFig)
 
