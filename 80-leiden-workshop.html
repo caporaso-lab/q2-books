@@ -376,12 +376,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-abundance">Differential abundance</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quast-qc">QUAST QC</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Filtering Feature Table</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
@@ -403,8 +406,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -451,38 +457,51 @@ document.write(`
 <p>We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the <code class="docutils literal notranslate"><span class="pre">results</span></code> directory. If you want to read more about the QIIME cache, you can do so <a class="reference external" href="https://dev.qiime2.org/latest/api-reference/cache/">here</a>.</p>
 </section>
 </section>
+<section id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this heading">#</a></h2>
+<p>wget…
+metadata tabulate…</p>
+</section>
 <section id="read-based-analysis">
 <h2>Read-based analysis<a class="headerlink" href="#read-based-analysis" title="Permalink to this heading">#</a></h2>
 <section id="filtering-feature-table">
 <h3>Filtering Feature Table<a class="headerlink" href="#filtering-feature-table" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_reads&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/bracken_feature_table.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads&quot;</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/bracken_autofmt_feature_table.qza&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="taxa-bar-creation">
 <h3>Taxa-bar Creation<a class="headerlink" href="#taxa-bar-creation" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_reads&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span>v<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/bracken_autofmt_feature_table.qza&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/bracken_taxonomy_reads.qza&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/taxa_bar_plot_autofmt_reads.qzv&quot;</span>
 </pre></div>
 </div>
 </section>
+<section id="differential-abundance">
+<h3>Differential abundance<a class="headerlink" href="#differential-abundance" title="Permalink to this heading">#</a></h3>
+<p>….</p>
+</section>
 </section>
 <section id="contig-based-analysis">
 <h2>Contig-based analysis<a class="headerlink" href="#contig-based-analysis" title="Permalink to this heading">#</a></h2>
+<section id="quast-qc">
+<h3>QUAST QC<a class="headerlink" href="#quast-qc" title="Permalink to this heading">#</a></h3>
+<p>wget…</p>
+</section>
 <section id="id1">
 <h3>Filtering Feature Table<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/kraken_feature_table_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -491,16 +510,16 @@ document.write(`
 <section id="observed-features">
 <h4>Observed Features<a class="headerlink" href="#observed-features" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--p-metric<span class="w"> </span><span class="s2">&quot;observed_features&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--o-alpha-diversity<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span>
+<span class="w">    </span>--o-alpha-diversity<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/obs_features_autofmt_contigs.qza&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="linear-mixed-effects">
 <h4>Linear Mixed Effects<a class="headerlink" href="#linear-mixed-effects" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
-<span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/obs_features_autofmt_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-state-column<span class="w"> </span>DayRelativeToNearestHCT<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
@@ -508,7 +527,7 @@ document.write(`
 </pre></div>
 </div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
-<span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/obs_features_autofmt_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
 <span class="w">   </span>--p-metric<span class="w"> </span>observed_features<span class="w"> </span><span class="se">\</span>
@@ -516,7 +535,7 @@ document.write(`
 </pre></div>
 </div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:obs_features_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--m-metadata-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/metadata.tsv&quot;</span><span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/obs_features_autofmt_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-group-columns<span class="w"> </span>autoFmtGroup<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
@@ -531,14 +550,14 @@ document.write(`
 <section id="jaccard-distance-matrix-pcoa-creation">
 <h4>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_contigs&quot;</span>
+<span class="w">  </span>--o-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/jaccard_autofmt_contigs.qza&quot;</span>
 </pre></div>
 </div>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>pcoa<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--i-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--o-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs&quot;</span>
+<span class="w">  </span>--i-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/jaccard_autofmt_contigs.qza&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-pcoa<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/jaccard_autofmt_pcoa_contigs.qza&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -608,6 +627,10 @@ document.write(`
 </section>
 <section id="mag-based-analysis">
 <h2>MAG-based analysis<a class="headerlink" href="#mag-based-analysis" title="Permalink to this heading">#</a></h2>
+<section id="busco-qc">
+<h3>BUSCO QC<a class="headerlink" href="#busco-qc" title="Permalink to this heading">#</a></h3>
+<p>wget….</p>
+</section>
 <section id="taxonomy-table-creation">
 <h3>Taxonomy table creation<a class="headerlink" href="#taxonomy-table-creation" title="Permalink to this heading">#</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>kraken2-to-mag-features<span class="w"> </span><span class="se">\</span>
@@ -617,15 +640,15 @@ document.write(`
 <span class="w"> </span>--verbose
 </pre></div>
 </div>
-</section>
 <section id="taxonomy-table-visualization">
-<h3>Taxonomy table visualization<a class="headerlink" href="#taxonomy-table-visualization" title="Permalink to this heading">#</a></h3>
+<h4>Taxonomy table visualization<a class="headerlink" href="#taxonomy-table-visualization" title="Permalink to this heading">#</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>metadata<span class="w"> </span>tabulate<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--m-input-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--p-page-size<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_hits_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--verbose
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 </section>
@@ -698,12 +721,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-abundance">Differential abundance</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quast-qc">QUAST QC</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Filtering Feature Table</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
@@ -725,8 +751,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-creation">Taxonomy table creation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#taxonomy-table-visualization">Taxonomy table visualization</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

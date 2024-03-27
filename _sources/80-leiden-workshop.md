@@ -38,46 +38,57 @@ qiime tools cache-create \
 
 We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the `results` directory. If you want to read more about the QIIME cache, you can do so [here](https://dev.qiime2.org/latest/api-reference/cache/).
 
+## Metadata
+wget...
+metadata tabulate...
+
+
 ## Read-based analysis
 ### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
-  --i-table "./moshpit_tutorial/cache:kraken_feature_table_reads" \
+  --i-table "./moshpit_tutorial/bracken_feature_table.qza" \
   --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads"
+  --o-filtered-table "./moshpit_tutorial/bracken_autofmt_feature_table.qza"
 ```
 
 ### Taxa-bar Creation
 ```shell
 qiime taxa barplot \
-  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_reads" \
-  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_reads" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv"v \
+  --i-table "./moshpit_tutorial/bracken_autofmt_feature_table.qza" \
+  --i-taxonomy "./moshpit_tutorial/bracken_taxonomy_reads.qza" \
+  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_reads.qzv"
 ```
+### Differential abundance
+....
+
 
 ## Contig-based analysis
+### QUAST QC
+wget...
+
 ### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
-  --i-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
+  --i-table "./moshpit_tutorial/kraken_feature_table_contigs.qza" \
   --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs"
+  --o-filtered-table "./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza"
 ```
 ### Alpha Diversity
 #### Observed Features 
 ```shell
 qiime diversity alpha \
-    --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
+    --i-table "./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza" \
     --p-metric "observed_features" \
-    --o-alpha-diversity "./moshpit_tutorial/cache:obs_features_autofmt_contigs"
+    --o-alpha-diversity "./moshpit_tutorial/obs_features_autofmt_contigs.qza"
 ```
 #### Linear Mixed Effects
 ```shell
  qiime longitudinal linear-mixed-effects \
-   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
+   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/obs_features_autofmt_contigs.qza" \
    --p-state-column DayRelativeToNearestHCT \
    --p-individual-id-column PatientID \
    --p-metric observed_features \
@@ -86,7 +97,7 @@ qiime diversity alpha \
 
 ```shell
  qiime longitudinal linear-mixed-effects \
-   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
+   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/obs_features_autofmt_contigs.qza" \
    --p-state-column day-relative-to-fmt \
    --p-individual-id-column PatientID \
    --p-metric observed_features \
@@ -95,7 +106,7 @@ qiime diversity alpha \
 
 ```shell
 qiime longitudinal linear-mixed-effects \
- --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/cache:obs_features_autofmt_contigs" \
+ --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/obs_features_autofmt_contigs.qza" \
   --p-state-column day-relative-to-fmt \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
@@ -107,15 +118,15 @@ qiime longitudinal linear-mixed-effects \
 #### Jaccard Distance Matrix PCoA creation
 ```shell
 qiime diversity beta \
-  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
+  --i-table "./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza" \
   --p-metric jaccard \
-  --o-distance-matrix "./moshpit_tutorial/cache:jaccard_autofmt_contigs"
+  --o-distance-matrix "./moshpit_tutorial/jaccard_autofmt_contigs.qza"
 ```
 
 ```shell
 qiime diversity pcoa \
-  --i-distance-matrix "./moshpit_tutorial/cache:jaccard_autofmt_contigs" \
-  --o-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs"
+  --i-distance-matrix "./moshpit_tutorial/jaccard_autofmt_contigs.qza" \
+  --o-pcoa "./moshpit_tutorial/jaccard_autofmt_pcoa_contigs.qza"
 ```
 #### Emperor Plot Creation
 ```shell
@@ -172,7 +183,10 @@ qiime emperor plot \
 ```
 
 ## MAG-based analysis
-#### Taxonomy table creation
+### BUSCO QC
+wget....
+
+### Taxonomy table creation
 ```shell
 qiime moshpit kraken2-to-mag-features \
  --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
