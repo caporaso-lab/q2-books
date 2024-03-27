@@ -21,7 +21,7 @@ bibtex_bibfiles:
   - references.bib
 
 repository:
-  url: https://github.com/caporaso-lab/q2-book
+  url: https://github.com/caporaso-lab/q2-books
   path_to_book: q2-metagenomics/book
   branch: main
 
