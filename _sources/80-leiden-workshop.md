@@ -173,7 +173,7 @@ qiime moshpit kraken2-to-mag-features \
  --verbose
 ```
 
-### Taxonomy table visualization
+#### Taxonomy table visualization
 ```shell
 qiime metadata tabulate \
  --m-input-file "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
