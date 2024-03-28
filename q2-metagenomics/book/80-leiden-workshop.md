@@ -29,7 +29,7 @@ https://workshop-server.qiime2.org/<your user namey>/
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
 ```
-``shell
+```shell
 wget -O bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 ```
 ### Filtering Feature Table
