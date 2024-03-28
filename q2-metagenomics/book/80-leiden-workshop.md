@@ -132,7 +132,7 @@ qiime taxa collapse \
 --o-collapsed-table collapsed-8-id-filtered-peri-fmt-table.qza 
 ```
 #### ANCOM-BC
-Now, we run ANCOM-BC
+Now, we run ANCOM-BC!
 ```shell
  qiime composition ancombc \
   --i-table collapsed-8-id-filtered-peri-fmt-table.qza  \
