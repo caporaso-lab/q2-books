@@ -96,7 +96,7 @@ qiime taxa collapse \
 
 ```shell
  qiime composition ancombc \
-  --i-table id-filtered-peri-fmt-table.qza \
+  --i-table collapsed-8-id-filtered-peri-fmt-table.qza  \
   --m-metadata-file sample-metadata.tsv \
   --p-formula autoFmtGroup \
   --o-differentials differentials-peri-autofmt.qza
