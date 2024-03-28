@@ -167,7 +167,7 @@ qiime longitudinal linear-mixed-effects \
   --p-state-column day-relative-to-fmt \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
-  --p-metric observed_features \
+  --p-metric "observed_features" \
   --o-visualization lme-obs-features-treatmentVScontrol-contigs.qzv"
 ```
 
