@@ -204,7 +204,11 @@ qiime taxa barplot \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
 ```
 ### Functional analysis
-### Filtering Feature Table
+#### Obtaining Feature Table
+```shell
+wget -O eggnog-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/YSXu2AaOFeusgRY/download
+```
+#### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
@@ -238,7 +242,6 @@ qiime emperor plot \
 ```shell
 wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
 ```
-
 ### Taxonomy table creation
 ```shell
 qiime moshpit kraken2-to-mag-features \
