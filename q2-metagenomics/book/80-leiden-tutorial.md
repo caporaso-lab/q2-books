@@ -1,4 +1,4 @@
-# Metagenomics with QIIME 2 - Leiden 2024
+# Metagenomics with QIIME 2 - Leiden Tutorial
 
 ## Setup
 
@@ -9,12 +9,12 @@ Before we dive into the tutorial, let's talk about our workshop server directory
 <your home directory>
 └ workshop
 ```
-Let's verify that QIIME 2 is working by calling qiime. 
+Let's verify that QIIME 2 is working by calling qiime.
 ```shell
 qiime
 ```
 ## Metadata
-First, let's grab our sample metadata! 
+First, let's grab our sample metadata!
 ```shell
 wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download
 ```
@@ -62,7 +62,7 @@ qiime moshpit estimate-bracken \
 
 ````
 ### Obtaining your Feature Table and Taxonomy Table
-We are going to look at taxonomic annotations for our read based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken. 
+We are going to look at taxonomic annotations for our read based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken.
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
 ```
@@ -81,7 +81,7 @@ qiime feature-table filter-samples \
 
 ### Taxa Barplot Creation
 Now we will use our table and taxonomy to create a taxa barplot.
-```shell 
+```shell
 qiime taxa barplot \
   --i-table bracken-autofmt-feature-table.qza \
   --i-taxonomy bracken-taxonomy.qza \
@@ -90,7 +90,7 @@ qiime taxa barplot \
 ```
 ### Differential abundance
 #### Feature Table preparation
-ANCOM-BC can not be run on repeated measures. So we will need to filter to one timepoint. Here we filter to the "peri" timepoint. 
+ANCOM-BC can not be run on repeated measures. So we will need to filter to one timepoint. Here we filter to the "peri" timepoint.
 ```shell
 qiime feature-table filter-samples \
   --i-table bracken-autofmt-feature-table.qza \
@@ -98,14 +98,14 @@ qiime feature-table filter-samples \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
   --o-filtered-table peri-fmt-table.qza
 ```
-Let's visualize our filtered table! 
+Let's visualize our filtered table!
 ```shell
 qiime feature-table summarize \
   --i-table peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization peri-fmt-table.qzv
 ```
-Looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out! 
+Looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out!
 ```shell
 
 echo SampleID > samples-to-remove.tsv
@@ -126,13 +126,13 @@ qiime feature-table summarize \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization id-filtered-peri-fmt-table.qzv
 ```
-Now, we should collapse our table so our features are grouped at the species level. 
+Now, we should collapse our table so our features are grouped at the species level.
 ```shell
 qiime taxa collapse \
 --i-table id-filtered-peri-fmt-table.qza \
 --i-taxonomy bracken-taxonomy.qza \
 --p-level 8 \
---o-collapsed-table collapsed-8-id-filtered-peri-fmt-table.qza 
+--o-collapsed-table collapsed-8-id-filtered-peri-fmt-table.qza
 ```
 #### ANCOM-BC
 Now, we run ANCOM-BC!
@@ -202,7 +202,7 @@ After assembling our reads into contigs, let's have a look at our contig quality
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
 ```
 ### Obtaining your Feature Table and Taxonomy Table
-Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2. 
+Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2.
 
 ```shell
 wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download
@@ -211,7 +211,7 @@ wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s
 wget -O kraken2-taxonomy-contigs.qza https://polybox.ethz.ch/index.php/s/Wk0nsgQfEjgdabc/download
 ```
 ### Filtering Feature Table
-Now that we have acquaired our contig feature table, we will also remove samples that are not part of the autoFMT study following the exact same approach as we did for the reads. 
+Now that we have acquaired our contig feature table, we will also remove samples that are not part of the autoFMT study following the exact same approach as we did for the reads.
 ```shell
 qiime feature-table filter-samples \
   --i-table kraken2-presence-absence-contigs.qza \
@@ -222,7 +222,7 @@ qiime feature-table filter-samples \
 ### Alpha Diversity
 Here we'll look and compare community richness between our control and treatment group.
 
-#### Observed Features 
+#### Observed Features
 To start with, we'll generate an 'observed features' vector from our presence/absence feature table:
 ```shell
 qiime diversity alpha \
@@ -307,7 +307,7 @@ We will again start by calculating our Jaccard beta-diversity matrix.
 qiime diversity beta \
   --i-table filtered-eggnog-presence-absence-contigs.qza \
   --p-metric jaccard \
-  --o-distance-matrix jaccard-diamond-autofmt-contigs.qza 
+  --o-distance-matrix jaccard-diamond-autofmt-contigs.qza
 ```
 Then, we will generate our PCoA from Jaccard matrix.
 ```shell
@@ -452,7 +452,7 @@ Now, let's unzip this QIIME artifact and explore!
 ```shell
 qiime tools extract \
   --input-path kraken2-reports-mags-derep.qza \
-  --output-path kraken2-reports-mags-derep.txt 
+  --output-path kraken2-reports-mags-derep.txt
 ```
 
 ## Provenance Replay
@@ -473,6 +473,6 @@ Now that we have all of our visualizations in one place, we can run provenance r
 ```shell
 qiime tools replay-supplement \
 --in-fp visualizations \
---out-fp replay-output 
+--out-fp replay-output
 ```
 
