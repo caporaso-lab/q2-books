@@ -187,9 +187,9 @@ qiime emperor plot \
 ```shell
 qiime taxa barplot \
   --i-table kraken2-autofmt-presence-absence-contigs.qza \
-  --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
-  --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
+  --i-taxonomy kraken2-taxonomy-contigs.qza \
+  --m-metadata-file sample-metadata.tsv \
+  --o-visualization taxa-bar-plot-autofmt-contigs.qzv
 ```
 ### Functional analysis
 #### Obtaining Feature Table
