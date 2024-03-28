@@ -25,9 +25,12 @@ qiime metadata tabulate \
 https://workshop-server.qiime2.org/<your user namey>/
 ```
 ## Read-based analysis
-### Obtaining your Feature Table
+### Obtaining your Feature Table and Taxonomy Table
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
+```
+``shell
+wget -O bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 ```
 ### Filtering Feature Table
 ```shell
@@ -41,10 +44,10 @@ qiime feature-table filter-samples \
 ### Taxa-bar Creation
 ```shell
 qiime taxa barplot \
-  --i-table "./moshpit_tutorial/bracken_autofmt_feature_table.qza" \
-  --i-taxonomy "./moshpit_tutorial/bracken_taxonomy_reads.qza" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
-  --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_reads.qzv"
+  --i-table bracken_autofmt-feature-table.qza \
+  --i-taxonomy bracken-taxonomy.qza \
+  --m-metadata-file sample-metadata.tsv \
+  --o-visualization taxa-bar-plot-autofmt-reads.qzv
 ```
 ### Differential abundance
 ....
