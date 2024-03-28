@@ -52,8 +52,8 @@ qiime taxa barplot \
 ### Differential abundance
 ```shell
 qiime feature-table filter-samples \
-  --i-table autofmt-table.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
+  --i-table bracken-autofmt-feature-table.qza \
+  --m-metadata-file sample-metadata.tsv \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
   --o-filtered-table peri-fmt-table.qza
 ```
@@ -61,7 +61,7 @@ qiime feature-table filter-samples \
 ```shell
 qiime feature-table summarize \
   --i-table peri-fmt-table.qza \
-  --m-sample-metadata-file ../new-sample-metadata.tsv \
+  --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization peri-fmt-table.qzv
 ```
 
@@ -81,14 +81,14 @@ qiime feature-table filter-samples \
 ```shell
 qiime feature-table summarize \
   --i-table id-filtered-peri-fmt-table.qza \
-  --m-sample-metadata-file ../new-sample-metadata.tsv \
+  --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization id-filtered-peri-fmt-table.qzv
 ```
 
 ```shell
  qiime composition ancombc \
   --i-table id-filtered-peri-fmt-table.qza \
-  --m-metadata-file ../new-sample-metadata.tsv \
+  --m-metadata-file sample-metadata.tsv \
   --p-formula autoFmtGroup \
   --o-differentials differentials-peri-autofmt.qza
 ```
