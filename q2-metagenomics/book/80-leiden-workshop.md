@@ -11,10 +11,11 @@ Before we dive into the tutorial, let's set up the required directory structre a
 ```
 
 ## Metadata
+First, Let's grab our sample Metadata! 
 ```shell
 wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download
 ```
-
+Next, lets take a look at the metadata by visualizing it in QIIME 2
 ```shell
 qiime metadata tabulate \
   --m-input-file sample-metadata.tsv \
@@ -29,8 +30,34 @@ https://workshop-server.qiime2.org/<your-user-name>/
 From here, you'll click on the hyperlink associated with the visualization you'd like to download.
 ```
 ## Read-based analysis
-TODO : add hidden kraken2+bracken!
+````{toggle}
+```shell
+qiime moshpit classify-kraken2 \
+	--i-seqs ./moshpit_tutorial/cache:workshop-reads \
+	--i-kraken2-db ./moshpit_tutorial/cache:kracken_standard \
+	--p-threads 40 \
+	--p-confidence 0.6 \
+	--p-minimum-base-quality 20 \
+	--o-hits ./moshpit_tutorial/cache:workshop_kraken_db_hits \
+	--o-reports ./moshpit_tutorial/cache:workshop_kraken_db_reports \
+	--p-report-minimizer-data \
+	--use-cache ./moshpit_tutorial/cache \
+	--parallel-config slurm_config.toml \
+    	--verbose \
+    	--p-memory-mapping False ##this was taking too much time for me
+```
 
+```shell
+qiime moshpit estimate-bracken \
+    --i-bracken-db ./moshpit_tutorial/cache:bracken_standard \
+    --p-read-len 100 \
+    --i-kraken-reports ./moshpit_tutorial/cache:workshop_kraken_db_reports \
+    --o-reports ./moshpit_tutorial/kraken-outputs/bracken-reports.qza \
+    --o-taxonomy ./moshpit_tutorial/kraken-outputs/taxonomy-bracken.qza \
+    --o-table ~./moshpit_tutorial/kraken-outputs/table-bracken.qza
+```
+
+````
 ### Obtaining your Feature Table and Taxonomy Table
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
