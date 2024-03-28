@@ -122,7 +122,7 @@ echo SRR14092317 >> ./reads/samples-to-remove.tsv
 ```shell
 qiime feature-table filter-samples \
   --i-table ./reads/peri-fmt-table.qza \
-  --m-metadata-file samples-to-remove.tsv \
+  --m-metadata-file ./reads/samples-to-remove.tsv \
   --p-exclude-ids \
   --o-filtered-table ./reads/id-filtered-peri-fmt-table.qza
 ```
