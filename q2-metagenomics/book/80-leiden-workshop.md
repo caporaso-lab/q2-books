@@ -455,14 +455,14 @@ qiime tools extract \
 ```
 
 ## Provenance Replay
-Now that we've gone through this tutorial, we'd like a way to keep track of all of the commands we ran to generate all of the visualizations we looked at today. Luckily, provenance replay can handle this for us!
+Now that we've gone through this tutorial, we'd like a way to keep track of the commands we ran to generate all of the visualizations we looked at today. Luckily, provenance replay can handle this for us!
 
 We'll start off by creating a new directory for all of the visualizations we've generated during this tutorial.
 ```shell
 mkdir visualizations
 ```
 
-Now we'll move all of our .qzv files into this directory.
+Then we'll move all of our .qzv files into this directory.
 ```
 mv *.qzv visualizations
 ```
