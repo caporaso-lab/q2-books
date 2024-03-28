@@ -285,7 +285,7 @@ qiime taxa barplot \
 ### Functional analysis
 Here we will perform functional annotation of contigs to capture gene diversity!
 #### Obtaining Feature Table
-Your know the drill by now ;)
+You know the drill by now ;)
 ```shell
 wget -O eggnog-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/YSXu2AaOFeusgRY/download
 ```
