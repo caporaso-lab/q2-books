@@ -26,6 +26,7 @@ mkdir contigs
 
 ````{toggle}
 **Required databases**
+
 In order to perform the taxonomic and functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using respective QIIME 2 actions.
 
 1. Kraken 2/Bracken database
@@ -52,6 +53,7 @@ qiime moshpit fetch-eggnog-db \
 ```
 
 **Data retrieval from SRA**
+
 The data we are using in this tutorial can be fetched from the SRA repository using the [q2-fondue](https://github.com/bokulich-lab/q2-fondue) plugin. We need to import the accession IDs into a QIIME 2 artifact:
 
 ```shell
@@ -91,7 +93,7 @@ qiime metadata tabulate \
 ```{note}
 We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you'll navigate to:
 
-https://workshop-server.qiime2.org/<your-user-name>/
+https://workshop-server.qiime2.org/[your-user-name]/
 
 From here, you'll click on the hyperlink associated with the visualization you'd like to download.
 ```
@@ -110,7 +112,7 @@ qiime moshpit classify-kraken2 \
 	--use-cache ./moshpit_tutorial/cache \
 	--parallel-config slurm_config.toml \
     	--verbose \
-    	--p-memory-mapping False ##this was taking too much time for me
+    	--p-memory-mapping False ##set to False to shorten runtime
 ```
 
 ```shell
@@ -217,6 +219,7 @@ qiime composition da-barplot \
 ## Contig-based analysis
 ````{toggle}
 **Assemble Reads into Contigs with MEGAHIT**
+
 The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
 ```shell
 qiime assembly assemble-megahit \
@@ -228,6 +231,7 @@ qiime assembly assemble-megahit \
     --verbose
 ```
 **Contig QC with QUAST**
+
 Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly.
 ```shell
 qiime assembly evaluate-contigs \
@@ -244,8 +248,9 @@ After assembling our reads into contigs, let's have a look at our contig quality
 wget -O ./contigs/quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
 ```
 
-````{toggle}
+### Obtaining your Feature Table and Taxonomy Table
 
+````{toggle}
 ```shell
 qiime moshpit classify-kraken2 \
     --i-seqs "./moshpit_tutorial/cache:megahit-contigs" \
@@ -258,7 +263,6 @@ qiime moshpit classify-kraken2 \
     --o-hits "./moshpit_tutorial/cache:kraken_hits_contigs" \
     --verbose
 ```
-
 ```shell
 qiime moshpit kraken2-to-features \
   --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
@@ -266,10 +270,8 @@ qiime moshpit kraken2-to-features \
   --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
   --verbose
 ```
-
 ````
 
-### Obtaining your Feature Table and Taxonomy Table
 Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2.
 
 ```shell
@@ -477,6 +479,7 @@ wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/downloa
 
 ````{toggle}
 **MAGs dereplication**
+
 Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:
 
 1. compute hash sketches of every genome using [sourmash](https://sourmash.readthedocs.io/en/latest/) - you can think of those sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).
@@ -511,7 +514,7 @@ qiime moshpit dereplicate-mags \
 **MAGs taxonomic annotation workflow**
 This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.
 
-***MAGs classify with Kraken2**
+**MAGs classify with Kraken2**
 MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.
 ```shell
 qiime moshpit classify-kraken2 \
