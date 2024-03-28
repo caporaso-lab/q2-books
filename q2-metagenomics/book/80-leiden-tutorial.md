@@ -93,7 +93,7 @@ qiime metadata tabulate \
 ```{note}
 We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you'll navigate to:
 
-https://workshop-server.qiime2.org/[your-user-name]/
+https://workshop-server.qiime2.org/[your-username]/
 
 From here, you'll click on the hyperlink associated with the visualization you'd like to download.
 ```
