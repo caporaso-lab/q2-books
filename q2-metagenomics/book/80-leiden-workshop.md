@@ -2,7 +2,7 @@
 
 ## Setup
 
-Before we dive into the tutorial, let's set up the required directory structre and make sure we have all the required software installed.
+Before we dive into the tutorial, let's set up the required directory structure and make sure we have all the required software installed.
 
 ### Directory structure
 ```shell
@@ -11,7 +11,7 @@ Before we dive into the tutorial, let's set up the required directory structre a
 ```
 
 ## Metadata
-First, let's grab our sample Metadata! 
+First, let's grab our sample metadata! 
 ```shell
 wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download
 ```
@@ -23,7 +23,7 @@ qiime metadata tabulate \
 ```
 
 ```{note}
-We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 Visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you'll navigate to:
+We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you'll navigate to:
 ```
 https://workshop-server.qiime2.org/<your-user-name>/
 ```
@@ -59,7 +59,7 @@ qiime moshpit estimate-bracken \
 
 ````
 ### Obtaining your Feature Table and Taxonomy Table
-We are going to look at taxonomic annotations for our read based analysis. In order to do that we need to download our read table and taxonomy that we generated using Bracken. 
+We are going to look at taxonomic annotations for our read based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken. 
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
 ```
@@ -194,10 +194,13 @@ qiime moshpit kraken2-to-features \
 
 
 ### QUAST QC
+After assembling our reads into contigs, let's have a look at our contig quality metrics.
 ```shell
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
 ```
 ### Obtaining your Feature Table and Taxonomy Table
+Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2. 
+
 ```shell
 wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download
 ```
@@ -205,6 +208,7 @@ wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s
 wget -O kraken2-taxonomy-contigs.qza https://polybox.ethz.ch/index.php/s/Wk0nsgQfEjgdabc/download
 ```
 ### Filtering Feature Table
+Now that we have acquaired our contig feature table, we will also remove samples that are not part of the autoFMT study following the exact same approach as we did for the reads. 
 ```shell
 qiime feature-table filter-samples \
   --i-table kraken2-presence-absence-contigs.qza \
