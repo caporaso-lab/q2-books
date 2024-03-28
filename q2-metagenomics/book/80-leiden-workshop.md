@@ -328,7 +328,7 @@ qiime emperor plot \
 ````{toggle}
 Let's start binning our contigs into MAGs using various tools and methodologies!
 
-### Read mapping
+**Read mapping**
 We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together.
 
 ```shell
@@ -351,7 +351,7 @@ qiime assembly map-reads-to-contigs \
     --o-alignment-map "./moshpit_tutorial/cache:reads_to_contigs" \
     --verbose
 ```
-### Binning
+**Binning**
 Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the [MetaBAT 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6662567/) tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign contigs to individual bins.
 
 ```shell
@@ -366,14 +366,14 @@ qiime moshpit bin-contigs-metabat \
     --o-unbinned-contigs "./moshpit_tutorial/cache:unbinned_contigs" \
     --verbose
 ```
-This tep generated a couple artifacts:
+This step generated a couple artifacts:
 
 - `mags.qza`: these are our actual MAGS, per sample.
 - `contig-map.qza`: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.
 - `unbinned-contigs.qza`: these are all the contigs that could not be assign to any particular MAG.
 From now on, we will focus on the mags.qza.
 
-## MAGs QC with BUSCO
+**MAGs QC with BUSCO**
 BUSCO is used here to assess the completeness and quality of MAGs by searching for single-copy orthologous genes within the genomes.
 ```shell
 qiime moshpit evaluate-busco \
@@ -384,7 +384,7 @@ qiime moshpit evaluate-busco \
     --verbose
 ```
 
-## MAGs dereplication 
+**MAGs dereplication**
 Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:
 
 1. compute hash sketches of every genome using [sourmash](https://sourmash.readthedocs.io/en/latest/) - you can think of those sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).
@@ -415,7 +415,7 @@ qiime moshpit dereplicate-mags \
     --o-feature-table "./moshpit_tutorial/cache:mags_ft" \
     --verbose
 ```
-## MAGs taxonomic annotation workflow
+**MAGs taxonomic annotation workflow**
 This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.
 ### MAGs classify with Kraken2
 MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.
