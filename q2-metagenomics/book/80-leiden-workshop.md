@@ -145,7 +145,7 @@ qiime diversity alpha \
 #### Linear Mixed Effects
 ```shell
 qiime longitudinal linear-mixed-effects \
- --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
+  --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
   --p-state-column day-relative-to-fmt \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
@@ -186,7 +186,7 @@ qiime emperor plot \
 ### Taxa-bar Creation
 ```shell
 qiime taxa barplot \
-  --i-table "./moshpit_tutorial/cache:kraken_autofmt_feature_table_contigs" \
+  --i-table kraken2-autofmt-presence-absence-contigs.qza \
   --i-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
   --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
   --o-visualization "./moshpit_tutorial/results/taxa_bar_plot_autofmt_contigs.qzv"
