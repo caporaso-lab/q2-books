@@ -25,13 +25,17 @@ qiime metadata tabulate \
 https://workshop-server.qiime2.org/<your user namey>/
 ```
 ## Read-based analysis
+### Obtaining your Feature Table
+```shell
+wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
+```
 ### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
-  --i-table "./moshpit_tutorial/bracken_feature_table.qza" \
-  --m-metadata-file "sample-metadata.tsv" \
+  --i-table bracken-feature-table.qza \
+  --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table "./moshpit_tutorial/bracken_autofmt_feature_table.qza"
+  --o-filtered-table bracken-autofmt-feature-table.qza
 ```
 
 ### Taxa-bar Creation
