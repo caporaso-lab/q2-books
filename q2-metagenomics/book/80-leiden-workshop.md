@@ -145,7 +145,7 @@ qiime diversity alpha \
 #### Linear Mixed Effects
 ```shell
  qiime longitudinal linear-mixed-effects \
-   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/obs_features_autofmt_contigs.qza" \
+   --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
    --p-state-column DayRelativeToNearestHCT \
    --p-individual-id-column PatientID \
    --p-metric observed_features \
