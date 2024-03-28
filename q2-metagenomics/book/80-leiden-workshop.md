@@ -4,19 +4,11 @@
 
 Before we dive into the tutorial, let's set up the required directory structre and make sure we have all the required software installed.
 
-### QIIME 2 metagenome distribution
-
-You can install the latest distribution of the QIIME 2 metagenome distribution by following the instructions [here](https://docs.qiime2.org/2024.2/install/native/#qiime-2-metagenome-distribution). Once installed, you can activate the environment by running the following command:
-
-```shell
-conda activate qiime2-shotgun-2024.2
-```
-
 ### Directory structure
 ```shell
 <your home directory>
 └ workshop
-``
+```
 
 ## Metadata
 ```shell
@@ -33,7 +25,7 @@ qiime metadata tabulate \
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/bracken_feature_table.qza" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --m-metadata-file "sample-metadata.tsv" \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table "./moshpit_tutorial/bracken_autofmt_feature_table.qza"
 ```
