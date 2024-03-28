@@ -344,4 +344,24 @@ qiime tools extract \
   --output-path kraken2-reports-mags-derep.txt \
 ```
 
+## Provenance Replay
+Now that we've gone through this tutorial, we'd like a way to keep track of all of the commands we ran to generate all of the visualizations we looked at today. Luckily, provenance replay can handle this for us!
+
+We'll start off by creating a new directory for all of the visualizations we've generated during this tutorial.
+```shell
+mkdir visualizations
+```
+
+Now we'll move all of our .qzv files into this directory.
+```
+mv *.qzv visualizations
+```
+
+Now that we have all of our visualizations in one place, we can run provenance replay on the entire directory. This will provide us with all of the upstream commands used to generate each visualization, along with any relevant citations associated with each of the commands used.
+
+```shell
+qiime tools replay \
+--in-fp visualizations \
+--out-fp replay-output \
+```
 
