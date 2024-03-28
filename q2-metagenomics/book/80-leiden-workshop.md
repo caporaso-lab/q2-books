@@ -144,24 +144,6 @@ qiime diversity alpha \
 ```
 #### Linear Mixed Effects
 ```shell
- qiime longitudinal linear-mixed-effects \
-   --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
-   --p-state-column DayRelativeToNearestHCT \
-   --p-individual-id-column PatientID \
-   --p-metric "observed_features" \
-   --o-visualization lme-obs-features-HCT-contigs.qzv
-```
-
-```shell
- qiime longitudinal linear-mixed-effects \
-   --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
-   --p-state-column day-relative-to-fmt \
-   --p-individual-id-column PatientID \
-   --p-metric "observed_features" \
-   --o-visualization lme-obs-features-FMT-contigs.qzv
-```
-
-```shell
 qiime longitudinal linear-mixed-effects \
  --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
   --p-state-column day-relative-to-fmt \
