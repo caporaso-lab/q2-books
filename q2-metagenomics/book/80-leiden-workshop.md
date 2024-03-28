@@ -21,10 +21,9 @@ qiime metadata tabulate \
   --o-visualization sample-metadata.qzv
 ```
 
-```shell
+```{note}
 https://workshop-server.qiime2.org/<your user namey>/
 ```
-
 ## Read-based analysis
 ### Filtering Feature Table
 ```shell
