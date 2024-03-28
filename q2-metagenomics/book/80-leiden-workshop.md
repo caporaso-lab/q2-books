@@ -451,7 +451,7 @@ Now, let's unzip this QIIME artifact and explore!
 ```shell
 qiime tools extract \
   --input-path kraken2-reports-mags-derep.qza \
-  --output-path kraken2-reports-mags-derep.txt \
+  --output-path kraken2-reports-mags-derep.txt 
 ```
 
 ## Provenance Replay
@@ -472,6 +472,6 @@ Now that we have all of our visualizations in one place, we can run provenance r
 ```shell
 qiime tools replay-supplement \
 --in-fp visualizations \
---out-fp replay-output \
+--out-fp replay-output 
 ```
 
