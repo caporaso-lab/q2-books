@@ -5,10 +5,10 @@
 
 #######################################################################################
 # Book settings
-title                       : Metagenomics Analysis with QIIME 2  # The title of the book. Will be placed in the left navbar.
-author                      : Bokulich and Caporaso Labs  # The author of the book
-copyright                   : "2024"  # Copyright year to be placed in the footer
-logo                        : logo.png  # A path to the book logo
+title                       : Metagenome analysis with QIIME 2
+author                      : Bokulich and Caporaso Labs
+copyright                   : "2024"
+logo                        : logo.png
 
 execute:
   execute_notebooks: force
