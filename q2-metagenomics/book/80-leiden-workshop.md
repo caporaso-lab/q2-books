@@ -177,10 +177,10 @@ qiime emperor plot \
 
 ```shell
 qiime emperor plot \
-  --i-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
+  --m-metadata-file sample-metadata.tsv \
   --p-custom-axes week-relative-to-fmt \
-  --o-visualization "./moshpit_tutorial/results/jaccard_autofmt_emperor_custom.qzv"
+  --o-visualization jaccard-autofmt-emperor-custom-contigs.qzv
 ```
 
 ### Taxa-bar Creation
