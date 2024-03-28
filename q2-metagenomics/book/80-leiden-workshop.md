@@ -78,18 +78,20 @@ qiime feature-table filter-samples \
   --p-exclude-ids \
   --o-filtered-table id-filtered-peri-fmt-table.qza
 ```
+
+```shell
+qiime feature-table summarize \
+  --i-table id-filtered-peri-fmt-table.qza \
+  --m-sample-metadata-file sample-metadata.tsv \
+  --o-visualization id-filtered-peri-fmt-table.qzv
+```
+
 ```shell
 qiime taxa collapse \
 --i-table id-filtered-peri-fmt-table.qza \
 --i-taxonomy bracken-taxonomy.qza \
 --p-level 8 \
 --o-collaped-table collapsed-8-id-filtered-peri-fmt-table.qza 
-```
-```shell
-qiime feature-table summarize \
-  --i-table id-filtered-peri-fmt-table.qza \
-  --m-sample-metadata-file sample-metadata.tsv \
-  --o-visualization id-filtered-peri-fmt-table.qzv
 ```
 
 ```shell
@@ -99,6 +101,7 @@ qiime feature-table summarize \
   --p-formula autoFmtGroup \
   --o-differentials differentials-peri-autofmt.qza
 ```
+
 ```shell
 qiime composition da-barplot \
   --i-data differentials-peri-autofmt.qza \
