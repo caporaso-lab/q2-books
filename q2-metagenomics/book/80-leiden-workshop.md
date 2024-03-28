@@ -11,11 +11,11 @@ Before we dive into the tutorial, let's set up the required directory structre a
 ```
 
 ## Metadata
-First, Let's grab our sample Metadata! 
+First, let's grab our sample Metadata! 
 ```shell
 wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download
 ```
-Next, lets take a look at the metadata by visualizing it in QIIME 2
+Next, let's take a look at the metadata by visualizing it in QIIME 2.
 ```shell
 qiime metadata tabulate \
   --m-input-file sample-metadata.tsv \
@@ -59,6 +59,7 @@ qiime moshpit estimate-bracken \
 
 ````
 ### Obtaining your Feature Table and Taxonomy Table
+We are going to look at taxonomic annotations for our read based analysis. In order to do that we need to download our read table and taxonomy that we generated using Bracken. 
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
 ```
@@ -66,6 +67,7 @@ wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTz
 wget -O bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 ```
 ### Filtering Feature Table
+First, we’ll remove samples that are not part of the autoFMT study from the feature table. We identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.
 ```shell
 qiime feature-table filter-samples \
   --i-table bracken-feature-table.qza \
@@ -74,8 +76,9 @@ qiime feature-table filter-samples \
   --o-filtered-table bracken-autofmt-feature-table.qza
 ```
 
-### Taxa-bar Creation
-```shell
+### Taxa Barplot Creation
+Now we will use our table and taxonomy to create a taxa barplot.
+```shell 
 qiime taxa barplot \
   --i-table bracken-autofmt-feature-table.qza \
   --i-taxonomy bracken-taxonomy.qza \
@@ -84,6 +87,7 @@ qiime taxa barplot \
 ```
 ### Differential abundance
 #### Feature Table preparation
+ANCOM-BC can not be run on repeated measures. So we will need to filter to one timepoint. Here we filter to the "peri" timepoint. 
 ```shell
 qiime feature-table filter-samples \
   --i-table bracken-autofmt-feature-table.qza \
@@ -91,24 +95,24 @@ qiime feature-table filter-samples \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
   --o-filtered-table peri-fmt-table.qza
 ```
-
+Let's visualize our filtered table! 
 ```shell
 qiime feature-table summarize \
   --i-table peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization peri-fmt-table.qzv
 ```
-
+Looks like there is still a subject that has a two samples at our peri timepoint. Let's filter that out! 
 ```shell
 
-echo SampleID > samples-to-keep.tsv
-echo SRR14092317 >> samples-to-keep.tsv
+echo SampleID > samples-to-remove.tsv
+echo SRR14092317 >> samples-to-remove.tsv
 
 ```
 ```shell
 qiime feature-table filter-samples \
   --i-table peri-fmt-table.qza \
-  --m-metadata-file samples-to-keep.tsv \
+  --m-metadata-file samples-to-remove.tsv \
   --p-exclude-ids \
   --o-filtered-table id-filtered-peri-fmt-table.qza
 ```
@@ -119,7 +123,7 @@ qiime feature-table summarize \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization id-filtered-peri-fmt-table.qzv
 ```
-
+Now, we should collapse our table so our features are grouped at the species level. 
 ```shell
 qiime taxa collapse \
 --i-table id-filtered-peri-fmt-table.qza \
@@ -128,6 +132,7 @@ qiime taxa collapse \
 --o-collapsed-table collapsed-8-id-filtered-peri-fmt-table.qza 
 ```
 #### ANCOM-BC
+Now, we run ANCOM-BC
 ```shell
  qiime composition ancombc \
   --i-table collapsed-8-id-filtered-peri-fmt-table.qza  \
@@ -144,8 +149,10 @@ qiime composition da-barplot \
   --o-visualization differentials-peri-autofmt.qzv
 ```
 ## Contig-based analysis
-TODO : add hidden kraken2
+````{toggle}
 
+
+````
 ### QUAST QC
 ```shell
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
