@@ -264,7 +264,7 @@ qiime emperor plot \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization jaccard-autofmt-emperor-contigs.qzv
 ```
-We can make week-relative-to-fmt a custom axis in our PCOA. This allows us to look at changes in microbial composition over the course of the study.
+We can make week-relative-to-fmt a custom axis in our PCoA. This allows us to look at changes in microbial composition over the course of the study.
 ```shell
 qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
