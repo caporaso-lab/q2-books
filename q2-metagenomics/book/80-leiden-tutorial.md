@@ -172,6 +172,15 @@ qiime assembly evaluate-contigs \
     --verbose
 ```
 
+````
+### QUAST QC
+After assembling our reads into contigs, let's have a look at our contig quality metrics.
+```shell
+wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
+```
+
+````{toggle}
+
 ```shell
 qiime moshpit classify-kraken2 \
     --i-seqs "./moshpit_tutorial/cache:megahit-contigs" \
@@ -384,6 +393,15 @@ qiime moshpit evaluate-busco \
     --verbose
 ```
 
+````
+
+### BUSCO QC
+Here we will have a look at our BUSCO results to assess the completeness and quality of MAGs!
+```shell
+wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
+```
+
+```{toggle}
 **MAGs dereplication**
 Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:
 
@@ -436,13 +454,8 @@ Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your 
 
 
 ````
-### BUSCO QC
-Here we will have a look at our BUSCO results to assess the completeness and quality of MAGs!
-```shell
-wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
-```
 ### Obtaining our Kraken2 reports
-QIIME 2 does not stop you from using other tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this dataset.
+QIIME 2 does not stop you from using your favorite tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this dataset. We will used (pavian)[https://fbreitwieser.shinyapps.io/pavian/]
 ```shell
 wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
 ```
