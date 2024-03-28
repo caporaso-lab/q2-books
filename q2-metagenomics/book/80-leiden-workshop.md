@@ -44,14 +44,54 @@ qiime feature-table filter-samples \
 ### Taxa-bar Creation
 ```shell
 qiime taxa barplot \
-  --i-table bracken_autofmt-feature-table.qza \
+  --i-table bracken-autofmt-feature-table.qza \
   --i-taxonomy bracken-taxonomy.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization taxa-bar-plot-autofmt-reads.qzv
 ```
 ### Differential abundance
-....
+```shell
+qiime feature-table filter-samples \
+  --i-table autofmt-table.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --p-where "[categorical-time-relative-to-fmt]='peri'" \
+  --o-filtered-table peri-fmt-table.qza
+```
 
+```shell
+qiime feature-table summarize \
+  --i-table peri-fmt-table.qza \
+  --m-sample-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization peri-fmt-table.qzv
+```
+
+```shell
+
+echo SampleID > samples-to-keep.tsv
+echo SRR14092317 > samples-to-keep.tsv
+
+```
+```shell
+qiime feature-table filter-samples \
+  --i-table peri-fmt-table.qza \
+  --m-metadata-file samples-to-keep.tsv \
+  --o-filtered-table id-filtered-peri-fmt-table.qza
+```
+
+```shell
+qiime feature-table summarize \
+  --i-table id-filtered-peri-fmt-table.qza \
+  --m-sample-metadata-file ../new-sample-metadata.tsv \
+  --o-visualization id-filtered-peri-fmt-table.qzv
+```
+
+```shell
+ qiime composition ancombc \
+  --i-table id-filtered-peri-fmt-table.qza \
+  --m-metadata-file ../new-sample-metadata.tsv \
+  --p-formula autoFmtGroup \
+  --o-differentials differentials-peri-autofmt.qza
+```
 
 ## Contig-based analysis
 ### QUAST QC
