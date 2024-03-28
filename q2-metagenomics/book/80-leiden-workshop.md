@@ -217,7 +217,10 @@ qiime feature-table filter-samples \
   --o-filtered-table kraken2-autofmt-presence-absence-contigs.qza
 ```
 ### Alpha Diversity
+Here we'll look and compare community richness between our control and treatment group.
+
 #### Observed Features 
+To start with, we'll generate an 'observed features' vector from our presence/absence feature table:
 ```shell
 qiime diversity alpha \
     --i-table kraken2-autofmt-presence-absence-contigs.qza \
