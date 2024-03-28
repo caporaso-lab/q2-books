@@ -95,6 +95,7 @@ qiime feature-table summarize \
 ```
 ```shell
 qiime composition da-barplot \
+  --i-data differentials-peri-autofmt.qza \
   --p-significance-threshold 0.05 \
   --o-visualization differentials-peri-autofmt.qzv
 ```
@@ -104,6 +105,9 @@ qiime composition da-barplot \
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
 ```
 ### Filtering Feature Table
+wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download"
+
+
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/kraken_feature_table_contigs.qza" \
