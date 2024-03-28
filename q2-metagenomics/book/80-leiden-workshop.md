@@ -243,6 +243,7 @@ qiime longitudinal linear-mixed-effects \
 Now that we better understand community richness trends, lets look at differences in microbial composition.
 
 #### Jaccard Distance Matrix PCoA creation
+Let's first create the Jaccard distance matrix!
 ```shell
 qiime diversity beta \
   --i-table kraken2-autofmt-presence-absence-contigs.qza \
