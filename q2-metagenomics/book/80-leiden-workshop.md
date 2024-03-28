@@ -12,7 +12,7 @@ Before we dive into the tutorial, let's set up the required directory structre a
 
 ## Metadata
 ```shell
-"wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download"
+wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download
 ```
 
 ```shell
