@@ -22,7 +22,11 @@ qiime metadata tabulate \
 ```
 
 ```{note}
-https://workshop-server.qiime2.org/<your user namey>/
+We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 Visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you'll navigate to:
+```
+https://workshop-server.qiime2.org/<your-user-name>/
+```
+From here, you'll click on the hyperlink associated with the visualization you'd like to download.
 ```
 ## Read-based analysis
 TODO : add hidden kraken2+bracken!
@@ -237,9 +241,9 @@ wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2v
 
 ### Kraken2 annotation reports extraction
 ```shell
-qiime tools extract  \
-  --input-path  \
-  --output-path  \
+qiime tools extract \
+  --input-path kraken2-reports-mags-derep.qza \
+  --output-path kraken2-reports-mags-derep.txt \
 ```
 
 
