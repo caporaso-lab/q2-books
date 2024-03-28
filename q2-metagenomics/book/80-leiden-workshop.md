@@ -17,7 +17,7 @@ wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/
 
 ```shell
 qiime metadata tabulate \
-  --m-input-file sample-metadata.tsv
+  --m-input-file sample-metadata.tsv \
   --o-visualization sample-metadata.qzv
 ```
 ## Read-based analysis
