@@ -8,6 +8,9 @@ Before we dive into the tutorial, let's talk about our workshop server directory
 ```shell
 <your home directory>
 └ workshop
+   ├ reads
+   ├ contigs
+   └ sample-metadata.tsv
 ```
 Let's verify that QIIME 2 is working by calling qiime.
 ```shell
@@ -297,6 +300,21 @@ qiime taxa barplot \
 ```
 ### Functional analysis
 Here we will perform functional annotation of contigs to capture gene diversity!
+
+````{toggle}
+```shell
+qiime moshpit eggnog-diamond-search \
+  --i-sequences "./moshpit_tutorial/cache:contigs" \
+  --i-diamond-db "./moshpit_tutorial/cache:eggnog_diamond_full"\
+  --p-num-cpus 14 \
+  --p-db-in-memory \
+  --o-eggnog-hits "./moshpit_tutorial/cache:diamond_hits_contigs" \
+  --o-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
+  --verbose
+```
+
+````
+
 #### Obtaining Feature Table
 You know the drill by now ;)
 ```shell
@@ -402,7 +420,7 @@ Here we will have a look at our BUSCO results to assess the completeness and qua
 wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
 ```
 
-```{toggle}
+````{toggle}
 **MAGs dereplication**
 Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:
 
@@ -434,6 +452,7 @@ qiime moshpit dereplicate-mags \
     --o-feature-table "./moshpit_tutorial/cache:mags_ft" \
     --verbose
 ```
+````
 **MAGs taxonomic annotation workflow**
 This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.
 
