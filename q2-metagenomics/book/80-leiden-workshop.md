@@ -94,7 +94,9 @@ qiime feature-table summarize \
 ```
 ```shell
 qiime composition da-barplot \
-
+  --p-significance-threshold 0.05 \
+  --o-visualization differentials-peri-autofmt.qzv
+```
 ## Contig-based analysis
 ### QUAST QC
 ```shell
