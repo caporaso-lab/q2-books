@@ -525,7 +525,7 @@ document.write(`
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We will be using QIIME 2 View (<a class="reference external" href="http://view.qiime2.org">view.qiime2.org</a>) to examine our QIIME 2 visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you’ll navigate to:</p>
-<p><a class="reference external" href="https://workshop-server.qiime2.org/%5Byour-user-name%5D/">https://workshop-server.qiime2.org/[your-user-name]/</a></p>
+<p><a class="reference external" href="https://workshop-server.qiime2.org/%5Byour-username%5D/">https://workshop-server.qiime2.org/[your-username]/</a></p>
 <p>From here, you’ll click on the hyperlink associated with the visualization you’d like to download.</p>
 </div>
 </section>
@@ -807,7 +807,6 @@ document.write(`
 </section>
 <section id="functional-analysis">
 <h3>Functional analysis<a class="headerlink" href="#functional-analysis" title="Permalink to this heading">#</a></h3>
-<p>Here we will perform functional annotation of contigs to capture gene diversity!</p>
 <div class="toggle docutils container">
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-sequences<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -820,6 +819,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<p>Here we will perform functional annotation of contigs to capture gene diversity!</p>
 <section id="obtaining-feature-table">
 <h4>Obtaining Feature Table<a class="headerlink" href="#obtaining-feature-table" title="Permalink to this heading">#</a></h4>
 <p>You know the drill by now ;)</p>
@@ -870,8 +870,8 @@ document.write(`
 <h2>MAG-based analysis<a class="headerlink" href="#mag-based-analysis" title="Permalink to this heading">#</a></h2>
 <div class="toggle docutils container">
 <p>Let’s start binning our contigs into MAGs using various tools and methodologies!</p>
-<p><strong>Read mapping</strong>
-We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together.</p>
+<p><strong>Read mapping</strong></p>
+<p>We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>assembly<span class="w"> </span>index-contigs<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--p-seed<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
@@ -892,8 +892,8 @@ We first need to index the contigs obtained in the assembly step and map the ori
 <span class="w">    </span>--verbose
 </pre></div>
 </div>
-<p><strong>Binning</strong>
-Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6662567/">MetaBAT 2</a> tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign contigs to individual bins.</p>
+<p><strong>Binning</strong></p>
+<p>Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6662567/">MetaBAT 2</a> tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign contigs to individual bins.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>bin-contigs-metabat<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-alignment-maps<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:reads_to_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -913,8 +913,8 @@ Finally, we are ready to perform contig binning. This process involves categoriz
 <li><p><code class="docutils literal notranslate"><span class="pre">unbinned-contigs.qza</span></code>: these are all the contigs that could not be assign to any particular MAG.
 From now on, we will focus on the mags.qza.</p></li>
 </ul>
-<p><strong>MAGs QC with BUSCO</strong>
-BUSCO is used here to assess the completeness and quality of MAGs by searching for single-copy orthologous genes within the genomes.</p>
+<p><strong>MAGs QC with BUSCO</strong></p>
+<p>BUSCO is used here to assess the completeness and quality of MAGs by searching for single-copy orthologous genes within the genomes.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>evaluate-busco<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-bins<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--p-lineage-dataset<span class="w"> </span>bacteria_odb10<span class="w"> </span><span class="se">\</span>
@@ -962,11 +962,10 @@ BUSCO is used here to assess the completeness and quality of MAGs by searching f
 <span class="w">    </span>--verbose
 </pre></div>
 </div>
-</div>
-<p><strong>MAGs taxonomic annotation workflow</strong>
-This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.</p>
-<p><strong>MAGs classify with Kraken2</strong>
-MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.</p>
+<p><strong>MAGs taxonomic annotation workflow</strong></p>
+<p>This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.</p>
+<p><strong>MAGs classify with Kraken2</strong></p>
+<p>MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>classify-kraken2<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-seqs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--i-kraken2-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_standard&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -979,7 +978,7 @@ MAGs are classified taxonomically using Kraken2, with parameters set for confide
 <span class="w">    </span>--verbose
 </pre></div>
 </div>
-<p>Alternatively, you can also use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">classify-kaiju</span></code> to classify your contigs with Kaiju.</p>
+</div>
 </section>
 <section id="obtaining-our-kraken2-reports">
 <h3>Obtaining our Kraken2 reports<a class="headerlink" href="#obtaining-our-kraken2-reports" title="Permalink to this heading">#</a></h3>
