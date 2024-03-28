@@ -23,6 +23,59 @@ mkdir reads
 ```
 mkdir contigs
 ```
+
+````{toggle}
+**Required databases**
+In order to perform the taxonomic and functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using respective QIIME 2 actions.
+
+1. Kraken 2/Bracken database
+
+```shell
+qiime moshpit build-kraken-db \
+    --p-collection standard \
+    --o-kraken2-database ./moshpit_tutorial/cache:kraken_standard \
+    --o-bracken-database ./moshpit_tutorial/cache:bracken_standard \
+    --verbose
+```
+
+2. EggNOG databases
+
+```shell
+qiime moshpit fetch-diamond-db \
+    --o-diamond-db ./moshpit_tutorial/cache:eggnog_diamond_full \
+    --verbose
+```
+```shell
+qiime moshpit fetch-eggnog-db \
+    --o-eggnog-db ./moshpit_tutorial/cache:eggnog_annot_full \
+    --verbose
+```
+
+**Data retrieval from SRA**
+The data we are using in this tutorial can be fetched from the SRA repository using the [q2-fondue](https://github.com/bokulich-lab/q2-fondue) plugin. We need to import the accession IDs into a QIIME 2 artifact:
+
+```shell
+qiime tools import \
+  --type NCBIAccessionIDs \
+  --input-path ids.tsv \
+  --output-path ./moshpit_tutorial/ids.qza
+```
+
+We can then use the `get-sequences` action to download the data (please insert your e-mail address in the `--p-email` parameter):
+
+```shell
+qiime fondue get-sequences \
+    --i-accession-ids ./moshpit_tutorial/ids.qza \
+    --p-n-jobs 16 \
+    --p-email you@tutorial.com \
+    --o-single-reads ./moshpit_tutorial/cache:reads_single \
+    --o-single-paired ./moshpit_tutorial/cache:reads_paired \
+    --o-failed-runs ./moshpit_tutorial/cache:failed_runse \
+    --verbose
+```
+This will download all the sequences into the QIIME 2 cache. It is a lot of data, so keep in mind that depending on your network speed, this might take a while.
+````
+
 ## Metadata
 First, let's grab our sample metadata!
 ```shell
@@ -163,6 +216,8 @@ qiime composition da-barplot \
 ```
 ## Contig-based analysis
 ````{toggle}
+**Assemble Reads into Contigs with MEGAHIT**
+The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.
 ```shell
 qiime assembly assemble-megahit \
     --i-seqs "./moshpit_tutorial/cache:reads_no_host" \
@@ -172,7 +227,8 @@ qiime assembly assemble-megahit \
     --o-contigs "./moshpit_tutorial/cache:contigs" \
     --verbose
 ```
-
+**Contig QC with QUAST**
+Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly.
 ```shell
 qiime assembly evaluate-contigs \
     --i-contigs "./moshpit_tutorial/cache:contigs" \
@@ -181,7 +237,6 @@ qiime assembly evaluate-contigs \
     --o-visualization "./moshpit_tutorial/results/contigs.qzv" \
     --verbose
 ```
-
 ````
 ### QUAST QC
 After assembling our reads into contigs, let's have a look at our contig quality metrics.
