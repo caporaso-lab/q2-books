@@ -50,6 +50,7 @@ qiime taxa barplot \
   --o-visualization taxa-bar-plot-autofmt-reads.qzv
 ```
 ### Differential abundance
+#### Feature Table preparation
 ```shell
 qiime feature-table filter-samples \
   --i-table bracken-autofmt-feature-table.qza \
@@ -93,7 +94,7 @@ qiime taxa collapse \
 --p-level 8 \
 --o-collapsed-table collapsed-8-id-filtered-peri-fmt-table.qza 
 ```
-
+#### ANCOM-BC
 ```shell
  qiime composition ancombc \
   --i-table collapsed-8-id-filtered-peri-fmt-table.qza  \
