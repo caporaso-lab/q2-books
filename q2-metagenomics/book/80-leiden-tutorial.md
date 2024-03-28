@@ -80,7 +80,7 @@ wget -O ./reads/bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzL
 First, we’ll remove samples that are not part of the autoFMT study from the feature table. We identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.
 ```shell
 qiime feature-table filter-samples \
-  --i-table bracken-feature-table.qza \
+  --i-table ./reads/bracken-feature-table.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table ./reads/bracken-autofmt-feature-table.qza
@@ -90,8 +90,8 @@ qiime feature-table filter-samples \
 Now we will use our table and taxonomy to create a taxa barplot.
 ```shell
 qiime taxa barplot \
-  --i-table bracken-autofmt-feature-table.qza \
-  --i-taxonomy bracken-taxonomy.qza \
+  --i-table ./reads/bracken-autofmt-feature-table.qza \
+  --i-taxonomy ./reads/bracken-taxonomy.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./reads/taxa-bar-plot-autofmt-reads.qzv
 ```
@@ -100,7 +100,7 @@ qiime taxa barplot \
 ANCOM-BC can not be run on repeated measures. So we will need to filter to one timepoint. Here we filter to the "peri" timepoint.
 ```shell
 qiime feature-table filter-samples \
-  --i-table bracken-autofmt-feature-table.qza \
+  --i-table ./reads/bracken-autofmt-feature-table.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
   --o-filtered-table ./reads/peri-fmt-table.qza
@@ -108,7 +108,7 @@ qiime feature-table filter-samples \
 Let's visualize our filtered table!
 ```shell
 qiime feature-table summarize \
-  --i-table peri-fmt-table.qza \
+  --i-table ./reads/peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization ./reads/peri-fmt-table.qzv
 ```
@@ -121,7 +121,7 @@ echo SRR14092317 >> ./reads/samples-to-remove.tsv
 ```
 ```shell
 qiime feature-table filter-samples \
-  --i-table peri-fmt-table.qza \
+  --i-table ./reads/peri-fmt-table.qza \
   --m-metadata-file samples-to-remove.tsv \
   --p-exclude-ids \
   --o-filtered-table ./reads/id-filtered-peri-fmt-table.qza
@@ -129,15 +129,15 @@ qiime feature-table filter-samples \
 
 ```shell
 qiime feature-table summarize \
-  --i-table id-filtered-peri-fmt-table.qza \
+  --i-table ./reads/id-filtered-peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization ./reads/id-filtered-peri-fmt-table.qzv
 ```
 Now, we should collapse our table so our features are grouped at the species level.
 ```shell
 qiime taxa collapse \
---i-table id-filtered-peri-fmt-table.qza \
---i-taxonomy bracken-taxonomy.qza \
+--i-table ./reads/id-filtered-peri-fmt-table.qza \
+--i-taxonomy ./reads/bracken-taxonomy.qza \
 --p-level 8 \
 --o-collapsed-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza
 ```
@@ -145,7 +145,7 @@ qiime taxa collapse \
 Now, we run ANCOM-BC!
 ```shell
  qiime composition ancombc \
-  --i-table collapsed-8-id-filtered-peri-fmt-table.qza  \
+  --i-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza  \
   --m-metadata-file sample-metadata.tsv \
   --p-formula autoFmtGroup \
   --o-differentials ./reads/differentials-peri-autofmt.qza
@@ -153,7 +153,7 @@ Now, we run ANCOM-BC!
 
 ```shell
 qiime composition da-barplot \
-  --i-data differentials-peri-autofmt.qza \
+  --i-data ./reads/differentials-peri-autofmt.qza \
   --p-significance-threshold 0.05 \
   --p-level-delimiter ";" \
   --o-visualization ./reads/differentials-peri-autofmt.qzv
@@ -224,7 +224,7 @@ wget -O ./contigs/kraken2-taxonomy-contigs.qza https://polybox.ethz.ch/index.php
 Now that we have acquaired our contig feature table, we will also remove samples that are not part of the autoFMT study following the exact same approach as we did for the reads.
 ```shell
 qiime feature-table filter-samples \
-  --i-table kraken2-presence-absence-contigs.qza \
+  --i-table ./contigs/kraken2-presence-absence-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza
@@ -236,7 +236,7 @@ Here we'll look and compare community richness between our control and treatment
 To start with, we'll generate an 'observed features' vector from our presence/absence feature table:
 ```shell
 qiime diversity alpha \
-    --i-table kraken2-autofmt-presence-absence-contigs.qza \
+    --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
     --p-metric "observed_features" \
     --o-alpha-diversity ./contigs/obs-features-autofmt-contigs.qza
 ```
@@ -244,7 +244,7 @@ qiime diversity alpha \
 We will use a linear mixed-effects model in order to manage the repeated measures in our dataset.
 ```shell
 qiime longitudinal linear-mixed-effects \
-  --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
+  --m-metadata-file sample-metadata.tsv ./contigs/obs-features-autofmt-contigs.qza \
   --p-state-column day-relative-to-fmt \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
@@ -259,28 +259,28 @@ Now that we better understand community richness trends, let's look at differenc
 Let's first create the Jaccard distance matrix!
 ```shell
 qiime diversity beta \
-  --i-table kraken2-autofmt-presence-absence-contigs.qza \
+  --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
   --p-metric jaccard \
   --o-distance-matrix ./contigs/jaccard-autofmt-contigs.qza
 ```
 Now, let's generate a PCoA from Jaccard matrix.
 ```shell
 qiime diversity pcoa \
-  --i-distance-matrix jaccard-autofmt-contigs.qza \
+  --i-distance-matrix ./contigs/jaccard-autofmt-contigs.qza \
   --o-pcoa ./contigs/jaccard-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation
 Now that we have our Jaccard diversity PCoA, let's visualize it!
 ```shell
 qiime emperor plot \
-  --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
+  --i-pcoa ./contigs/jaccard-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./contigs/jaccard-autofmt-emperor-contigs.qzv
 ```
 We can make week-relative-to-fmt a custom axis in our PCoA. This allows us to look at changes in microbial composition over the course of the study.
 ```shell
 qiime emperor plot \
-  --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
+  --i-pcoa ./contigs/jaccard-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-custom-axes week-relative-to-fmt \
   --o-visualization ./contigs/jaccard-autofmt-emperor-custom-contigs.qzv
@@ -290,8 +290,8 @@ qiime emperor plot \
 We will now explore our contig microbial composition by visualizing a taxa bar plot. Note that we are using a FeatureTable[PresenceAbsence], hence we are not talking about relative abundance in this case.
 ```shell
 qiime taxa barplot \
-  --i-table kraken2-autofmt-presence-absence-contigs.qza \
-  --i-taxonomy kraken2-taxonomy-contigs.qza \
+  --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
+  --i-taxonomy ./contigs/kraken2-taxonomy-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./contigs/taxa-bar-plot-autofmt-contigs.qzv
 ```
@@ -306,7 +306,7 @@ wget -O ./contigs/eggnog-presence-absence-contigs.qza https://polybox.ethz.ch/in
 Same here ;)
 ```shell
 qiime feature-table filter-samples \
-  --i-table eggnog-presence-absence-contigs.qza \
+  --i-table ./contigs/eggnog-presence-absence-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
   --o-filtered-table ./contigs/filtered-eggnog-presence-absence-contigs.qza
@@ -315,21 +315,21 @@ qiime feature-table filter-samples \
 We will again start by calculating our Jaccard beta-diversity matrix.
 ```shell
 qiime diversity beta \
-  --i-table filtered-eggnog-presence-absence-contigs.qza \
+  --i-table ./contigs/filtered-eggnog-presence-absence-contigs.qza \
   --p-metric jaccard \
   --o-distance-matrix ./contigs/jaccard-diamond-autofmt-contigs.qza
 ```
 Then, we will generate our PCoA from Jaccard matrix.
 ```shell
 qiime diversity pcoa \
-  --i-distance-matrix jaccard-diamond-autofmt-contigs.qza  \
+  --i-distance-matrix ./contigs/jaccard-diamond-autofmt-contigs.qza  \
   --o-pcoa ./contigs/jaccard-diamond-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation for gene diversity
 Visulization time!
 ```shell
 qiime emperor plot \
-  --i-pcoa  jaccard-diamond-autofmt-pcoa-contigs.qza \
+  --i-pcoa ./contigs/jaccard-diamond-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./contigs/jaccard-diamond-autofmt-pcoa-contigs.qzv
 ```
