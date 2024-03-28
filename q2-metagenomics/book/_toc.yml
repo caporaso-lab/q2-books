@@ -3,11 +3,17 @@
 
 format: jb-book
 root: intro
-chapters:
-- file: 01-sra-data-access.md
-- file: 02-read-analysis.md
-- file: 03-contig-analysis.md
-- file: 04-MAG-analysis.md
-- file: 80-leiden-workshop.md
-- file: 90-tips.md
-- file: 91-workflow-diagram.md
+parts:
+  - caption: Alpha release tutorials
+    chapters:
+    - file: 80-leiden-tutorial.md
+  - caption: How-to guides
+    chapters:
+    - file: 01-sra-data-access.md
+    - file: 02-read-analysis.md
+    - file: 03-contig-analysis.md
+    - file: 04-MAG-analysis.md
+  - caption: References
+    chapters:
+    - file: 90-tips.md
+    - file: 91-workflow-diagram.md
