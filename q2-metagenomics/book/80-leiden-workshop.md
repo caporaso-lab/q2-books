@@ -20,6 +20,11 @@ qiime metadata tabulate \
   --m-input-file sample-metadata.tsv \
   --o-visualization sample-metadata.qzv
 ```
+
+```shell
+https://workshop-server.qiime2.org/<your user namey>/
+```
+
 ## Read-based analysis
 ### Filtering Feature Table
 ```shell
