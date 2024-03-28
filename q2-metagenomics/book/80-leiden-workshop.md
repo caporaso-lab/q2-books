@@ -168,7 +168,7 @@ qiime longitudinal linear-mixed-effects \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
   --p-metric "observed_features" \
-  --o-visualization lme-obs-features-treatmentVScontrol-contigs.qzv"
+  --o-visualization lme-obs-features-treatmentVScontrol-contigs.qzv
 ```
 
 ### Beta Diversity
