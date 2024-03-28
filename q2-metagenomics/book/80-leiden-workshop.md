@@ -157,22 +157,22 @@ qiime longitudinal linear-mixed-effects \
 #### Jaccard Distance Matrix PCoA creation
 ```shell
 qiime diversity beta \
-  --i-table "./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza" \
+  --i-table kraken2-autofmt-presence-absence-contigs.qza \
   --p-metric jaccard \
-  --o-distance-matrix "./moshpit_tutorial/jaccard_autofmt_contigs.qza"
+  --o-distance-matrix jaccard-autofmt-contigs.qza
 ```
 
 ```shell
 qiime diversity pcoa \
-  --i-distance-matrix "./moshpit_tutorial/jaccard_autofmt_contigs.qza" \
-  --o-pcoa "./moshpit_tutorial/jaccard_autofmt_pcoa_contigs.qza"
+  --i-distance-matrix jaccard-autofmt-contigs.qza \
+  --o-pcoa jaccard-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation
 ```shell
 qiime emperor plot \
-  --i-pcoa "./moshpit_tutorial/cache:jaccard_autofmt_pcoa_contigs" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
-  --o-visualization "./moshpit_tutorial/results/jaccard_autofmt_emperor.qzv
+  --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
+  --m-metadata-file sample-metadata.tsv \
+  --o-visualization jaccard-autofmt-emperor-contigs.qzv
 ```
 
 ```shell
