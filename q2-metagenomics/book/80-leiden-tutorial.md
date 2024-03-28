@@ -17,6 +17,7 @@ Before we start our analyses, we want to create sub-directories for each type of
 ```
 mkdir reads
 ```
+```
 mkdir contigs
 ```
 ## Metadata
