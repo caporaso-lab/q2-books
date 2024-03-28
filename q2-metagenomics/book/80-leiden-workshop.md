@@ -228,6 +228,7 @@ qiime diversity alpha \
     --o-alpha-diversity obs-features-autofmt-contigs.qza
 ```
 #### Linear Mixed Effects
+We will use a linear mixed-effects model in order to manage the repeated measures in our dataset.
 ```shell
 qiime longitudinal linear-mixed-effects \
   --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
