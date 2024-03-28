@@ -13,36 +13,21 @@ conda activate qiime2-shotgun-2024.2
 ```
 
 ### Directory structure
-
-Below you can see the directory structure that we will use throughout this tutorial:
-
 ```shell
-<your working directory>
-├── moshpit_tutorial
-│   ├── cache
-│   ├── results
-```
-
-Once you decided on the location of your working directory, let's create the `results` subdirectory by running the following command:
-
-```shell
-mkdir -p moshpit_tutorial/results
-```
-
-Next, we create the `cache` subdirectory (this is where majority of the data will be written to by QIIME 2) by running the following command:
-
-```shell
-qiime tools cache-create \
-  --cache ./moshpit_tutorial/cache
-```
-
-We will be saving all the artifacts into that QIIME cache and all the final visualizations and tables into the `results` directory. If you want to read more about the QIIME cache, you can do so [here](https://dev.qiime2.org/latest/api-reference/cache/).
+<your home directory>
+└ workshop
+``
 
 ## Metadata
-wget...
-metadata tabulate...
+```shell
+"wget -O sample-metadata.tsv https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download"
+```
 
-
+```shell
+qiime metadata tabulate \
+  --m-input-file
+  --o-visualization
+```
 ## Read-based analysis
 ### Filtering Feature Table
 ```shell
