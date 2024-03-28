@@ -360,7 +360,7 @@ mv *.qzv visualizations
 Now that we have all of our visualizations in one place, we can run provenance replay on the entire directory. This will provide us with all of the upstream commands used to generate each visualization, along with any relevant citations associated with each of the commands used.
 
 ```shell
-qiime tools replay \
+qiime tools replay-supplement \
 --in-fp visualizations \
 --out-fp replay-output \
 ```
