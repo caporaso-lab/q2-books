@@ -86,7 +86,7 @@ qiime taxa barplot \
   --i-table bracken-autofmt-feature-table.qza \
   --i-taxonomy bracken-taxonomy.qza \
   --m-metadata-file sample-metadata.tsv \
-  --o-visualization taxa-bar-plot-autofmt-reads.qzv
+  --o-visualization reads/taxa-bar-plot-autofmt-reads.qzv
 ```
 ### Differential abundance
 #### Feature Table preparation
@@ -103,7 +103,7 @@ Let's visualize our filtered table!
 qiime feature-table summarize \
   --i-table peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
-  --o-visualization peri-fmt-table.qzv
+  --o-visualization reads/peri-fmt-table.qzv
 ```
 Looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out!
 ```shell
@@ -124,7 +124,7 @@ qiime feature-table filter-samples \
 qiime feature-table summarize \
   --i-table id-filtered-peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
-  --o-visualization id-filtered-peri-fmt-table.qzv
+  --o-visualization reads/id-filtered-peri-fmt-table.qzv
 ```
 Now, we should collapse our table so our features are grouped at the species level.
 ```shell
@@ -149,7 +149,7 @@ qiime composition da-barplot \
   --i-data differentials-peri-autofmt.qza \
   --p-significance-threshold 0.05 \
   --p-level-delimiter ";" \
-  --o-visualization differentials-peri-autofmt.qzv
+  --o-visualization reads/differentials-peri-autofmt.qzv
 ```
 ## Contig-based analysis
 ````{toggle}
@@ -242,7 +242,7 @@ qiime longitudinal linear-mixed-effects \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
   --p-metric "observed_features" \
-  --o-visualization lme-obs-features-treatmentVScontrol-contigs.qzv
+  --o-visualization contigs/lme-obs-features-treatmentVScontrol-contigs.qzv
 ```
 
 ### Beta Diversity
@@ -268,7 +268,7 @@ Now that we have our Jaccard diversity PCoA, let's visualize it!
 qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
-  --o-visualization jaccard-autofmt-emperor-contigs.qzv
+  --o-visualization contigs/jaccard-autofmt-emperor-contigs.qzv
 ```
 We can make week-relative-to-fmt a custom axis in our PCoA. This allows us to look at changes in microbial composition over the course of the study.
 ```shell
@@ -276,7 +276,7 @@ qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-custom-axes week-relative-to-fmt \
-  --o-visualization jaccard-autofmt-emperor-custom-contigs.qzv
+  --o-visualization contigs/jaccard-autofmt-emperor-custom-contigs.qzv
 ```
 
 ### Taxa-bar Creation
@@ -286,7 +286,7 @@ qiime taxa barplot \
   --i-table kraken2-autofmt-presence-absence-contigs.qza \
   --i-taxonomy kraken2-taxonomy-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
-  --o-visualization taxa-bar-plot-autofmt-contigs.qzv
+  --o-visualization contigs/taxa-bar-plot-autofmt-contigs.qzv
 ```
 ### Functional analysis
 Here we will perform functional annotation of contigs to capture gene diversity!
@@ -324,7 +324,7 @@ Visulization time!
 qiime emperor plot \
   --i-pcoa  jaccard-diamond-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
-  --o-visualization jaccard-diamond-autofmt-pcoa-contigs.qzv
+  --o-visualization contigs/jaccard-diamond-autofmt-pcoa-contigs.qzv
 ```
 
 ## MAG-based analysis
@@ -467,23 +467,12 @@ qiime tools extract \
 ## Provenance Replay
 Now that we've gone through this tutorial, we'd like a way to keep track of the commands we ran to generate all of the visualizations we looked at today. Luckily, provenance replay can handle this for us!
 
-We'll start off by creating a new directory for all of the visualizations we've generated during this tutorial.
-
-```shell
-mkdir visualizations
-```
-
-Then we'll move all of our .qzv files into this directory.
-
-```
-mv *.qzv visualizations
-```
-
-Now that we have all of our visualizations in one place, we can run provenance replay on the entire directory. This will provide us with all of the upstream commands used to generate each visualization, along with any relevant citations associated with each of the commands used.
+We'll start off by running provenance replay for all of the read-based visualizations we've generated during this tutorial. We can run provenance replay on the entire `reads` directory. This will provide us with all of the upstream commands used to generate each visualization, along with any relevant citations associated with each of the commands used.
 
 ```shell
 qiime tools replay-supplement \
---in-fp visualizations \
---out-fp replay-output
+--in-fp reads \
+--out-fp reads-replay-output
 ```
 
+On your own, try generating the replay supplement for all of the contig-based visualizations! **Hint**: use the `contigs` directory for your input filepath. :)
