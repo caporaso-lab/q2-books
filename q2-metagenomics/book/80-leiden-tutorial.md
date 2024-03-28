@@ -537,7 +537,7 @@ qiime moshpit classify-kraken2 \
 
 ### Obtaining our Kraken2 reports
 
-QIIME 2 does not stop you from using your favorite tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this dataset. We will used (pavian)[https://fbreitwieser.shinyapps.io/pavian/]
+QIIME 2 does not stop you from using your favorite tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this dataset. We will visualize some of them with [pavian](https://fbreitwieser.shinyapps.io/pavian/).
 
 ```shell
 wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
