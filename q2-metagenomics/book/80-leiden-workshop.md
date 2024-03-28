@@ -150,7 +150,45 @@ qiime composition da-barplot \
 ```
 ## Contig-based analysis
 ````{toggle}
+```shell
+qiime assembly assemble-megahit \
+    --i-seqs "./moshpit_tutorial/cache:reads_no_host" \
+    --p-presets "meta-sensitive" \
+    --p-num-cpu-threads 64 \
+    --p-num-partitions 4 \
+    --o-contigs "./moshpit_tutorial/cache:contigs" \
+    --verbose
+```
 
+```shell
+qiime assembly evaluate-contigs \
+    --i-contigs "./moshpit_tutorial/cache:contigs" \
+    --p-threads 128 \
+    --p-memory-efficient \
+    --o-visualization "./moshpit_tutorial/results/contigs.qzv" \
+    --verbose
+```
+
+```shell
+qiime moshpit classify-kraken2 \
+    --i-seqs "./moshpit_tutorial/cache:megahit-contigs" \
+    --i-kraken2-db "./moshpit_tutorial/cache:kraken_standard" \
+    --p-threads 48 \
+    --p-confidence 0.6 \
+    --p-minimum-base-quality 20 \
+    --p-num-partitions 4 \
+    --o-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
+    --o-hits "./moshpit_tutorial/cache:kraken_hits_contigs" \
+    --verbose
+```
+
+```shell
+qiime moshpit kraken2-to-features \
+  --i-reports "./moshpit_tutorial/cache:kraken_reports_contigs" \
+  --o-table "./moshpit_tutorial/cache:kraken_feature_table_contigs" \
+  --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_contigs" \
+  --verbose
+```
 
 ````
 ### QUAST QC
