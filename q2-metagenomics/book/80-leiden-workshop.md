@@ -240,7 +240,7 @@ qiime longitudinal linear-mixed-effects \
 ```
 
 ### Beta Diversity
-Now that we better understand community richness trends, lets look at differences in microbial composition.
+Now that we better understand community richness trends, let's look at differences in microbial composition.
 
 #### Jaccard Distance Matrix PCoA creation
 Let's first create the Jaccard distance matrix!
@@ -257,14 +257,14 @@ qiime diversity pcoa \
   --o-pcoa jaccard-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation
-Now that we have our Jaccard diversity PCoA, lets visualize it!
+Now that we have our Jaccard diversity PCoA, let's visualize it!
 ```shell
 qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization jaccard-autofmt-emperor-contigs.qzv
 ```
-We can make week-relative-to-fmt a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.
+We can make week-relative-to-fmt a custom axis in our PCOA. This allows us to look at changes in microbial composition over the course of the study.
 ```shell
 qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
@@ -274,7 +274,7 @@ qiime emperor plot \
 ```
 
 ### Taxa-bar Creation
-We will now explore our coting microbial composition by visualizing a taxa bar plot. Note that we are using a FeatureTable[PresenceAbsence], hence we are not talking about relative abundance in this case.
+We will now explore our contig microbial composition by visualizing a taxa bar plot. Note that we are using a FeatureTable[PresenceAbsence], hence we are not talking about relative abundance in this case.
 ```shell
 qiime taxa barplot \
   --i-table kraken2-autofmt-presence-absence-contigs.qza \
@@ -328,7 +328,7 @@ Here we will have a look at our BUSCO results to assess the completeness and qua
 wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
 ```
 ### Obtaining our Kraken2 reports
-QIIME 2 does not stop you from using other tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this datasetet.
+QIIME 2 does not stop you from using other tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this dataset.
 ```shell
 wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
 ```
