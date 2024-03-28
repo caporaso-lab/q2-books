@@ -148,27 +148,27 @@ qiime diversity alpha \
    --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
    --p-state-column DayRelativeToNearestHCT \
    --p-individual-id-column PatientID \
-   --p-metric observed_features \
-   --o-visualization "./moshpit_tutorial/results/lme_obs_features_HCT_contigs.qzv"
+   --p-metric "observed_features" \
+   --o-visualization lme-obs-features-HCT-contigs.qzv
 ```
 
 ```shell
  qiime longitudinal linear-mixed-effects \
-   --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/obs_features_autofmt_contigs.qza" \
+   --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
    --p-state-column day-relative-to-fmt \
    --p-individual-id-column PatientID \
-   --p-metric observed_features \
-   --o-visualization "./moshpit_tutorial/results/lme_obs_features_FMT_contigs.qzv"
+   --p-metric "observed_features" \
+   --o-visualization lme-obs-features-FMT-contigs.qzv
 ```
 
 ```shell
 qiime longitudinal linear-mixed-effects \
- --m-metadata-file "./moshpit_tutorial/metadata.tsv" "./moshpit_tutorial/obs_features_autofmt_contigs.qza" \
+ --m-metadata-file sample-metadata.tsv obs-features-autofmt-contigs.qza \
   --p-state-column day-relative-to-fmt \
   --p-group-columns autoFmtGroup \
   --p-individual-id-column PatientID \
   --p-metric observed_features \
-  --o-visualization "./moshpit_tutorial/results/lme_obs_features_treatmentVScontrol_contigs.qzv"
+  --o-visualization lme-obs-features-treatmentVScontrol-contigs.qzv"
 ```
 
 ### Beta Diversity
