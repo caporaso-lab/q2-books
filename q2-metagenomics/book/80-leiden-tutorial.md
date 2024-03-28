@@ -13,6 +13,12 @@ Let's verify that QIIME 2 is working by calling qiime.
 ```shell
 qiime
 ```
+Before we start our analyses, we want to create sub-directories for each type of data we're examining to keep things organized. We'll create the following sub-directories:
+```
+mkdir reads
+```
+mkdir contigs
+```
 ## Metadata
 First, let's grab our sample metadata!
 ```shell
@@ -64,10 +70,10 @@ qiime moshpit estimate-bracken \
 ### Obtaining your Feature Table and Taxonomy Table
 We are going to look at taxonomic annotations for our read based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken.
 ```shell
-wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
+wget -O ./reads/bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
 ```
 ```shell
-wget -O bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
+wget -O ./reads/bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 ```
 ### Filtering Feature Table
 First, we’ll remove samples that are not part of the autoFMT study from the feature table. We identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.
@@ -76,7 +82,7 @@ qiime feature-table filter-samples \
   --i-table bracken-feature-table.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table bracken-autofmt-feature-table.qza
+  --o-filtered-table ./reads/bracken-autofmt-feature-table.qza
 ```
 
 ### Taxa Barplot Creation
@@ -86,7 +92,7 @@ qiime taxa barplot \
   --i-table bracken-autofmt-feature-table.qza \
   --i-taxonomy bracken-taxonomy.qza \
   --m-metadata-file sample-metadata.tsv \
-  --o-visualization reads/taxa-bar-plot-autofmt-reads.qzv
+  --o-visualization ./reads/taxa-bar-plot-autofmt-reads.qzv
 ```
 ### Differential abundance
 #### Feature Table preparation
@@ -96,20 +102,20 @@ qiime feature-table filter-samples \
   --i-table bracken-autofmt-feature-table.qza \
   --m-metadata-file sample-metadata.tsv \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
-  --o-filtered-table peri-fmt-table.qza
+  --o-filtered-table ./reads/peri-fmt-table.qza
 ```
 Let's visualize our filtered table!
 ```shell
 qiime feature-table summarize \
   --i-table peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
-  --o-visualization reads/peri-fmt-table.qzv
+  --o-visualization ./reads/peri-fmt-table.qzv
 ```
 Looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out!
 ```shell
 
-echo SampleID > samples-to-remove.tsv
-echo SRR14092317 >> samples-to-remove.tsv
+echo SampleID > ./reads/samples-to-remove.tsv
+echo SRR14092317 >> ./reads/samples-to-remove.tsv
 
 ```
 ```shell
@@ -117,14 +123,14 @@ qiime feature-table filter-samples \
   --i-table peri-fmt-table.qza \
   --m-metadata-file samples-to-remove.tsv \
   --p-exclude-ids \
-  --o-filtered-table id-filtered-peri-fmt-table.qza
+  --o-filtered-table ./reads/id-filtered-peri-fmt-table.qza
 ```
 
 ```shell
 qiime feature-table summarize \
   --i-table id-filtered-peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
-  --o-visualization reads/id-filtered-peri-fmt-table.qzv
+  --o-visualization ./reads/id-filtered-peri-fmt-table.qzv
 ```
 Now, we should collapse our table so our features are grouped at the species level.
 ```shell
@@ -132,7 +138,7 @@ qiime taxa collapse \
 --i-table id-filtered-peri-fmt-table.qza \
 --i-taxonomy bracken-taxonomy.qza \
 --p-level 8 \
---o-collapsed-table collapsed-8-id-filtered-peri-fmt-table.qza
+--o-collapsed-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza
 ```
 #### ANCOM-BC
 Now, we run ANCOM-BC!
@@ -141,7 +147,7 @@ Now, we run ANCOM-BC!
   --i-table collapsed-8-id-filtered-peri-fmt-table.qza  \
   --m-metadata-file sample-metadata.tsv \
   --p-formula autoFmtGroup \
-  --o-differentials differentials-peri-autofmt.qza
+  --o-differentials ./reads/differentials-peri-autofmt.qza
 ```
 
 ```shell
@@ -149,7 +155,7 @@ qiime composition da-barplot \
   --i-data differentials-peri-autofmt.qza \
   --p-significance-threshold 0.05 \
   --p-level-delimiter ";" \
-  --o-visualization reads/differentials-peri-autofmt.qzv
+  --o-visualization ./reads/differentials-peri-autofmt.qzv
 ```
 ## Contig-based analysis
 ````{toggle}
