@@ -444,18 +444,20 @@ qiime moshpit classify-kraken2 \
     --o-hits "./moshpit_tutorial/cache:kraken_hit_derep_mags" \
     --verbose
 ```
+
 Alternatively, you can also use `qiime moshpit classify-kaiju` to classify your contigs with Kaiju.
 
-
-````
 ### Obtaining our Kraken2 reports
+
 QIIME 2 does not stop you from using your favorite tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this dataset. We will used (pavian)[https://fbreitwieser.shinyapps.io/pavian/]
+
 ```shell
 wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
 ```
 
 ### Kraken2 annotation reports extraction
 Now, let's unzip this QIIME artifact and explore!
+
 ```shell
 qiime tools extract \
   --input-path kraken2-reports-mags-derep.qza \
@@ -466,11 +468,13 @@ qiime tools extract \
 Now that we've gone through this tutorial, we'd like a way to keep track of the commands we ran to generate all of the visualizations we looked at today. Luckily, provenance replay can handle this for us!
 
 We'll start off by creating a new directory for all of the visualizations we've generated during this tutorial.
+
 ```shell
 mkdir visualizations
 ```
 
 Then we'll move all of our .qzv files into this directory.
+
 ```
 mv *.qzv visualizations
 ```
