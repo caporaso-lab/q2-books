@@ -107,6 +107,7 @@ qiime taxa collapse \
 qiime composition da-barplot \
   --i-data differentials-peri-autofmt.qza \
   --p-significance-threshold 0.05 \
+  --p-level-delimiter ";" \
   --o-visualization differentials-peri-autofmt.qzv
 ```
 ## Contig-based analysis
