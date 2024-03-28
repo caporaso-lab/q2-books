@@ -199,30 +199,30 @@ wget -O eggnog-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/
 #### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
-  --i-table "./moshpit_tutorial/cache:diamond_feature_table_contigs" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --i-table eggnog-presence-absence-contigs.qza \
+  --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table "./moshpit_tutorial/cache:diamond_autofmt_feature_table_contigs"
+  --o-filtered-table filtered-eggnog-presence-absence-contigs.qza
 ```
 #### Jaccard Distance Matrix PCoA creation for gene diversity
 ```shell
 qiime diversity beta \
-  --i-table "./moshpit_tutorial/cache:diamond_autofmt_feature_table_contigs" \
+  --i-table filtered-eggnog-presence-absence-contigs.qza \
   --p-metric jaccard \
-  --o-distance-matrix "./moshpit_tutorial/cache:jaccard_diamond_autofmt_contigs"
+  --o-distance-matrix jaccard-diamond-autofmt-contigs.qza 
 ```
 
 ```shell
 qiime diversity pcoa \
-  --i-distance-matrix "./moshpit_tutorial/cache:jaccard_diamond_autofmt_contigs" \
-  --o-pcoa "./moshpit_tutorial/cache:jaccard_diamond_autofmt_pcoa_contigs"
+  --i-distance-matrix jaccard-diamond-autofmt-contigs.qza  \
+  --o-pcoa jaccard-diamond-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation for gene diversity
 ```shell
 qiime emperor plot \
-  --i-pcoa  "./moshpit_tutorial/cache:jaccard_distance_matrix_pcoa_contigs" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
-  --o-visualization "./moshpit_tutorial/results/jaccard_distance_matrix_pcoa_contigs.qzv"
+  --i-pcoa  jaccard-diamond-autofmt-pcoa-contigs.qza \
+  --m-metadata-file sample-metadata.tsv \
+  --o-visualization jaccard-diamond-autofmt-pcoa-contigs.qzv
 ```
 
 ## MAG-based analysis
@@ -230,22 +230,16 @@ qiime emperor plot \
 ```shell
 wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
 ```
-### Taxonomy table creation
+### Obtaining our Kraken2 reports
 ```shell
-qiime moshpit kraken2-to-mag-features \
- --i-reports "./moshpit_tutorial/cache:kraken_reports_derep_mags" \
- --i-hits "./moshpit_tutorial/cache:kraken_hits_derep_mags" \
- --o-taxonomy "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
- --verbose
+wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
 ```
 
-#### Taxonomy table visualization
+### Kraken2 annotation reports extraction
 ```shell
-qiime metadata tabulate \
- --m-input-file "./moshpit_tutorial/cache:kraken_taxonomy_derep_mags" \
- --p-page-size "./moshpit_tutorial/cache:kraken_hits_derep_mags" \
- --verbose
+qiime tools extract  \
+  --input-path  \
+  --output-path  \
 ```
-
 
 
