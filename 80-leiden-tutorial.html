@@ -1,0 +1,1178 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Metagenomics with QIIME 2 - Leiden Tutorial &#8212; Metagenome analysis with QIIME 2</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '80-leiden-tutorial';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data access from SRA and other resources" href="01-sra-data-access.html" />
+    <link rel="prev" title="Metagenome analysis with QIIME 2" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Metagenome analysis with QIIME 2 - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Metagenome analysis with QIIME 2 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Metagenome analysis with QIIME 2
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Alpha release tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Metagenomics with QIIME 2 - Leiden Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">How-to guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-sra-data-access.html">Data access from SRA and other resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-read-analysis.html">Reads Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-contig-analysis.html">Contig Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-MAG-analysis.html">MAG analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="90-tips.html">Tips for metagenome analysis with QIIME 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="91-workflow-diagram.html">Diagram of QIIME 2 metagenomics workflow</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/caporaso-lab/q2-books" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/caporaso-lab/q2-books/issues/new?title=Issue%20on%20page%20%2F80-leiden-tutorial.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/80-leiden-tutorial.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Metagenomics with QIIME 2 - Leiden Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-your-feature-table-and-taxonomy-table">Obtaining your Feature Table and Taxonomy Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-barplot-creation">Taxa Barplot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-abundance">Differential abundance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-table-preparation">Feature Table preparation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ancom-bc">ANCOM-BC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quast-qc">QUAST QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Obtaining your Feature Table and Taxonomy Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functional-analysis">Functional analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-feature-table">Obtaining Feature Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Filtering Feature Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation-for-gene-diversity">Jaccard Distance Matrix PCoA creation for gene diversity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation-for-gene-diversity">Emperor Plot Creation for gene diversity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-our-kraken2-reports">Obtaining our Kraken2 reports</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken2-annotation-reports-extraction">Kraken2 annotation reports extraction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance-replay">Provenance Replay</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="metagenomics-with-qiime-2-leiden-tutorial">
+<h1>Metagenomics with QIIME 2 - Leiden Tutorial<a class="headerlink" href="#metagenomics-with-qiime-2-leiden-tutorial" title="Permalink to this heading">#</a></h1>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<p>Before we dive into the tutorial, let’s talk about our workshop server directory structure.</p>
+<section id="directory-structure">
+<h3>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&lt;your<span class="w"> </span>home<span class="w"> </span>directory&gt;
+└<span class="w"> </span>workshop
+<span class="w">   </span>├<span class="w"> </span>reads
+<span class="w">   </span>├<span class="w"> </span>contigs
+<span class="w">   </span>└<span class="w"> </span>sample-metadata.tsv
+</pre></div>
+</div>
+<p>Let’s verify that QIIME 2 is working by calling qiime.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime
+</pre></div>
+</div>
+<p>Before we start our analyses, we want to create sub-directories for each type of data we’re examining to keep things organized. We’ll create the following sub-directories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">reads</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">contigs</span>
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<p><strong>Required databases</strong>
+In order to perform the taxonomic and functional annotation, we will need a couple of different reference databases. Below you will find instructions on how to download these databases using respective QIIME 2 actions.</p>
+<ol class="arabic simple">
+<li><p>Kraken 2/Bracken database</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>build-kraken-db<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-collection<span class="w"> </span>standard<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-kraken2-database<span class="w"> </span>./moshpit_tutorial/cache:kraken_standard<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-bracken-database<span class="w"> </span>./moshpit_tutorial/cache:bracken_standard<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>EggNOG databases</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>fetch-diamond-db<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-diamond-db<span class="w"> </span>./moshpit_tutorial/cache:eggnog_diamond_full<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>fetch-eggnog-db<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-eggnog-db<span class="w"> </span>./moshpit_tutorial/cache:eggnog_annot_full<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p><strong>Data retrieval from SRA</strong>
+The data we are using in this tutorial can be fetched from the SRA repository using the <a class="reference external" href="https://github.com/bokulich-lab/q2-fondue">q2-fondue</a> plugin. We need to import the accession IDs into a QIIME 2 artifact:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>import<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--type<span class="w"> </span>NCBIAccessionIDs<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input-path<span class="w"> </span>ids.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output-path<span class="w"> </span>./moshpit_tutorial/ids.qza
+</pre></div>
+</div>
+<p>We can then use the <code class="docutils literal notranslate"><span class="pre">get-sequences</span></code> action to download the data (please insert your e-mail address in the <code class="docutils literal notranslate"><span class="pre">--p-email</span></code> parameter):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>fondue<span class="w"> </span>get-sequences<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-accession-ids<span class="w"> </span>./moshpit_tutorial/ids.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-n-jobs<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-email<span class="w"> </span>you@tutorial.com<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-single-reads<span class="w"> </span>./moshpit_tutorial/cache:reads_single<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-single-paired<span class="w"> </span>./moshpit_tutorial/cache:reads_paired<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-failed-runs<span class="w"> </span>./moshpit_tutorial/cache:failed_runse<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p>This will download all the sequences into the QIIME 2 cache. It is a lot of data, so keep in mind that depending on your network speed, this might take a while.</p>
+</div>
+</section>
+</section>
+<section id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this heading">#</a></h2>
+<p>First, let’s grab our sample metadata!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>sample-metadata.tsv<span class="w"> </span>https://polybox.ethz.ch/index.php/s/79s2cQry8Ll0FGq/download
+</pre></div>
+</div>
+<p>Next, let’s take a look at the metadata by visualizing it in QIIME 2.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>metadata<span class="w"> </span>tabulate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-input-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>sample-metadata.qzv
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We will be using QIIME 2 View (<a class="reference external" href="http://view.qiime2.org">view.qiime2.org</a>) to examine our QIIME 2 visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you’ll navigate to:</p>
+<p><a class="reference external" href="https://workshop-server.qiime2.org/">https://workshop-server.qiime2.org/</a><your-user-name>/</p>
+<p>From here, you’ll click on the hyperlink associated with the visualization you’d like to download.</p>
+</div>
+</section>
+<section id="read-based-analysis">
+<h2>Read-based analysis<a class="headerlink" href="#read-based-analysis" title="Permalink to this heading">#</a></h2>
+<div class="toggle docutils container">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>classify-kraken2<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--i-seqs<span class="w"> </span>./moshpit_tutorial/cache:workshop-reads<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--i-kraken2-db<span class="w"> </span>./moshpit_tutorial/cache:kracken_standard<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-threads<span class="w"> </span><span class="m">40</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-confidence<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-minimum-base-quality<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--o-hits<span class="w"> </span>./moshpit_tutorial/cache:workshop_kraken_db_hits<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--o-reports<span class="w"> </span>./moshpit_tutorial/cache:workshop_kraken_db_reports<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--p-report-minimizer-data<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--use-cache<span class="w"> </span>./moshpit_tutorial/cache<span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>--parallel-config<span class="w"> </span>slurm_config.toml<span class="w"> </span><span class="se">\</span>
+<span class="w">    	</span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">    	</span>--p-memory-mapping<span class="w"> </span>False<span class="w"> </span><span class="c1">##this was taking too much time for me</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>estimate-bracken<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-bracken-db<span class="w"> </span>./moshpit_tutorial/cache:bracken_standard<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-read-len<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-kraken-reports<span class="w"> </span>./moshpit_tutorial/cache:workshop_kraken_db_reports<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-reports<span class="w"> </span>./moshpit_tutorial/kraken-outputs/bracken-reports.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-taxonomy<span class="w"> </span>./moshpit_tutorial/kraken-outputs/taxonomy-bracken.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-table<span class="w"> </span>~./moshpit_tutorial/kraken-outputs/table-bracken.qza
+</pre></div>
+</div>
+</div>
+<section id="obtaining-your-feature-table-and-taxonomy-table">
+<h3>Obtaining your Feature Table and Taxonomy Table<a class="headerlink" href="#obtaining-your-feature-table-and-taxonomy-table" title="Permalink to this heading">#</a></h3>
+<p>We are going to look at taxonomic annotations for our read based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./reads/bracken-feature-table.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./reads/bracken-taxonomy.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
+</pre></div>
+</div>
+</section>
+<section id="filtering-feature-table">
+<h3>Filtering Feature Table<a class="headerlink" href="#filtering-feature-table" title="Permalink to this heading">#</a></h3>
+<p>First, we’ll remove samples that are not part of the autoFMT study from the feature table. We identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/bracken-feature-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>./reads/bracken-autofmt-feature-table.qza
+</pre></div>
+</div>
+</section>
+<section id="taxa-barplot-creation">
+<h3>Taxa Barplot Creation<a class="headerlink" href="#taxa-barplot-creation" title="Permalink to this heading">#</a></h3>
+<p>Now we will use our table and taxonomy to create a taxa barplot.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/bracken-autofmt-feature-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span>./reads/bracken-taxonomy.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./reads/taxa-bar-plot-autofmt-reads.qzv
+</pre></div>
+</div>
+</section>
+<section id="differential-abundance">
+<h3>Differential abundance<a class="headerlink" href="#differential-abundance" title="Permalink to this heading">#</a></h3>
+<section id="feature-table-preparation">
+<h4>Feature Table preparation<a class="headerlink" href="#feature-table-preparation" title="Permalink to this heading">#</a></h4>
+<p>ANCOM-BC can not be run on repeated measures. So we will need to filter to one timepoint. Here we filter to the “peri” timepoint.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/bracken-autofmt-feature-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s2">&quot;[categorical-time-relative-to-fmt]=&#39;peri&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>./reads/peri-fmt-table.qza
+</pre></div>
+</div>
+<p>Let’s visualize our filtered table!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./reads/peri-fmt-table.qzv
+</pre></div>
+</div>
+<p>Looks like there is still a subject that has two samples at our peri timepoint. Let’s filter that out!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>SampleID<span class="w"> </span>&gt;<span class="w"> </span>./reads/samples-to-remove.tsv
+<span class="nb">echo</span><span class="w"> </span>SRR14092317<span class="w"> </span>&gt;&gt;<span class="w"> </span>./reads/samples-to-remove.tsv
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>./reads/samples-to-remove.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-exclude-ids<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>./reads/id-filtered-peri-fmt-table.qza
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/id-filtered-peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./reads/id-filtered-peri-fmt-table.qzv
+</pre></div>
+</div>
+<p>Now, we should collapse our table so our features are grouped at the species level.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>collapse<span class="w"> </span><span class="se">\</span>
+--i-table<span class="w"> </span>./reads/id-filtered-peri-fmt-table.qza<span class="w"> </span><span class="se">\</span>
+--i-taxonomy<span class="w"> </span>./reads/bracken-taxonomy.qza<span class="w"> </span><span class="se">\</span>
+--p-level<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+--o-collapsed-table<span class="w"> </span>./reads/collapsed-8-id-filtered-peri-fmt-table.qza
+</pre></div>
+</div>
+</section>
+<section id="ancom-bc">
+<h4>ANCOM-BC<a class="headerlink" href="#ancom-bc" title="Permalink to this heading">#</a></h4>
+<p>Now, we run ANCOM-BC!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>qiime<span class="w"> </span>composition<span class="w"> </span>ancombc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/collapsed-8-id-filtered-peri-fmt-table.qza<span class="w">  </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-formula<span class="w"> </span>autoFmtGroup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-differentials<span class="w"> </span>./reads/differentials-peri-autofmt.qza
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>composition<span class="w"> </span>da-barplot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-data<span class="w"> </span>./reads/differentials-peri-autofmt.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-significance-threshold<span class="w"> </span><span class="m">0</span>.05<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-level-delimiter<span class="w"> </span><span class="s2">&quot;;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./reads/differentials-peri-autofmt.qzv
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="contig-based-analysis">
+<h2>Contig-based analysis<a class="headerlink" href="#contig-based-analysis" title="Permalink to this heading">#</a></h2>
+<div class="toggle docutils container">
+<p><strong>Assemble Reads into Contigs with MEGAHIT</strong>
+The first step in recovering metagenome-assembled genomes (MAGs) is genome assembly itself. There are many genome assemblers available, two of which you can use through our QIIME 2 plugin - here, we will use MEGAHIT. MEGAHIT takes short DNA sequencing reads, constructs a simplified De Bruijn graph, and generates longer contiguous sequences called contigs, providing valuable genetic information for the next steps of our analysis.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>assembly<span class="w"> </span>assemble-megahit<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-seqs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:reads_no_host&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-presets<span class="w"> </span><span class="s2">&quot;meta-sensitive&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-cpu-threads<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-partitions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p><strong>Contig QC with QUAST</strong>
+Once the reads are assembled into contigs, we can use QUAST to evaluate the quality of our assembly.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>assembly<span class="w"> </span>evaluate-contigs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-threads<span class="w"> </span><span class="m">128</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-memory-efficient<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/contigs.qzv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+</div>
+<section id="quast-qc">
+<h3>QUAST QC<a class="headerlink" href="#quast-qc" title="Permalink to this heading">#</a></h3>
+<p>After assembling our reads into contigs, let’s have a look at our contig quality metrics.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./contigs/quast-qc.qzv<span class="w"> </span>https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>classify-kraken2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-seqs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:megahit-contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-kraken2-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_standard&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-threads<span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-confidence<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-minimum-base-quality<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-partitions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-reports<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_reports_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_hits_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>kraken2-to-features<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-reports<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_reports_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-taxonomy<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_taxonomy_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbose
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Obtaining your Feature Table and Taxonomy Table<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./contigs/kraken2-presence-absence-contigs.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./contigs/kraken2-taxonomy-contigs.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/Wk0nsgQfEjgdabc/download
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Filtering Feature Table<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Now that we have acquaired our contig feature table, we will also remove samples that are not part of the autoFMT study following the exact same approach as we did for the reads.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./contigs/kraken2-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>./contigs/kraken2-autofmt-presence-absence-contigs.qza
+</pre></div>
+</div>
+</section>
+<section id="alpha-diversity">
+<h3>Alpha Diversity<a class="headerlink" href="#alpha-diversity" title="Permalink to this heading">#</a></h3>
+<p>Here we’ll look and compare community richness between our control and treatment group.</p>
+<section id="observed-features">
+<h4>Observed Features<a class="headerlink" href="#observed-features" title="Permalink to this heading">#</a></h4>
+<p>To start with, we’ll generate an ‘observed features’ vector from our presence/absence feature table:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-table<span class="w"> </span>./contigs/kraken2-autofmt-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-metric<span class="w"> </span><span class="s2">&quot;observed_features&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-alpha-diversity<span class="w"> </span>./contigs/obs-features-autofmt-contigs.qza
+</pre></div>
+</div>
+</section>
+<section id="linear-mixed-effects">
+<h4>Linear Mixed Effects<a class="headerlink" href="#linear-mixed-effects" title="Permalink to this heading">#</a></h4>
+<p>We will use a linear mixed-effects model in order to manage the repeated measures in our dataset.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>longitudinal<span class="w"> </span>linear-mixed-effects<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span>./contigs/obs-features-autofmt-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-state-column<span class="w"> </span>day-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-group-columns<span class="w"> </span>autoFmtGroup<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-individual-id-column<span class="w"> </span>PatientID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span><span class="s2">&quot;observed_features&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./contigs/lme-obs-features-treatmentVScontrol-contigs.qzv
+</pre></div>
+</div>
+</section>
+</section>
+<section id="beta-diversity">
+<h3>Beta Diversity<a class="headerlink" href="#beta-diversity" title="Permalink to this heading">#</a></h3>
+<p>Now that we better understand community richness trends, let’s look at differences in microbial composition.</p>
+<section id="jaccard-distance-matrix-pcoa-creation">
+<h4>Jaccard Distance Matrix PCoA creation<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation" title="Permalink to this heading">#</a></h4>
+<p>Let’s first create the Jaccard distance matrix!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./contigs/kraken2-autofmt-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-distance-matrix<span class="w"> </span>./contigs/jaccard-autofmt-contigs.qza
+</pre></div>
+</div>
+<p>Now, let’s generate a PCoA from Jaccard matrix.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>pcoa<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-distance-matrix<span class="w"> </span>./contigs/jaccard-autofmt-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-pcoa<span class="w"> </span>./contigs/jaccard-autofmt-pcoa-contigs.qza
+</pre></div>
+</div>
+</section>
+<section id="emperor-plot-creation">
+<h4>Emperor Plot Creation<a class="headerlink" href="#emperor-plot-creation" title="Permalink to this heading">#</a></h4>
+<p>Now that we have our Jaccard diversity PCoA, let’s visualize it!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span>./contigs/jaccard-autofmt-pcoa-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./contigs/jaccard-autofmt-emperor-contigs.qzv
+</pre></div>
+</div>
+<p>We can make week-relative-to-fmt a custom axis in our PCoA. This allows us to look at changes in microbial composition over the course of the study.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span>./contigs/jaccard-autofmt-pcoa-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-custom-axes<span class="w"> </span>week-relative-to-fmt<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./contigs/jaccard-autofmt-emperor-custom-contigs.qzv
+</pre></div>
+</div>
+</section>
+</section>
+<section id="taxa-bar-creation">
+<h3>Taxa-bar Creation<a class="headerlink" href="#taxa-bar-creation" title="Permalink to this heading">#</a></h3>
+<p>We will now explore our contig microbial composition by visualizing a taxa bar plot. Note that we are using a FeatureTable[PresenceAbsence], hence we are not talking about relative abundance in this case.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./contigs/kraken2-autofmt-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-taxonomy<span class="w"> </span>./contigs/kraken2-taxonomy-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./contigs/taxa-bar-plot-autofmt-contigs.qzv
+</pre></div>
+</div>
+</section>
+<section id="functional-analysis">
+<h3>Functional analysis<a class="headerlink" href="#functional-analysis" title="Permalink to this heading">#</a></h3>
+<p>Here we will perform functional annotation of contigs to capture gene diversity!</p>
+<div class="toggle docutils container">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>eggnog-diamond-search<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-sequences<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-diamond-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:eggnog_diamond_full&quot;</span><span class="se">\</span>
+<span class="w">  </span>--p-num-cpus<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-db-in-memory<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-eggnog-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_hits_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:diamond_feature_table_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbose
+</pre></div>
+</div>
+</div>
+<section id="obtaining-feature-table">
+<h4>Obtaining Feature Table<a class="headerlink" href="#obtaining-feature-table" title="Permalink to this heading">#</a></h4>
+<p>You know the drill by now ;)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./contigs/eggnog-presence-absence-contigs.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/YSXu2AaOFeusgRY/download
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h4>Filtering Feature Table<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<p>Same here ;)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./contigs/eggnog-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-where<span class="w"> </span><span class="s1">&#39;autoFmtGroup IS NOT NULL&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-filtered-table<span class="w"> </span>./contigs/filtered-eggnog-presence-absence-contigs.qza
+</pre></div>
+</div>
+</section>
+<section id="jaccard-distance-matrix-pcoa-creation-for-gene-diversity">
+<h4>Jaccard Distance Matrix PCoA creation for gene diversity<a class="headerlink" href="#jaccard-distance-matrix-pcoa-creation-for-gene-diversity" title="Permalink to this heading">#</a></h4>
+<p>We will again start by calculating our Jaccard beta-diversity matrix.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>beta<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./contigs/filtered-eggnog-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--p-metric<span class="w"> </span>jaccard<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-distance-matrix<span class="w"> </span>./contigs/jaccard-diamond-autofmt-contigs.qza
+</pre></div>
+</div>
+<p>Then, we will generate our PCoA from Jaccard matrix.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>diversity<span class="w"> </span>pcoa<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-distance-matrix<span class="w"> </span>./contigs/jaccard-diamond-autofmt-contigs.qza<span class="w">  </span><span class="se">\</span>
+<span class="w">  </span>--o-pcoa<span class="w"> </span>./contigs/jaccard-diamond-autofmt-pcoa-contigs.qza
+</pre></div>
+</div>
+</section>
+<section id="emperor-plot-creation-for-gene-diversity">
+<h4>Emperor Plot Creation for gene diversity<a class="headerlink" href="#emperor-plot-creation-for-gene-diversity" title="Permalink to this heading">#</a></h4>
+<p>Visulization time!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>emperor<span class="w"> </span>plot<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-pcoa<span class="w"> </span>./contigs/jaccard-diamond-autofmt-pcoa-contigs.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./contigs/jaccard-diamond-autofmt-pcoa-contigs.qzv
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="mag-based-analysis">
+<h2>MAG-based analysis<a class="headerlink" href="#mag-based-analysis" title="Permalink to this heading">#</a></h2>
+<div class="toggle docutils container">
+<p>Let’s start binning our contigs into MAGs using various tools and methodologies!</p>
+<p><strong>Read mapping</strong>
+We first need to index the contigs obtained in the assembly step and map the original reads to those contigs using that index. This read mapping can then be used by the contig binner to figure out which contigs originated from the same genome and put those together.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>assembly<span class="w"> </span>index-contigs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-seed<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-threads<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-partitions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-index<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs_index&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>assembly<span class="w"> </span>map-reads-to-contigs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-indexed-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs_index&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-reads<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:reads_no_host&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-seed<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-threads<span class="w"> </span><span class="m">64</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-partitions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-alignment-map<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:reads_to_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p><strong>Binning</strong>
+Finally, we are ready to perform contig binning. This process involves categorizing contigs into distinct bins or groups based on their likely origin from different microbial species or strains within a mixed community. Here, we will use the <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6662567/">MetaBAT 2</a> tool, which uses tetranucleotide frequency together with abundance (coverage) information to assign contigs to individual bins.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>bin-contigs-metabat<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-alignment-maps<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:reads_to_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-seed<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-threads<span class="w"> </span><span class="m">128</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-mags<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-contig-map<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:contig_map&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-unbinned-contigs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:unbinned_contigs&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p>This step generated a couple artifacts:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mags.qza</span></code>: these are our actual MAGS, per sample.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contig-map.qza</span></code>: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unbinned-contigs.qza</span></code>: these are all the contigs that could not be assign to any particular MAG.
+From now on, we will focus on the mags.qza.</p></li>
+</ul>
+<p><strong>MAGs QC with BUSCO</strong>
+BUSCO is used here to assess the completeness and quality of MAGs by searching for single-copy orthologous genes within the genomes.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>evaluate-busco<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-bins<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-lineage-dataset<span class="w"> </span>bacteria_odb10<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-cpu<span class="w"> </span><span class="m">196</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-visualization<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/results/mags.qzv&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+</div>
+<section id="busco-qc">
+<h3>BUSCO QC<a class="headerlink" href="#busco-qc" title="Permalink to this heading">#</a></h3>
+<p>Here we will have a look at our BUSCO results to assess the completeness and quality of MAGs!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>busco-qc.qzv<span class="w"> </span>https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
+</pre></div>
+</div>
+<div class="toggle docutils container">
+<p><strong>MAGs dereplication</strong>
+Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:</p>
+<ol class="arabic simple">
+<li><p>compute hash sketches of every genome using <a class="reference external" href="https://sourmash.readthedocs.io/en/latest/">sourmash</a> - you can think of those sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).</p></li>
+<li><p>compare all of those sketches (genomes) to one another to generate a matrix of pairwise distances between our MAGs</p></li>
+<li><p>dereplicate the genomes using the distance matrix and a fixed similarity threshold: the last action will simply choose the longest genome from all of the genomes belonging to the same cluster, given a similarity threshold.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>sourmash<span class="w"> </span>compute<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-sequence-file<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-ksizes<span class="w"> </span><span class="m">35</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-scaled<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-min-hash-signature<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags_minhash&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>sourmash<span class="w"> </span>compare<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-min-hash-signature<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags_minhash&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-ksize<span class="w"> </span><span class="m">35</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-compare-output<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags_dist_matrix&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>dereplicate-mags<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-mags<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-distance-matrix<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags_dist_matrix&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-threshold<span class="w"> </span><span class="m">0</span>.99<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-dereplicated-mags<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags_derep&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-feature-table<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:mags_ft&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+</div>
+<p><strong>MAGs taxonomic annotation workflow</strong>
+This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.</p>
+<p>*<strong>MAGs classify with Kraken2</strong>
+MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>moshpit<span class="w"> </span>classify-kraken2<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-seqs<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--i-kraken2-db<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_standard&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-threads<span class="w"> </span><span class="m">48</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-confidence<span class="w"> </span><span class="m">0</span>.6<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-minimum-base-quality<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--p-num-partitions<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-reports<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_reports_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--o-hits<span class="w"> </span><span class="s2">&quot;./moshpit_tutorial/cache:kraken_hit_derep_mags&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--verbose
+</pre></div>
+</div>
+<p>Alternatively, you can also use <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">moshpit</span> <span class="pre">classify-kaiju</span></code> to classify your contigs with Kaiju.</p>
+</section>
+<section id="obtaining-our-kraken2-reports">
+<h3>Obtaining our Kraken2 reports<a class="headerlink" href="#obtaining-our-kraken2-reports" title="Permalink to this heading">#</a></h3>
+<p>QIIME 2 does not stop you from using your favorite tools with its output! First, let’s obtain an artifact containing Kraken 2 annotated MAGs from this dataset. We will used (pavian)[<a class="reference external" href="https://fbreitwieser.shinyapps.io/pavian/">https://fbreitwieser.shinyapps.io/pavian/</a>]</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>kraken2-reports-mags-derep.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
+</pre></div>
+</div>
+</section>
+<section id="kraken2-annotation-reports-extraction">
+<h3>Kraken2 annotation reports extraction<a class="headerlink" href="#kraken2-annotation-reports-extraction" title="Permalink to this heading">#</a></h3>
+<p>Now, let’s unzip this QIIME artifact and explore!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>extract<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input-path<span class="w"> </span>kraken2-reports-mags-derep.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output-path<span class="w"> </span>kraken2-reports-mags-derep.txt
+</pre></div>
+</div>
+</section>
+</section>
+<section id="provenance-replay">
+<h2>Provenance Replay<a class="headerlink" href="#provenance-replay" title="Permalink to this heading">#</a></h2>
+<p>Now that we’ve gone through this tutorial, we’d like a way to keep track of the commands we ran to generate all of the artifacts and visualizations we looked at today. Luckily, provenance replay can handle this for us!</p>
+<p>We’ll start off by running provenance replay for all of the read-based outputs we’ve generated during this tutorial. We can run provenance replay on the entire <code class="docutils literal notranslate"><span class="pre">reads</span></code> directory. This will provide us with all of the upstream commands used to generate each artifact and visualization, along with any relevant citations associated with each of the commands used.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>replay-supplement<span class="w"> </span><span class="se">\</span>
+--in-fp<span class="w"> </span>./reads<span class="w"> </span><span class="se">\</span>
+--out-fp<span class="w"> </span>reads-replay-output
+</pre></div>
+</div>
+<p>On your own, try generating the replay supplement for all of the contig-based visualizations! <strong>Hint</strong>: use the <code class="docutils literal notranslate"><span class="pre">contigs</span></code> directory for your input filepath. :)</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Metagenome analysis with QIIME 2</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="01-sra-data-access.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data access from SRA and other resources</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#directory-structure">Directory structure</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#read-based-analysis">Read-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-your-feature-table-and-taxonomy-table">Obtaining your Feature Table and Taxonomy Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-feature-table">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-barplot-creation">Taxa Barplot Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#differential-abundance">Differential abundance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-table-preparation">Feature Table preparation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ancom-bc">ANCOM-BC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contig-based-analysis">Contig-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quast-qc">QUAST QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Obtaining your Feature Table and Taxonomy Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Filtering Feature Table</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alpha-diversity">Alpha Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#observed-features">Observed Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-mixed-effects">Linear Mixed Effects</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-diversity">Beta Diversity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation">Jaccard Distance Matrix PCoA creation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation">Emperor Plot Creation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#taxa-bar-creation">Taxa-bar Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functional-analysis">Functional analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-feature-table">Obtaining Feature Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Filtering Feature Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jaccard-distance-matrix-pcoa-creation-for-gene-diversity">Jaccard Distance Matrix PCoA creation for gene diversity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation-for-gene-diversity">Emperor Plot Creation for gene diversity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-our-kraken2-reports">Obtaining our Kraken2 reports</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken2-annotation-reports-extraction">Kraken2 annotation reports extraction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance-replay">Provenance Replay</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Bokulich and Caporaso Labs
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
