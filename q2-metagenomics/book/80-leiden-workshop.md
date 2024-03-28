@@ -2,14 +2,17 @@
 
 ## Setup
 
-Before we dive into the tutorial, let's set up the required directory structure and make sure we have all the required software installed.
+Before we dive into the tutorial, let's talk about our workshop server directory structure.
 
 ### Directory structure
 ```shell
 <your home directory>
 └ workshop
 ```
-
+Let's verify that QIIME 2 is working by calling qiime. 
+```shell
+qiime
+```
 ## Metadata
 First, let's grab our sample metadata! 
 ```shell
