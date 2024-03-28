@@ -25,6 +25,8 @@ qiime metadata tabulate \
 https://workshop-server.qiime2.org/<your user namey>/
 ```
 ## Read-based analysis
+TODO : add hidden kraken2+bracken!
+
 ### Obtaining your Feature Table and Taxonomy Table
 ```shell
 wget -O bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
@@ -111,6 +113,8 @@ qiime composition da-barplot \
   --o-visualization differentials-peri-autofmt.qzv
 ```
 ## Contig-based analysis
+TODO : add hidden kraken2
+
 ### QUAST QC
 ```shell
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
@@ -125,18 +129,18 @@ wget -O kraken2-taxonomy-contigs.qza https://polybox.ethz.ch/index.php/s/Wk0nsgQ
 ### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
-  --i-table "./moshpit_tutorial/kraken_feature_table_contigs.qza" \
-  --m-metadata-file "./moshpit_tutorial/metadata.tsv" \
+  --i-table kraken2-presence-absence-contigs.qza \
+  --m-metadata-file sample-metadata.tsv \
   --p-where 'autoFmtGroup IS NOT NULL' \
-  --o-filtered-table "./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza"
+  --o-filtered-table kraken2-autofmt-presence-absence-contigs.qza
 ```
 ### Alpha Diversity
 #### Observed Features 
 ```shell
 qiime diversity alpha \
-    --i-table "./moshpit_tutorial/kraken_autofmt_feature_table_contigs.qza" \
+    --i-table kraken2-autofmt-presence-absence-contigs.qza \
     --p-metric "observed_features" \
-    --o-alpha-diversity "./moshpit_tutorial/obs_features_autofmt_contigs.qza"
+    --o-alpha-diversity obs-features-autofmt-contigs.qza
 ```
 #### Linear Mixed Effects
 ```shell
