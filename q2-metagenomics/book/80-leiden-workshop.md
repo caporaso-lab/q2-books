@@ -104,10 +104,14 @@ qiime composition da-barplot \
 ```shell
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
 ```
+### Obtaining your Feature Table and Taxonomy Table
+```shell
+wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download
+```
+```shell
+wget -O kraken2-taxonomy-contigs.qza https://polybox.ethz.ch/index.php/s/Wk0nsgQfEjgdabc/download
+```
 ### Filtering Feature Table
-wget -O kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download"
-
-
 ```shell
 qiime feature-table filter-samples \
   --i-table "./moshpit_tutorial/kraken_feature_table_contigs.qza" \
@@ -222,7 +226,9 @@ qiime emperor plot \
 
 ## MAG-based analysis
 ### BUSCO QC
-wget....
+```shell
+wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
+```
 
 ### Taxonomy table creation
 ```shell
