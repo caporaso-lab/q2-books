@@ -25,8 +25,8 @@ conda activate qiime2-shotgun-2024.2
 
 ```shell
 qiime metadata tabulate \
-  --m-input-file
-  --o-visualization
+  --m-input-file "sample-metadata.tsv"
+  --o-visualization "sample-metadata.qzv"
 ```
 ## Read-based analysis
 ### Filtering Feature Table
