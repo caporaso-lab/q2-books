@@ -204,12 +204,6 @@ qiime moshpit kraken2-to-features \
 
 ````
 
-
-### QUAST QC
-After assembling our reads into contigs, let's have a look at our contig quality metrics.
-```shell
-wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
-```
 ### Obtaining your Feature Table and Taxonomy Table
 Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2.
 
