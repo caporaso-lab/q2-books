@@ -95,8 +95,9 @@ qiime feature-table summarize \
 
 ## Contig-based analysis
 ### QUAST QC
-wget...
-
+```shell
+wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
+```
 ### Filtering Feature Table
 ```shell
 qiime feature-table filter-samples \
