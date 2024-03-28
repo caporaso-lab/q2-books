@@ -75,7 +75,7 @@ echo SRR14092317 >> samples-to-keep.tsv
 qiime feature-table filter-samples \
   --i-table peri-fmt-table.qza \
   --m-metadata-file samples-to-keep.tsv \
-  --p-exclude-id  \ 
+  --p-exclude-ids  \ 
   --o-filtered-table id-filtered-peri-fmt-table.qza
 ```
 
