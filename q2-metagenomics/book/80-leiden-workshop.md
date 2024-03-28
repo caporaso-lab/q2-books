@@ -102,7 +102,7 @@ qiime feature-table summarize \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization peri-fmt-table.qzv
 ```
-Looks like there is still a subject that has a two samples at our peri timepoint. Let's filter that out! 
+Looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out! 
 ```shell
 
 echo SampleID > samples-to-remove.tsv
@@ -191,6 +191,8 @@ qiime moshpit kraken2-to-features \
 ```
 
 ````
+
+
 ### QUAST QC
 ```shell
 wget -O quast-qc.qzv https://polybox.ethz.ch/index.php/s/XyZfYkDEHh1nHZq/download
