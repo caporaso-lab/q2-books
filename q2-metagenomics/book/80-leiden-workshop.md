@@ -240,6 +240,8 @@ qiime longitudinal linear-mixed-effects \
 ```
 
 ### Beta Diversity
+Now that we better understand community richness trends, lets look at differences in microbial composition.
+
 #### Jaccard Distance Matrix PCoA creation
 ```shell
 qiime diversity beta \
