@@ -68,7 +68,7 @@ qiime feature-table summarize \
 ```shell
 
 echo SampleID > samples-to-keep.tsv
-echo SRR14092317 > samples-to-keep.tsv
+echo SRR14092317 >> samples-to-keep.tsv
 
 ```
 ```shell
@@ -92,6 +92,8 @@ qiime feature-table summarize \
   --p-formula autoFmtGroup \
   --o-differentials differentials-peri-autofmt.qza
 ```
+```shell
+qiime composition da-barplot \
 
 ## Contig-based analysis
 ### QUAST QC
