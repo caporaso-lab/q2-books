@@ -250,20 +250,21 @@ qiime diversity beta \
   --p-metric jaccard \
   --o-distance-matrix jaccard-autofmt-contigs.qza
 ```
-
+Now, let's generate a PCoA from Jaccard matrix.
 ```shell
 qiime diversity pcoa \
   --i-distance-matrix jaccard-autofmt-contigs.qza \
   --o-pcoa jaccard-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation
+Now that we have our Jaccard diversity PCoA, lets visualize it!
 ```shell
 qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization jaccard-autofmt-emperor-contigs.qzv
 ```
-
+We can make week-relative-to-fmt a custom axis in our PCOA. This allows us to look at changes in microbial composition over the couse of the study.
 ```shell
 qiime emperor plot \
   --i-pcoa jaccard-autofmt-pcoa-contigs.qza \
@@ -273,6 +274,7 @@ qiime emperor plot \
 ```
 
 ### Taxa-bar Creation
+We will now explore our coting microbial composition by visualizing a taxa bar plot. Note that we are using a FeatureTable[PresenceAbsence], hence we are not talking about relative abundance in this case.
 ```shell
 qiime taxa barplot \
   --i-table kraken2-autofmt-presence-absence-contigs.qza \
@@ -281,11 +283,14 @@ qiime taxa barplot \
   --o-visualization taxa-bar-plot-autofmt-contigs.qzv
 ```
 ### Functional analysis
+Here we will perform functional annotation of contigs to capture gene diversity!
 #### Obtaining Feature Table
+Your know the drill by now ;)
 ```shell
 wget -O eggnog-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/YSXu2AaOFeusgRY/download
 ```
 #### Filtering Feature Table
+Same here ;)
 ```shell
 qiime feature-table filter-samples \
   --i-table eggnog-presence-absence-contigs.qza \
@@ -294,19 +299,21 @@ qiime feature-table filter-samples \
   --o-filtered-table filtered-eggnog-presence-absence-contigs.qza
 ```
 #### Jaccard Distance Matrix PCoA creation for gene diversity
+We will again start by calculating our Jaccard beta-diversity matrix.
 ```shell
 qiime diversity beta \
   --i-table filtered-eggnog-presence-absence-contigs.qza \
   --p-metric jaccard \
   --o-distance-matrix jaccard-diamond-autofmt-contigs.qza 
 ```
-
+Then, we will generate our PCoA from Jaccard matrix.
 ```shell
 qiime diversity pcoa \
   --i-distance-matrix jaccard-diamond-autofmt-contigs.qza  \
   --o-pcoa jaccard-diamond-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation for gene diversity
+Visulization time!
 ```shell
 qiime emperor plot \
   --i-pcoa  jaccard-diamond-autofmt-pcoa-contigs.qza \
@@ -316,15 +323,18 @@ qiime emperor plot \
 
 ## MAG-based analysis
 ### BUSCO QC
+Here we will have a look at our BUSCO results to assess the completeness and quality of MAGs!
 ```shell
 wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/download
 ```
 ### Obtaining our Kraken2 reports
+QIIME 2 does not stop you from using other tools with its output! First, let's obtain an artifact containing Kraken 2 annotated MAGs from this datasetet.
 ```shell
 wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
 ```
 
 ### Kraken2 annotation reports extraction
+Now, let's unzip this QIIME artifact and explore!
 ```shell
 qiime tools extract \
   --input-path kraken2-reports-mags-derep.qza \
