@@ -417,7 +417,8 @@ qiime moshpit dereplicate-mags \
 ```
 **MAGs taxonomic annotation workflow**
 This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.
-### MAGs classify with Kraken2
+
+***MAGs classify with Kraken2**
 MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.
 ```shell
 qiime moshpit classify-kraken2 \
