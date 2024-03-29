@@ -543,13 +543,13 @@ QIIME 2 does not stop you from using your favorite tools with its output! First,
 wget -O kraken2-reports-mags-derep.qza https://polybox.ethz.ch/index.php/s/n0L2vm16C1J6MHe/download
 ```
 
-### Kraken2 annotation reports extraction
-Now, let's unzip this QIIME artifact and explore!
+### Kraken2 annotation reports export
+Now, let's export this QIIME artifact and explore!
 
 ```shell
-qiime tools extract \
+qiime tools export \
   --input-path kraken2-reports-mags-derep.qza \
-  --output-path kraken2-reports-mags-derep.txt
+  --output-path kraken2-reports-mags-derep
 ```
 
 ## Provenance Replay

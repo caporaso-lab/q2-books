@@ -421,7 +421,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-our-kraken2-reports">Obtaining our Kraken2 reports</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken2-annotation-reports-extraction">Kraken2 annotation reports extraction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken2-annotation-reports-export">Kraken2 annotation reports export</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance-replay">Provenance Replay</a></li>
@@ -987,12 +987,12 @@ From now on, we will focus on the mags.qza.</p></li>
 </pre></div>
 </div>
 </section>
-<section id="kraken2-annotation-reports-extraction">
-<h3>Kraken2 annotation reports extraction<a class="headerlink" href="#kraken2-annotation-reports-extraction" title="Permalink to this heading">#</a></h3>
-<p>Now, let’s unzip this QIIME artifact and explore!</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span>extract<span class="w"> </span><span class="se">\</span>
+<section id="kraken2-annotation-reports-export">
+<h3>Kraken2 annotation reports export<a class="headerlink" href="#kraken2-annotation-reports-export" title="Permalink to this heading">#</a></h3>
+<p>Now, let’s export this QIIME artifact and explore!</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--input-path<span class="w"> </span>kraken2-reports-mags-derep.qza<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output-path<span class="w"> </span>kraken2-reports-mags-derep.txt
+<span class="w">  </span>--output-path<span class="w"> </span>kraken2-reports-mags-derep
 </pre></div>
 </div>
 </section>
@@ -1116,7 +1116,7 @@ From now on, we will focus on the mags.qza.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-our-kraken2-reports">Obtaining our Kraken2 reports</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken2-annotation-reports-extraction">Kraken2 annotation reports extraction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kraken2-annotation-reports-export">Kraken2 annotation reports export</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#provenance-replay">Provenance Replay</a></li>
