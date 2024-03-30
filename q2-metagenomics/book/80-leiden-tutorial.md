@@ -1,5 +1,11 @@
 # Metagenomics with QIIME 2 - Leiden Tutorial
 
+```{warning}
+Metagenomics analysis with QIIME 2 is in alpha release.
+This means that results you generate should be considered preliminary, and NOT PUBLICATION QUALITY.
+Additionally, interfaces are subject to change, and those changes may be backward incompatible (meaning that a command or file that works in one version of the QIIME 2 Shotgun Metagenomics distribution may not work in the next version of that distribution).
+```
+
 ## Setup
 
 Before we dive into the tutorial, let's talk about our workshop server directory structure.
@@ -14,9 +20,9 @@ Before we dive into the tutorial, let's talk about our workshop server directory
 ```
 Let's verify that QIIME 2 is working by calling qiime.
 ```shell
-qiime
+qiime info
 ```
-Before we start our analyses, we want to create sub-directories for each type of data we're examining to keep things organized. We'll create the following sub-directories:
+Before we start our analyses, we want to create sub-directories for each type of data we're examining to keep things organized. Within the `workshop` directory, we'll create the following sub-directories:
 ```
 mkdir reads
 ```
@@ -91,11 +97,11 @@ qiime metadata tabulate \
 ```
 
 ```{note}
-We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to download each visualization from the workshop server. For each visualization, you'll navigate to:
+We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to grab the URL for each visualization from the workshop server. For each visualization, you'll navigate to:
 
 https://workshop-server.qiime2.org/[your-username]/
 
-From here, you'll click on the hyperlink associated with the visualization you'd like to download.
+From here, you'll right click on the hyperlink associated with the visualization you'd like to view, copy the URL, navigate to QIIME 2 View and paste this URL under `a file from the web`. Note that you can also download any of these files directly from the server by left clicking on the hyperlink associated with the visualization you'd like to download.
 ```
 ## Read-based analysis
 ````{toggle}
@@ -127,15 +133,15 @@ qiime moshpit estimate-bracken \
 
 ````
 ### Obtaining your Feature Table and Taxonomy Table
-We are going to look at taxonomic annotations for our read based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken.
+We are going to look at taxonomic annotations for our read-based analysis. In order to do that, we need to download our read table and taxonomy that we generated using Bracken.
 ```shell
 wget -O ./reads/bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y1IGtZHTzo1KTi/download
 ```
 ```shell
 wget -O ./reads/bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 ```
-### Filtering Feature Table
-First, we’ll remove samples that are not part of the autoFMT study from the feature table. We identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.
+### Feature Table Filtering
+First, we need to remove samples that are not part of the autoFMT study from the feature table. We'll identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.
 ```shell
 qiime feature-table filter-samples \
   --i-table ./reads/bracken-feature-table.qza \
@@ -145,7 +151,7 @@ qiime feature-table filter-samples \
 ```
 
 ### Taxa Barplot Creation
-Now we will use our table and taxonomy to create a taxa barplot.
+Now we will use our filtered table and taxonomy to create a taxanomic barplot.
 ```shell
 qiime taxa barplot \
   --i-table ./reads/bracken-autofmt-feature-table.qza \
@@ -153,9 +159,9 @@ qiime taxa barplot \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./reads/taxa-bar-plot-autofmt-reads.qzv
 ```
-### Differential abundance
-#### Feature Table preparation
-ANCOM-BC can not be run on repeated measures. So we will need to filter to one timepoint. Here we filter to the "peri" timepoint.
+### Differential Abundance
+#### Feature Table Preparation
+ANCOM-BC cannot be run on repeated measures, so we need to filter to one timepoint. Here we will filter to the "peri" timepoint.
 ```shell
 qiime feature-table filter-samples \
   --i-table ./reads/bracken-autofmt-feature-table.qza \
@@ -163,14 +169,14 @@ qiime feature-table filter-samples \
   --p-where "[categorical-time-relative-to-fmt]='peri'" \
   --o-filtered-table ./reads/peri-fmt-table.qza
 ```
-Let's visualize our filtered table!
+Now let's visualize our filtered table!
 ```shell
 qiime feature-table summarize \
   --i-table ./reads/peri-fmt-table.qza \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization ./reads/peri-fmt-table.qzv
 ```
-Looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out!
+Upon examination of our filtered table, it looks like there is still a subject that has two samples at our peri timepoint. Let's filter that out!
 ```shell
 
 echo SampleID > ./reads/samples-to-remove.tsv
@@ -191,7 +197,7 @@ qiime feature-table summarize \
   --m-sample-metadata-file sample-metadata.tsv \
   --o-visualization ./reads/id-filtered-peri-fmt-table.qzv
 ```
-Now, we should collapse our table so our features are grouped at the species level.
+Now we should collapse our table so our features are grouped at the species level.
 ```shell
 qiime taxa collapse \
 --i-table ./reads/id-filtered-peri-fmt-table.qza \
@@ -199,8 +205,8 @@ qiime taxa collapse \
 --p-level 8 \
 --o-collapsed-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza
 ```
-#### ANCOM-BC
-Now, we run ANCOM-BC!
+#### Differential Abundance with ANCOM-BC
+Now let's run ANCOM-BC! This is a great way to take a look at what features are either enriched or depleted, relative to a reference group of our choosing.
 ```shell
  qiime composition ancombc \
   --i-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza  \
@@ -272,7 +278,7 @@ qiime moshpit kraken2-to-features \
 ```
 ````
 
-Similarly as we did for reads, we are now going to look at taxonomic annotations for our contigs based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2.
+Similar to our read-based analysis, we are now going to look at taxonomic annotations for our contig-based analysis. In order to do that, we need to download our contig feature table and taxonomy that we generated using Kraken2.
 
 ```shell
 wget -O ./contigs/kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/OYL590hv7eZJPWS/download
@@ -280,8 +286,8 @@ wget -O ./contigs/kraken2-presence-absence-contigs.qza https://polybox.ethz.ch/i
 ```shell
 wget -O ./contigs/kraken2-taxonomy-contigs.qza https://polybox.ethz.ch/index.php/s/Wk0nsgQfEjgdabc/download
 ```
-### Filtering Feature Table
-Now that we have acquaired our contig feature table, we will also remove samples that are not part of the autoFMT study following the exact same approach as we did for the reads.
+### Feature Table Filtering
+Now that we have acquired our contig feature table, we will also remove samples that are not part of the autoFMT study (following the same approach we used in our read-based analysis).
 ```shell
 qiime feature-table filter-samples \
   --i-table ./contigs/kraken2-presence-absence-contigs.qza \
@@ -290,10 +296,10 @@ qiime feature-table filter-samples \
   --o-filtered-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza
 ```
 ### Alpha Diversity
-Here we'll look and compare community richness between our control and treatment group.
+Here we'll examine and compare the community richness between our control and treatment groups.
 
 #### Observed Features
-To start with, we'll generate an 'observed features' vector from our presence/absence feature table:
+To start with, we'll generate an `observed features` vector from our presence/absence feature table:
 ```shell
 qiime diversity alpha \
     --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
@@ -323,7 +329,7 @@ qiime diversity beta \
   --p-metric jaccard \
   --o-distance-matrix ./contigs/jaccard-autofmt-contigs.qza
 ```
-Now, let's generate a PCoA from Jaccard matrix.
+Now, let's generate a PCoA from our Jaccard matrix.
 ```shell
 qiime diversity pcoa \
   --i-distance-matrix ./contigs/jaccard-autofmt-contigs.qza \
@@ -337,7 +343,7 @@ qiime emperor plot \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./contigs/jaccard-autofmt-emperor-contigs.qzv
 ```
-We can make week-relative-to-fmt a custom axis in our PCoA. This allows us to look at changes in microbial composition over the course of the study.
+We can make `week-relative-to-fmt` a custom axis in our PCoA. This allows us to look at changes in microbial composition over the course of the study.
 ```shell
 qiime emperor plot \
   --i-pcoa ./contigs/jaccard-autofmt-pcoa-contigs.qza \
@@ -346,8 +352,8 @@ qiime emperor plot \
   --o-visualization ./contigs/jaccard-autofmt-emperor-custom-contigs.qzv
 ```
 
-### Taxa-bar Creation
-We will now explore our contig microbial composition by visualizing a taxa bar plot. Note that we are using a FeatureTable[PresenceAbsence], hence we are not talking about relative abundance in this case.
+### Taxa Barplot Creation
+We will now explore our contigs' microbial composition by visualizing a taxanomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.
 ```shell
 qiime taxa barplot \
   --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
@@ -355,7 +361,7 @@ qiime taxa barplot \
   --m-metadata-file sample-metadata.tsv \
   --o-visualization ./contigs/taxa-bar-plot-autofmt-contigs.qzv
 ```
-### Functional analysis
+### Functional Analysis
 
 ````{toggle}
 ```shell
@@ -372,12 +378,12 @@ qiime moshpit eggnog-diamond-search \
 
 Here we will perform functional annotation of contigs to capture gene diversity!
 
-#### Obtaining Feature Table
+#### Obtaining your Feature Table
 You know the drill by now ;)
 ```shell
 wget -O ./contigs/eggnog-presence-absence-contigs.qza https://polybox.ethz.ch/index.php/s/YSXu2AaOFeusgRY/download
 ```
-#### Filtering Feature Table
+#### Feature Table Filtering
 Same here ;)
 ```shell
 qiime feature-table filter-samples \
@@ -387,7 +393,7 @@ qiime feature-table filter-samples \
   --o-filtered-table ./contigs/filtered-eggnog-presence-absence-contigs.qza
 ```
 #### Jaccard Distance Matrix PCoA creation for gene diversity
-We will again start by calculating our Jaccard beta-diversity matrix.
+We will again start by calculating our Jaccard beta diversity matrix.
 ```shell
 qiime diversity beta \
   --i-table ./contigs/filtered-eggnog-presence-absence-contigs.qza \
@@ -401,7 +407,7 @@ qiime diversity pcoa \
   --o-pcoa ./contigs/jaccard-diamond-autofmt-pcoa-contigs.qza
 ```
 #### Emperor Plot Creation for gene diversity
-Visulization time!
+Visualization time!
 ```shell
 qiime emperor plot \
   --i-pcoa ./contigs/jaccard-diamond-autofmt-pcoa-contigs.qza \
@@ -457,8 +463,8 @@ This step generated a couple artifacts:
 
 - `mags.qza`: these are our actual MAGS, per sample.
 - `contig-map.qza`: this is a mapping between MAG IDs and IDs of contigs which belong to a given MAG.
-- `unbinned-contigs.qza`: these are all the contigs that could not be assign to any particular MAG.
-From now on, we will focus on the mags.qza.
+- `unbinned-contigs.qza`: these are all the contigs that could not be assigned to any particular MAG.
+From here, we will focus on the mags.qza artifact.
 
 **MAGs QC with BUSCO**
 
@@ -484,9 +490,9 @@ wget -O busco-qc.qzv https://polybox.ethz.ch/index.php/s/fzAA003m6UVw5je/downloa
 
 Dereplication involves removing duplicate or nearly identical MAGs to reduce redundancy and improve downstream analyses. To dereplicate our MAGs, we will:
 
-1. compute hash sketches of every genome using [sourmash](https://sourmash.readthedocs.io/en/latest/) - you can think of those sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).
-2. compare all of those sketches (genomes) to one another to generate a matrix of pairwise distances between our MAGs
-3. dereplicate the genomes using the distance matrix and a fixed similarity threshold: the last action will simply choose the longest genome from all of the genomes belonging to the same cluster, given a similarity threshold.
+1. Compute hash sketches of every genome using [sourmash](https://sourmash.readthedocs.io/en/latest/) - you can think of these sketches as tiny representations of our genomes (sourmash compresses a lot of information into much smaller space).
+2. Compare all of those sketches (genomes) to one another to generate a matrix of pairwise distances between our MAGs.
+3. Dereplicate the genomes using the distance matrix and a fixed similarity threshold. The last action will simply choose the longest genome from all of the genomes belonging to the same cluster, given a similarity threshold.
 
 ```shell
 qiime sourmash compute \
@@ -515,11 +521,11 @@ qiime moshpit dereplicate-mags \
 
 **MAGs taxonomic annotation workflow**
 
-This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we perfom taxonomic and functional annotation on dereplicated MAGs.
+This workflow focuses on annotating MAGs with taxonomic information using Kraken2, a tool for taxonomic classification. In this tutorial we will perfom taxonomic and functional annotation on dereplicated MAGs.
 
 **MAGs classify with Kraken2**
 
-MAGs are classified taxonomically using Kraken2, with parameters set for confidence threshold and minimum base quality.
+MAGs are classified taxonomically using Kraken2, with parameters set for a confidence threshold and minimum base quality.
 
 ```shell
 qiime moshpit classify-kraken2 \
@@ -553,9 +559,13 @@ qiime tools export \
 ```
 
 ## Provenance Replay
-Now that we've gone through this tutorial, we'd like a way to keep track of the commands we ran to generate all of the artifacts and visualizations we looked at today. Luckily, provenance replay can handle this for us!
+Without looking back through all of the commands we ran in this tutorial, how many of you feel confident that you could re-run our analyses from memory? If you don't feel confident in that, you're not alone! It is very common to have difficulty remembering the exact commands you ran for a past analysis (or trying to figure out the commands that someone else ran from an external analysis). Even if you write down all of the steps you've taken, humans are fallible and our memories aren't perfect.
 
-We'll start off by running provenance replay for all of the read-based outputs we've generated during this tutorial. We can run provenance replay on the entire `reads` directory. This will provide us with all of the upstream commands used to generate each artifact and visualization, along with any relevant citations associated with each of the commands used.
+Each QIIME 2 Result (i.e. Artifact or Visualization) contains provenance that can be used as a reference to reconstruct the commands that were used to generate said result. Let's take a look at the provenance associated with one of the visualizations from our read-based analysis as an example!
+
+While using provenance to manually reconstruct the commands used to generate a result is a reasonable workflow for one or two results, we need a more automated solution to reconstruct the commands for a larger analysis - such as the analyses we ran in this workshop. Luckily, provenance replay can handle this for us!
+
+We'll start off by running provenance replay for all of the read-based results we've generated during this tutorial. We can run provenance replay on the entire `reads` directory. This will provide us with a replay supplement that contains all of the upstream commands used to generate each result, any relevant citations associated with each of the commands used (in BibTex format), and the recorded metadata used in each command.
 
 ```shell
 qiime tools replay-supplement \
@@ -563,4 +573,6 @@ qiime tools replay-supplement \
 --out-fp reads-replay-output
 ```
 
-On your own, try generating the replay supplement for all of the contig-based visualizations! **Hint**: use the `contigs` directory for your input filepath. :)
+On your own, try generating the replay supplement for all of the contig-based results, and reconstruct a few of the commands used in that analysis!
+
+**Hint**: use the `contigs` directory for your input filepath. :)
