@@ -96,13 +96,13 @@ qiime metadata tabulate \
   --o-visualization sample-metadata.qzv
 ```
 
-```{note}
+````{note}
 We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to grab the URL for each visualization from the workshop server. For each visualization, you'll navigate to:
-
+```shell
 https://workshop-server.qiime2.org/[your-username]/
-
-From here, you'll right click on the hyperlink associated with the visualization you'd like to view, copy the URL, navigate to QIIME 2 View and paste this URL under `a file from the web`. Note that you can also download any of these files directly from the server by left clicking on the hyperlink associated with the visualization you'd like to download.
 ```
+From here, you'll right click on the hyperlink associated with the visualization you'd like to view, copy the URL, navigate to QIIME 2 View and paste this URL under `a file from the web`. Note that you can also download any of these files directly from the server by left clicking on the hyperlink associated with the visualization you'd like to download.
+````
 ## Read-based analysis
 ````{toggle}
 ```shell
