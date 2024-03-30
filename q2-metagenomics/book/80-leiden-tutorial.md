@@ -159,7 +159,7 @@ qiime feature-table filter-samples \
 ```
 
 ### Taxa Barplot Creation
-Now we will use our filtered table and taxonomy to create a taxanomic barplot.
+Now we will use our filtered table and taxonomy to create a taxonomic barplot.
 ```shell
 qiime taxa barplot \
   --i-table ./reads/bracken-autofmt-feature-table.qza \
@@ -361,7 +361,7 @@ qiime emperor plot \
 ```
 
 ### Taxa Barplot Creation
-We will now explore our contigs' microbial composition by visualizing a taxanomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.
+We will now explore our contigs' microbial composition by visualizing a taxonomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.
 ```shell
 qiime taxa barplot \
   --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
