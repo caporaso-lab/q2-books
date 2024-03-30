@@ -572,6 +572,13 @@ Additionally, interfaces are subject to change, and those changes may be backwar
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>-O<span class="w"> </span>./reads/bracken-taxonomy.qza<span class="w"> </span>https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 </pre></div>
 </div>
+<p>Before moving forward in our analysis, let’s take a look at a visual summary of our feature table and re-examine our metadata summary. This will help to orient us with what our original data looks like, and put subsequent downstream steps in context.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--i-table<span class="w"> </span>./reads/bracken-feature-table.qza<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--o-visualization<span class="w"> </span>./reads/bracken-feature-table.qzv
+</pre></div>
+</div>
 </section>
 <section id="feature-table-filtering">
 <h3>Feature Table Filtering<a class="headerlink" href="#feature-table-filtering" title="Permalink to this heading">#</a></h3>

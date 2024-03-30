@@ -140,6 +140,14 @@ wget -O ./reads/bracken-feature-table.qza https://polybox.ethz.ch/index.php/s/4Y
 ```shell
 wget -O ./reads/bracken-taxonomy.qza https://polybox.ethz.ch/index.php/s/haWDZzLcJsuiI9b/download
 ```
+Before moving forward in our analysis, let's take a look at a visual summary of our feature table and re-examine our metadata summary. This will help to orient us with what our original data looks like, and put subsequent downstream steps in context.
+```shell
+qiime feature-table summarize \
+  --i-table ./reads/bracken-feature-table.qza \
+  --m-sample-metadata-file sample-metadata.tsv \
+  --o-visualization ./reads/bracken-feature-table.qzv
+```
+
 ### Feature Table Filtering
 First, we need to remove samples that are not part of the autoFMT study from the feature table. We'll identify these samples using the metadata. Specifically, this step filters samples that do not contain a value in the autoFmtGroup column in the metadata.
 ```shell
