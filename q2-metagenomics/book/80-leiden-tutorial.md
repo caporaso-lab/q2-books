@@ -1,4 +1,4 @@
-# Metagenomics with QIIME 2 - Leiden Tutorial
+# Metagenomics with QIIME 2 - Spring 2024 Leiden & Zurich Tutorial
 
 ```{warning}
 Metagenomics analysis with QIIME 2 is in alpha release.
