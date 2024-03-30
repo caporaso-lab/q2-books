@@ -214,12 +214,13 @@ qiime taxa collapse \
 --o-collapsed-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza
 ```
 #### Differential Abundance with ANCOM-BC
-Now let's run ANCOM-BC! This is a great way to take a look at what features are either enriched or depleted, relative to a reference group of our choosing.
+Now let's run ANCOM-BC! This is a great way to take a look at what features are either enriched or depleted, relative to a reference group of our choosing. Since we'd like to look at the differential abundance of the `autoFmtGroup`, we'll set our reference group to `control`.
 ```shell
  qiime composition ancombc \
   --i-table ./reads/collapsed-8-id-filtered-peri-fmt-table.qza  \
   --m-metadata-file sample-metadata.tsv \
   --p-formula autoFmtGroup \
+  --p-reference-levels autoFmtGroup::control \
   --o-differentials ./reads/differentials-peri-autofmt.qza
 ```
 
@@ -361,7 +362,7 @@ qiime emperor plot \
 ```
 
 ### Taxa Barplot Creation
-We will now explore our contigs' microbial composition by visualizing a taxonomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.
+We will now explore the microbial composition in our contig-based analysis by visualizing a taxonomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.
 ```shell
 qiime taxa barplot \
   --i-table ./contigs/kraken2-autofmt-presence-absence-contigs.qza \
