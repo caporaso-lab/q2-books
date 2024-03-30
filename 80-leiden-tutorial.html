@@ -600,7 +600,7 @@ Additionally, interfaces are subject to change, and those changes may be backwar
 </section>
 <section id="taxa-barplot-creation">
 <h3>Taxa Barplot Creation<a class="headerlink" href="#taxa-barplot-creation" title="Permalink to this heading">#</a></h3>
-<p>Now we will use our filtered table and taxonomy to create a taxanomic barplot.</p>
+<p>Now we will use our filtered table and taxonomy to create a taxonomic barplot.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span>./reads/bracken-autofmt-feature-table.qza<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-taxonomy<span class="w"> </span>./reads/bracken-taxonomy.qza<span class="w"> </span><span class="se">\</span>
@@ -816,7 +816,7 @@ Additionally, interfaces are subject to change, and those changes may be backwar
 </section>
 <section id="id3">
 <h3>Taxa Barplot Creation<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
-<p>We will now explore our contigs’ microbial composition by visualizing a taxanomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.</p>
+<p>We will now explore our contigs’ microbial composition by visualizing a taxonomic bar plot. Note that we are using a FeatureTable[PresenceAbsence], and thus are not talking about relative abundance.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span>./contigs/kraken2-autofmt-presence-absence-contigs.qza<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-taxonomy<span class="w"> </span>./contigs/kraken2-taxonomy-contigs.qza<span class="w"> </span><span class="se">\</span>
