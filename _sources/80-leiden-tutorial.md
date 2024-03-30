@@ -423,6 +423,23 @@ qiime emperor plot \
   --o-visualization ./contigs/jaccard-diamond-autofmt-pcoa-contigs.qzv
 ```
 
+## Breakout Session
+Before we begin the final segment of our analysis in this workshop, we're going to break off into two groups for a small interactive exercise! We will assign you to either group A or B, and will go through your respective exercises below.
+
+#### Group A
+In this group exercise we will be examining the correlation between our Jaccard distance matrices for reads and contigs. We will not be providing commands for this, so do some poking around in the help text for commands within the diversity plugin to see what might make sense for comparing these two distance matrices. :)
+
+````{dropdown} Hint!
+Try running `qiime diversity --help` to view all of the available methods within this plugin. From here, you can run the `--help` command on any of the methods to learn more about their inputs and functionality (i.e. `qiime diversity beta --help`).
+````
+
+#### Group B
+In this group exercise we will be examining the correlation between our read-based Jaccard distance matrix and a read-based Bray-Curtis distance matrix. Note that you'll need to first generate the Bray-Curtis distance matrix before you can move forward with this comparison. We will not be providing commands for this, so do some poking around in the help text for commands within the diversity plugin to see what might make sense for comparing these two distance matrices. :)
+
+````{dropdown} Hint!
+Try running `qiime diversity --help` to view all of the available methods within this plugin. From here, you can run the `--help` command on any of the methods to learn more about their inputs and functionality (i.e. `qiime diversity beta --help`).
+````
+
 ## MAG-based analysis
 ````{toggle}
 Let's start binning our contigs into MAGs using various tools and methodologies!

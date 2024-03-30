@@ -418,6 +418,11 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-session">Breakout Session</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-a">Group A</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-b">Group B</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#busco-qc">BUSCO QC</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-our-kraken2-reports">Obtaining our Kraken2 reports</a></li>
@@ -881,6 +886,36 @@ Additionally, interfaces are subject to change, and those changes may be backwar
 </section>
 </section>
 </section>
+<section id="breakout-session">
+<h2>Breakout Session<a class="headerlink" href="#breakout-session" title="Permalink to this heading">#</a></h2>
+<p>Before we begin the final segment of our analysis in this workshop, we’re going to break off into two groups for a small interactive exercise! We will assign you to either group A or B, and will go through your respective exercises below.</p>
+<section id="group-a">
+<h3>Group A<a class="headerlink" href="#group-a" title="Permalink to this heading">#</a></h3>
+<p>In this group exercise we will be examining the correlation between our Jaccard distance matrices for reads and contigs. We will not be providing commands for this, so do some poking around in the help text for commands within the diversity plugin to see what might make sense for comparing these two distance matrices. :)</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Hint!<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Try running <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">diversity</span> <span class="pre">--help</span></code> to view all of the available methods within this plugin. From here, you can run the <code class="docutils literal notranslate"><span class="pre">--help</span></code> command on any of the methods to learn more about their inputs and functionality (i.e. <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">diversity</span> <span class="pre">beta</span> <span class="pre">--help</span></code>).</p>
+</div>
+</details></section>
+<section id="group-b">
+<h3>Group B<a class="headerlink" href="#group-b" title="Permalink to this heading">#</a></h3>
+<p>In this group exercise we will be examining the correlation between our read-based Jaccard distance matrix and a read-based Bray-Curtis distance matrix. Note that you’ll need to first generate the Bray-Curtis distance matrix before you can move forward with this comparison. We will not be providing commands for this, so do some poking around in the help text for commands within the diversity plugin to see what might make sense for comparing these two distance matrices. :)</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Hint!<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Try running <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">diversity</span> <span class="pre">--help</span></code> to view all of the available methods within this plugin. From here, you can run the <code class="docutils literal notranslate"><span class="pre">--help</span></code> command on any of the methods to learn more about their inputs and functionality (i.e. <code class="docutils literal notranslate"><span class="pre">qiime</span> <span class="pre">diversity</span> <span class="pre">beta</span> <span class="pre">--help</span></code>).</p>
+</div>
+</details></section>
+</section>
 <section id="mag-based-analysis">
 <h2>MAG-based analysis<a class="headerlink" href="#mag-based-analysis" title="Permalink to this heading">#</a></h2>
 <div class="toggle docutils container">
@@ -1129,6 +1164,11 @@ From here, we will focus on the mags.qza artifact.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#emperor-plot-creation-for-gene-diversity">Emperor Plot Creation for gene diversity</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#breakout-session">Breakout Session</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-a">Group A</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#group-b">Group B</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mag-based-analysis">MAG-based analysis</a><ul class="nav section-nav flex-column">
