@@ -97,7 +97,13 @@ qiime metadata tabulate \
 ```
 
 ````{note}
-We will be using QIIME 2 View (view.qiime2.org) to examine our QIIME 2 visualizations. In order to do this, we first need to grab the URL for each visualization from the workshop server. For each visualization, you'll navigate to:
+We will be using the newest version of QIIME 2 View (our Results viewer) to examine our QIIME 2 visualizations. The URL for this version is as follows:
+
+https://q2view-svelte.pages.dev/
+
+While this version is still in alpha release, we wanted to use this opportunity to share it with a live audience, and get any feedback from you on usability. Please let us know if you run into any issues while using it! If you find yourself blocked on any of the tutorial steps, please revert to using our current release version of QIIME 2 View (view.qiime2.org).
+
+In order to proceed, we first need to grab the URL for each visualization from the workshop server. For each visualization, you'll navigate to:
 ```shell
 https://workshop-server.qiime2.org/[your-username]/
 ```
