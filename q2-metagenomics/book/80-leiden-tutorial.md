@@ -97,7 +97,7 @@ qiime metadata tabulate \
 ```
 
 ````{note}
-We will be using the newest version of QIIME 2 View (our Results viewer) to examine our QIIME 2 visualizations. The URL for this version is as follows:
+We will be using the newest version of QIIME 2 View (our Results viewer) to examine our QIIME 2 Visualizations. The URL for this version is as follows:
 
 https://q2view-svelte.pages.dev/
 
