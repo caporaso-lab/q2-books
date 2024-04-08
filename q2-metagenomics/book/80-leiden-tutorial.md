@@ -607,4 +607,6 @@ qiime tools replay-supplement \
 
 On your own, try generating the replay supplement for all of the contig-based results, and reconstruct a few of the commands used in that analysis!
 
-**Hint**: use the `contigs` directory for your input filepath. :)
+````{dropdown} Hint!
+Use the `contigs` directory for your input filepath. :)
+````
