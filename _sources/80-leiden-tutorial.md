@@ -433,7 +433,7 @@ qiime emperor plot \
 ## Breakout Session
 We're going to take the next ~30 minutes or so to breakout into two groups and work on an interactive exercise! Each group will be examining the correlation for different beta diversity metrics. Group A will be examining the correlation between our Jaccard distance matrices for reads and contigs. Group B will be examining the correlation between our read-based Jaccard distance matrix and a read-based Bray-Curtis distance matrix.
 
-````{dropdown} Note:
+````{dropdown} Note
 We've only generated the Jaccard distance matrix for contigs in this tutorial (from our autofmt-filtered presence-absence table), so you'll need to generate the other appropriate distance matrices for your particular group's exercise. For your other read-based distance matrices, you'll need to use our autofmt-filtered feature table from bracken.
 ````
 For each group, please look through the instructions below - you'll notice that we're not providing you with explicit commands. This is a good time to do some problem solving and sleuthing together as a group. Once your group has generated and examined your particular visualization, discuss amongst yourselves - _do these results seem reasonable? Is this what you'd expect? Why or why not?_
