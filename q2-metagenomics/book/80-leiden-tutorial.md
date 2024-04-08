@@ -175,7 +175,7 @@ qiime taxa barplot \
 ```
 ### Differential Abundance
 #### Feature Table Preparation
-ANCOM-BC cannot be run on repeated measures, so we need to filter to one timepoint. Here we will filter to the "peri" timepoint.
+We'd now like to perform differential abundance analysis on our data, which aims to find the differences in the abundance of each taxa between two classes of subjects or samples, assigning a significance value to each comparison. For this analysis, we'll be using ANCOM-BC (which cannot be run on repeated measures), so we'll first need to filter to one timepoint. Here we will filter to the "peri" timepoint.
 ```shell
 qiime feature-table filter-samples \
   --i-table ./reads/bracken-autofmt-feature-table.qza \
