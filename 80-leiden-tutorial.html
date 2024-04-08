@@ -616,7 +616,7 @@ Additionally, interfaces are subject to change, and those changes may be backwar
 <h3>Differential Abundance<a class="headerlink" href="#differential-abundance" title="Permalink to this heading">#</a></h3>
 <section id="feature-table-preparation">
 <h4>Feature Table Preparation<a class="headerlink" href="#feature-table-preparation" title="Permalink to this heading">#</a></h4>
-<p>ANCOM-BC cannot be run on repeated measures, so we need to filter to one timepoint. Here we will filter to the “peri” timepoint.</p>
+<p>We’d now like to perform differential abundance analysis on our data, which aims to find the differences in the abundance of each taxa between two classes of subjects or samples, assigning a significance value to each comparison. For this analysis, we’ll be using ANCOM-BC (which cannot be run on repeated measures), so we’ll first need to filter to one timepoint. Here we will filter to the “peri” timepoint.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qiime<span class="w"> </span>feature-table<span class="w"> </span>filter-samples<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--i-table<span class="w"> </span>./reads/bracken-autofmt-feature-table.qza<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--m-metadata-file<span class="w"> </span>sample-metadata.tsv<span class="w"> </span><span class="se">\</span>
