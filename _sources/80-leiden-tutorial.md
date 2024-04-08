@@ -431,7 +431,12 @@ qiime emperor plot \
 ```
 
 ## Breakout Session
-Before we begin the final segment of our analysis in this workshop, we're going to break off into two groups for a small interactive exercise! We will assign you to either group A or B, and will go through your respective exercises below.
+We're going to take the next ~30 minutes or so to breakout into two groups and work on an interactive exercise! Each group will be examining the correlation for different beta diversity metrics. Group A will be examining the correlation between our Jaccard distance matrices for reads and contigs. Group B will be examining the correlation between our read-based Jaccard distance matrix and a read-based Bray-Curtis distance matrix.
+
+````{dropdown} Note:
+We've only generated the Jaccard distance matrix for contigs in this tutorial (from our autofmt-filtered presence-absence table), so you'll need to generate the other appropriate distance matrices for your particular group's exercise. For your other read-based distance matrices, you'll need to use our autofmt-filtered feature table from bracken.
+````
+For each group, please look through the instructions below - you'll notice that we're not providing you with explicit commands. This is a good time to do some problem solving and sleuthing together as a group. Once your group has generated and examined your particular visualization, discuss amongst yourselves - _do these results seem reasonable? Is this what you'd expect? Why or why not?_
 
 ### Group A
 In this group exercise we will be examining the correlation between Jaccard distance matrices for both reads and contigs. Note that while you'll already have the Jaccard distance matrix for contigs, you'll need to generate this for reads. We will not be providing commands for this, so do some poking around in the help text for commands within the diversity plugin to see what might make sense for comparing these two distance matrices. :)
@@ -446,6 +451,10 @@ In this group exercise we will be examining the correlation between a read-based
 ````{dropdown} Hint!
 Try running `qiime diversity --help` to view all of the available methods within this plugin. From here, you can run the `--help` command on any of the methods to learn more about their inputs and functionality (i.e. `qiime diversity beta --help`).
 ````
+
+A couple of helpful hints while working through these exercises: 
+ - Make sure you utilize the `--help` command (at both the plugin and command levels) to help you figure out what methods you'll need to use to generate these distance matrices, as well as a visual correlation between a set of two distance matrices.
+ - When running multi-line commands, you've seen the backslash format at the end of each line (visually splitting each parameter), which you can continue utilizing. You can also type everything out in a single line - the result will be the same, but you can pick which formatting feels preferable to you.
 
 ## MAG-based analysis
 ````{toggle}
